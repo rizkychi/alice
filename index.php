@@ -40,6 +40,12 @@
                 top: .6em !important;
                 z-index: 2 !important;
             }
+            @media only screen and (min-width: 768px) {
+                /* For desktop: */
+                .alice-notif {
+                    width: 320px;
+                }
+            }
         </style>
     </head>
 
@@ -54,63 +60,82 @@
     // put default page
 ?>
     <body>
-        <!-- Navbar -->
-        <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
-            <a class="navbar-brand" href="#">ALICE</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMainContent" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarMainContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link px-3 font-weight-normal" href="?p=home">Home
-                        <span class="sr-only">(current)</span>
+        <header>
+            <!-- Navbar -->
+            <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
+                <a class="navbar-brand" href="#">ALICE</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMainContent" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMainContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=home">Home
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=classroom">Ruang Kelas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=forum">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=dosen">Dosen</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light">
+                            <i class="fas fa-plus mt-1"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3 font-weight-normal" href="?p=classroom">Ruang Kelas</a>
+                    <li class="nav-item dropdown mx-2">
+                        <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell mt-1"></i>
+                                <span class="badge badge-danger">300</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary alice-notif" aria-labelledby="navbarMainNotification">
+                            <a class="dropdown-item d-flex" href="#">
+                                <span class="w-100 text-wrap">Rizky menambahkan post ke IF05</span>
+                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
+                            </a>
+                            <a class="dropdown-item d-flex" href="#">
+                                <span class="w-100 text-wrap">Rizky mengomentari post anda di IF05</span>
+                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
+                            </a>
+                            <a class="dropdown-item d-flex" href="#">
+                                <span class="w-100 text-wrap">Rizky membalas komentar anda di forum</span>
+                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-link p-0" href="#">Selengkapnya</a>
+                            </div>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3 font-weight-normal" href="?p=forum">Forum</a>
+                    <li class="nav-item avatar dropdown my-1 ml-1">
+                        <a class="nav-link dropdown-toggle rounded-circle" id="navbarMainContent-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
+                            alt="avatar image">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
+                            <a class="dropdown-item" href="#">Akunku</a>
+                            <a class="dropdown-item" href="#">Keluar</a>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3 font-weight-normal" href="?p=dosen">Dosen</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fas fa-plus mt-1"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown mx-2">
-                    <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell mt-1"></i>
-                            <span class="badge badge-danger">300</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainNotification">
-                        <a class="dropdown-item" href="#">Rizky menambahkan post ke IF05</a>
-                        <a class="dropdown-item" href="#">Rizky mengomentari post anda di IF05</a>
-                        <a class="dropdown-item" href="#">Rizky membalas komentar anda di forum</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="btn btn-link px-1 m-0" href="#">Selengkapnya</a>
-                    </div>
-                </li>
-                <li class="nav-item avatar dropdown my-1 ml-1">
-                    <a class="nav-link dropdown-toggle rounded-circle" id="navbarMainContent-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
-                        alt="avatar image">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
-                        <a class="dropdown-item" href="#">Akunku</a>
-                        <a class="dropdown-item" href="#">Keluar</a>
-                    </div>
-                </li>
-                </ul>
-            </div>
-        </nav>
+                    </ul>
+                </div>
+            </nav>
+        <header>
         <!-- End Navbar -->
-        <?php } ?>
+        <?php
+        } 
+        // include page file
+        include 'page/'.$page.'.php';
+        
+        ?>
+
         <!-- SCRIPTS -->
         <!-- JQuery -->
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
