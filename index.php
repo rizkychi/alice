@@ -40,6 +40,13 @@
                 top: .6em !important;
                 z-index: 2 !important;
             }
+            .alice-avatar {
+                width: 40px;
+            }
+            .alice-class {
+                min-width: 280px;
+                max-width: 280px;
+            }
             @media only screen and (min-width: 768px) {
                 /* For desktop: */
                 .alice-notif {
@@ -69,18 +76,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMainContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item <?php if ($page == 'home') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=home">Home
                             <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item <?php if ($page == 'classroom') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=classroom">Ruang Kelas</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item <?php if ($page == 'forum') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=forum">Forum</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item <?php if ($page == 'dosen' || $page == 'profile') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=dosen">Dosen</a>
                         </li>
                     </ul>
