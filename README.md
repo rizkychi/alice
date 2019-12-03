@@ -23,3 +23,5 @@
 5. Klik Commit (Tanda V / centang diatas)
 6. Klik tanda titik 3 diatas, pilih Sync
 7. Done
+
+hahhahahhah
