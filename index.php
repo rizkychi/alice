@@ -87,15 +87,22 @@
                         <li class="nav-item <?php if ($page == 'forum') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=forum">Forum</a>
                         </li>
+                        <li class="nav-item <?php if ($page == 'materi') echo 'active'; ?>">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=materi">Materi</a>
+                        </li>
                         <li class="nav-item <?php if ($page == 'dosen' || $page == 'profile') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=dosen">Dosen</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">
-                            <i class="fas fa-plus mt-1"></i>
-                        </a>
+                        <!-- button tambah -->
+                        <?php
+                            include 'action/_modals.php';    
+                            if ($page == 'forum') {
+                                echo '<button class="btn btn-sm btn-outline-white" type="button" data-toggle="modal" data-target="#createForumPost">Buat post</button>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,10 +144,11 @@
         <header>
         <!-- End Navbar -->
         <?php
-        } 
-        // include page file
-        include 'page/'.$page.'.php';
         
+            // include page file
+            include 'page/'.$page.'.php';
+        }
+
         ?>
 
         <!-- SCRIPTS -->
