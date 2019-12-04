@@ -69,41 +69,44 @@
             <!-- Grid row -->
             <hr>
 
-            <h4>Komentar</h4>
-
-            <form action="" method="post" class="col-md-12">
-                <div class="form-group purple-border mt-2 mb-1">
-                    <textarea class="form-control" name="comments" rows="3" placeholder="Tulis komentar..."></textarea>
-                </div>
-                <input class="btn btn-secondary btn-sm mx-0 my-1" type="submit" value="Kirim">
-            </form>
-
+            <div class="row px-4">
+                <h4>Komentar</h4>
+                <form action="" method="post" class="col-md-12">
+                    <div class="form-group purple-border mt-2 mb-1">
+                        <textarea class="form-control" name="comments" rows="3" placeholder="Tulis komentar..." required></textarea>
+                    </div>
+                    <input class="btn btn-secondary btn-sm mx-0 my-1" type="submit" value="Kirim">
+                </form>
+            </div>
             <hr>
 
             <?php
                 for ($i=0; $i < 2; $i++) { 
                     ?>
-                        <!-- Comments -->
-                        <div class="d-flex p-2 align-items-start">
-                            <div class="flex-shrink-1 mr-3">
-                                <div class="view overlay">
-                                    <img src="img/alice-img/avatar.png" class="rounded-circle img-fluid alice-avatar"
-                                        alt="Avatar">
-                                    <a>
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
+                        <div class="row px-4">
+                            <!-- Comments -->
+                            <div class="d-flex p-2 align-items-start">
+                                <div class="flex-shrink-1 mr-3">
+                                    <div class="view overlay">
+                                        <img src="img/alice-img/avatar.png" class="rounded-circle img-fluid alice-avatar"
+                                            alt="Avatar">
+                                        <a>
+                                            <div class="mask rgba-white-slight"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="w-100">
+                                    <h6 class="h6 mb-0">Nama orang
+                                        <span class="text-black-50 ml-2 font-small">04/04/2017</span>
+                                    </h6>
+                                    <p class="dark-grey-text article">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                        eiusmod tempor incididunt
+                                        ut labore et dolore magna aliqua. </p>
                                 </div>
                             </div>
-                            <div class="w-100">
-                                <h6 class="h6 mb-0">Nama orang
-                                    <span class="text-black-50 ml-2 font-small">04/04/2017</span>
-                                </h6>
-                                <p class="dark-grey-text article">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua. </p>
-                            </div>
+                            <!-- Comments -->
                         </div>
-                        <!-- Comments -->
+
                         <hr>
                     <?php
                 }    

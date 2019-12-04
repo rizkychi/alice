@@ -62,7 +62,7 @@
                                                 <!-- Image -->
                                                 <div class="view overlay rgba-white-slight mb-2">
                                                     <img src="img/alice-img/avatar.png"
-                                                    class="img-fluid rounded-circle w-75 mx-auto" alt="Minor sample post image">
+                                                    class="img-fluid rounded-circle w-75 mx-auto alice-avatar" alt="Avatar">
                                                     <a>
                                                     <div class="mask rgba-white-slight"></div>
                                                     </a>
@@ -95,8 +95,8 @@
                                                 <div class="col-md-4">
                                                 <!-- Image -->
                                                 <div class="view overlay rgba-white-slight mb-2">
-                                                    <img src="img/alice-img/avatar.png"
-                                                    class="img-fluid rounded-circle w-75 mx-auto" alt="Minor sample post image">
+                                                <img src="img/alice-img/avatar.png"
+                                                    class="img-fluid rounded-circle w-75 mx-auto alice-avatar" alt="Avatar">
                                                     <a>
                                                     <div class="mask rgba-white-slight"></div>
                                                     </a>
@@ -147,7 +147,7 @@
                                         <p class="font-small font-weight-bold dark-grey-text mb-1"><i class="far fa-clock-o"></i>
                                         27/08/2017</p>
                                         <p class="font-small grey-text mb-0">Anna Smith</p>
-                                        <p class="text-right mb-0 font-small font-weight-bold"><a>Baca selengkapnya <i
+                                        <p class="text-right mb-0 font-small font-weight-bold text-secondary"><a>Baca selengkapnya <i
                                             class="fas fa-angle-right"></i></a></p>
                                     </div>
                                     <!-- Card content -->
@@ -231,7 +231,7 @@
                                             <!-- Image -->
                                             <div class="view overlay rgba-white-slight">
                                                 <img src="img/alice-img/avatar.png"
-                                                    class="img-fluid rounded-0 w-75 ml-3" alt="Avatar">
+                                                    class="img-fluid rounded-0 w-75 ml-2" alt="Avatar">
                                                 <a>
                                                     <div class="mask waves-light"></div>
                                                 </a>

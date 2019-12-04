@@ -34,12 +34,21 @@
         <link href="css/<?php if ($page == 'landing' || $page == 'register') echo '_';?>mdb.min.css" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">
 
         <style>
             .md-outline.select-wrapper+label {
                 top: .6em !important;
                 z-index: 2 !important;
             }
+            .card.card-cascade .view.gradient-card-header {
+                padding: 1.1rem 1rem;
+            }
+            .card.card-cascade .view {
+                box-shadow: 0 5px 12px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.19);
+            }
+            /* Custom CSS by ALICE */
             .alice-avatar {
                 width: 40px;
             }
@@ -134,7 +143,7 @@
                             alt="avatar image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
-                            <a class="dropdown-item" href="#">Akunku</a>
+                            <a class="dropdown-item" href="?p=akun">Akunku</a>
                             <a class="dropdown-item" href="#">Keluar</a>
                         </div>
                     </li>
@@ -161,6 +170,9 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
 
+        <!-- Crop image -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+
         <script>
             // Tooltips Initialization
             $(function () {
@@ -181,9 +193,62 @@
         <script>
             $('.datepicker').pickadate({
             // Escape any “rule” characters with an exclamation mark (!).
-                format: 'dd/mm/yyyy',
-                formatSubmit: 'yyyy/mm/dd'
+                format: 'yyyy-mm-dd',
+                formatSubmit: 'yyyy-mm-dd'
             })
+
+            $('#uploadAvatar').click(function () {
+                $('#upload_image').click();
+            });
+        </script>
+
+        <script>  
+        $(document).ready(function(){
+        $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+            width:200,
+            height:200,
+            type:'square' //circle
+            },
+            boundary:{
+            width:300,
+            height:300
+            }
+        });
+
+        $('#upload_image').on('change', function(){
+            var reader = new FileReader();
+            reader.onload = function (event) {
+            $image_crop.croppie('bind', {
+                url: event.target.result
+            }).then(function(){
+                console.log('jQuery bind complete');
+            });
+            }
+            reader.readAsDataURL(this.files[0]);
+            $('#uploadimageModal').modal('show');
+        });
+
+        $('#cropImage').click(function(event){
+            $image_crop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+            }).then(function(response){
+            $.ajax({
+                url:"action/upload_picture.php",
+                type: "POST",
+                data:{"image": response},
+                success:function(data)
+                {
+                $('#uploadimageModal').modal('hide');
+                $('#uploaded_image').html(data);
+                }
+            });
+            })
+        });
+
+        });  
         </script>
     </body>
 </html>
