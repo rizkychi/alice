@@ -168,6 +168,29 @@ CREATE TABLE tb_forum_comment
     FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
 ) ENGINE=InnoDB;
 
+-- Material
+CREATE TABLE tb_material
+(
+    material_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    material_course INT NOT NULL,
+    material_user CHAR(10) NOT NULL,
+    material_subject VARCHAR(255) NOT NULL,
+    material_content TEXT,
+    material_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (material_course) REFERENCES tb_course(course_id),
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+) ENGINE=InnoDB;
+
+-- Downloaded material
+CREATE TABLE tb_material_downloaded
+(
+    material_id BIGINT NOT NULL,
+    material_user CHAR(10) NOT NULL,
+    material_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+) ENGINE=InnoDB;
+
 -- Notification
 CREATE TABLE tb_notification
 (

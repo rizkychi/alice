@@ -220,7 +220,7 @@
                 <hr class="red title-hr">
                 <!-- Heading -->
 
-                <div class="card card-body pb-0 mt-4">
+                <div class="card card-body pb-0 mt-4 mb-4">
                     <?php
                         for ($i=0; $i < 5; $i++) { 
                             ?>

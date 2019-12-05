@@ -35,7 +35,11 @@
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
         
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">
+        <?php
+            if ($page == 'akun') {
+                echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">';
+            }
+        ?>
 
         <style>
             .md-outline.select-wrapper+label {
@@ -61,6 +65,20 @@
                 .alice-notif {
                     width: 320px;
                 }
+            }
+            ::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-color: #F5F5F5;
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar {
+                width: 12px;
+                background-color: #F5F5F5;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-color: #aa66cc;
             }
         </style>
     </head>
@@ -170,9 +188,6 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
 
-        <!-- Crop image -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
-
         <script>
             // Tooltips Initialization
             $(function () {
@@ -202,53 +217,76 @@
             });
         </script>
 
+    <?php if ($page == 'akun') { ?>      
+        <!-- Crop image -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
         <script>  
         $(document).ready(function(){
-        $image_crop = $('#image_demo').croppie({
-            enableExif: true,
-            viewport: {
-            width:200,
-            height:200,
-            type:'square' //circle
-            },
-            boundary:{
-            width:300,
-            height:300
-            }
-        });
-
-        $('#upload_image').on('change', function(){
-            var reader = new FileReader();
-            reader.onload = function (event) {
-            $image_crop.croppie('bind', {
-                url: event.target.result
-            }).then(function(){
-                console.log('jQuery bind complete');
-            });
-            }
-            reader.readAsDataURL(this.files[0]);
-            $('#uploadimageModal').modal('show');
-        });
-
-        $('#cropImage').click(function(event){
-            $image_crop.croppie('result', {
-            type: 'canvas',
-            size: 'viewport'
-            }).then(function(response){
-            $.ajax({
-                url:"action/upload_picture.php",
-                type: "POST",
-                data:{"image": response},
-                success:function(data)
-                {
-                $('#uploadimageModal').modal('hide');
-                $('#uploaded_image').html(data);
+            $image_crop = $('#image_demo').croppie({
+                enableExif: true,
+                viewport: {
+                width:200,
+                height:200,
+                type:'square' //circle
+                },
+                boundary:{
+                width:300,
+                height:300
                 }
             });
-            })
-        });
 
+            $('#upload_image').on('change', function(){
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function(){
+                    console.log('jQuery bind complete');
+                });
+                }
+                reader.readAsDataURL(this.files[0]);
+                $('#uploadimageModal').modal('show');
+            });
+
+            $('#cropImage').click(function(event){
+                $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+                }).then(function(response){
+                    $.ajax({
+                        url:"action/upload_picture.php",
+                        type: "POST",
+                        data:{"image": response},
+                        success:function(data)
+                        {
+                        $('#uploadimageModal').modal('hide');
+                        $('#uploaded_image').html(data);
+                        }
+                    });
+                })
+            });
         });  
         </script>
+    <?php } ?>
+    <?php if ($page == 'materi') { ?>
+        <!-- Slider/Carousel material list -->
+        <script>
+        $('.carousel.carousel-multi-item.v-2 .carousel-item').each(function(){
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i=0;i<4;i++) {
+                next=next.next();
+                if (!next.length) {
+                next=$(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+            }
+            });
+        </script>
+    <?php } ?>
     </body>
 </html>
