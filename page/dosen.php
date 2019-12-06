@@ -3,14 +3,11 @@
         <div class="col-md-8 text-center">
             <h3 class="h3">Dosen</h3>
             <p class="mt-2">Sebagai sekolah tinggi di bidang informatika, proses belajar-mengajar di UNIVERSITAS AMIKOM didukung oleh tenaga pengajar yang berkualitas.</p>
-            <div class="col-md-6 input-group form-sm form-1 pl-0 mx-auto">
-                <div class="input-group-prepend">
-                    <span class="input-group-text purple lighten-3" id="basic-text1">
-                        <i class="fas fa-search text-white" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Cari dosen" aria-label="Search">
-            </div>
+            <!-- Search form -->
+            <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto">
+                <input class="form-control w-100" type="text" placeholder="Cari dosen" aria-label="Search">
+            </form>
+            <!-- Search form -->
         </div>
     </div>
     <div class="row mt-4">

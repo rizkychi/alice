@@ -34,12 +34,25 @@
         <link href="css/<?php if ($page == 'landing' || $page == 'register') echo '_';?>mdb.min.css" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
+        
+        <?php
+            if ($page == 'akun') {
+                echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">';
+            }
+        ?>
 
         <style>
             .md-outline.select-wrapper+label {
                 top: .6em !important;
                 z-index: 2 !important;
             }
+            .card.card-cascade .view.gradient-card-header {
+                padding: 1.1rem 1rem;
+            }
+            .card.card-cascade .view {
+                box-shadow: 0 5px 12px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.19);
+            }
+            /* Custom CSS by ALICE */
             .alice-avatar {
                 width: 40px;
             }
@@ -52,6 +65,20 @@
                 .alice-notif {
                     width: 320px;
                 }
+            }
+            ::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-color: #F5F5F5;
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar {
+                width: 12px;
+                background-color: #F5F5F5;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-color: #aa66cc;
             }
         </style>
     </head>
@@ -87,15 +114,22 @@
                         <li class="nav-item <?php if ($page == 'forum') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=forum">Forum</a>
                         </li>
+                        <li class="nav-item <?php if ($page == 'materi') echo 'active'; ?>">
+                            <a class="nav-link px-3 font-weight-normal" href="?p=materi">Materi</a>
+                        </li>
                         <li class="nav-item <?php if ($page == 'dosen' || $page == 'profile') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=dosen">Dosen</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">
-                            <i class="fas fa-plus mt-1"></i>
-                        </a>
+                        <!-- button tambah -->
+                        <?php
+                            include 'action/_modals.php';    
+                            if ($page == 'forum') {
+                                echo '<button class="btn btn-sm btn-outline-white" type="button" data-toggle="modal" data-target="#createForumPost">Buat post</button>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,7 +161,7 @@
                             alt="avatar image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
-                            <a class="dropdown-item" href="#">Akunku</a>
+                            <a class="dropdown-item" href="?p=akun">Akunku</a>
                             <a class="dropdown-item" href="#">Keluar</a>
                         </div>
                     </li>
@@ -137,10 +171,11 @@
         <header>
         <!-- End Navbar -->
         <?php
-        } 
-        // include page file
-        include 'page/'.$page.'.php';
         
+            // include page file
+            include 'page/'.$page.'.php';
+        }
+
         ?>
 
         <!-- SCRIPTS -->
@@ -173,9 +208,85 @@
         <script>
             $('.datepicker').pickadate({
             // Escape any “rule” characters with an exclamation mark (!).
-                format: 'dd/mm/yyyy',
-                formatSubmit: 'yyyy/mm/dd'
+                format: 'yyyy-mm-dd',
+                formatSubmit: 'yyyy-mm-dd'
             })
+
+            $('#uploadAvatar').click(function () {
+                $('#upload_image').click();
+            });
         </script>
+
+    <?php if ($page == 'akun') { ?>      
+        <!-- Crop image -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+        <script>  
+        $(document).ready(function(){
+            $image_crop = $('#image_demo').croppie({
+                enableExif: true,
+                viewport: {
+                width:200,
+                height:200,
+                type:'square' //circle
+                },
+                boundary:{
+                width:300,
+                height:300
+                }
+            });
+
+            $('#upload_image').on('change', function(){
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function(){
+                    console.log('jQuery bind complete');
+                });
+                }
+                reader.readAsDataURL(this.files[0]);
+                $('#uploadimageModal').modal('show');
+            });
+
+            $('#cropImage').click(function(event){
+                $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+                }).then(function(response){
+                    $.ajax({
+                        url:"action/upload_picture.php",
+                        type: "POST",
+                        data:{"image": response},
+                        success:function(data)
+                        {
+                        $('#uploadimageModal').modal('hide');
+                        $('#uploaded_image').html(data);
+                        }
+                    });
+                })
+            });
+        });  
+        </script>
+    <?php } ?>
+    <?php if ($page == 'materi') { ?>
+        <!-- Slider/Carousel material list -->
+        <script>
+        $('.carousel.carousel-multi-item.v-2 .carousel-item').each(function(){
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i=0;i<4;i++) {
+                next=next.next();
+                if (!next.length) {
+                next=$(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+            }
+            });
+        </script>
+    <?php } ?>
     </body>
 </html>

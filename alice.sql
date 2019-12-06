@@ -16,26 +16,51 @@ CREATE DATABASE IF NOT EXISTS db_alice;
 USE db_alice;
 
 /*-- Create Table --*/
+-- Role
+CREATE TABLE tb_role
+(
+    role_id TINYINT NOT NULL PRIMARY KEY,
+    role_name VARCHAR(10) NOT NULL
+) ENGINE=InnoDB;
+
+-- Course
+CREATE TABLE tb_course
+(
+    course_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(255) NOT NULL,
+    course_sks TINYINT NOT NULL
+) ENGINE=InnoDB;
+
 -- User Account
 CREATE TABLE tb_user
 (
     user_id CHAR(10) NOT NULL PRIMARY KEY,
-    user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL UNIQUE,
-    user_password VARCHAR(255) NOT NULL,
+    user_password CHAR(32) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
     user_dob DATE NOT NULL,
     user_gender ENUM('Laki-laki','Perempuan') NOT NULL,
-    user_address VARCHAR(255),
-    user_phone VARCHAR(13),
-    user_office VARCHAR(255),
-    user_blog VARCHAR(255),
-    user_about TEXT,
-    user_role ENUM('Dosen', 'Mahasiswa') NOT NULL,
-    user_status ENUM('Selo','Mengajar','Rapat','di Rumah'),
+    user_role TINYINT NOT NULL,
     user_photo VARCHAR(255) DEFAULT 'avatar.jpg',
     user_exp INT DEFAULT 0,
-    user_created DATETIME DEFAULT NOW()
-);
+    user_verified BOOLEAN DEFAULT 0,
+    user_created DATETIME DEFAULT NOW(),
+    FOREIGN KEY (user_role) REFERENCES tb_role(role_id)
+) ENGINE=InnoDB;
+
+-- Lecturer Profile
+CREATE TABLE tb_lecturer_profile 
+(
+    profile_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    profile_user CHAR(10) NOT NULL,
+    profile_address VARCHAR(255),
+    profile_phone VARCHAR(13),
+    profile_office VARCHAR(255),
+    profile_blog VARCHAR(255),
+    profile_about TEXT,
+    profile_status ENUM('Selo','Mengajar','Rapat','di Rumah'),
+    FOREIGN KEY (profile_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 -- Lecturer Schedule
 CREATE TABLE tb_schedule
@@ -46,14 +71,7 @@ CREATE TABLE tb_schedule
     schedule_class VARCHAR(255),
     FOREIGN KEY (schedule_user) REFERENCES tb_user(user_id),
     FOREIGN KEY (schedule_course) REFERENCES tb_course(course_id)
-);
-
--- Course
-CREATE TABLE tb_course
-(
-    course_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    course_name VARCHAR(255) NOT NULL
-);
+) ENGINE=InnoDB;
 
 -- Class
 CREATE TABLE tb_class (
@@ -67,7 +85,7 @@ CREATE TABLE tb_class (
     class_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE tb_class_member (
     class_id INT NOT NULL,
@@ -75,7 +93,7 @@ CREATE TABLE tb_class_member (
     joined DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES tb_user(user_id) ON DELETE CASCADE 
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE tb_class_post
 (
@@ -93,7 +111,7 @@ CREATE TABLE tb_class_post
     post_due_date DATETIME,
     FOREIGN KEY (post_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE tb_class_comment
 (
@@ -104,7 +122,7 @@ CREATE TABLE tb_class_comment
     comment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (comment_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE tb_class_assignment
 (
@@ -119,7 +137,7 @@ CREATE TABLE tb_class_assignment
     FOREIGN KEY (assignment_class) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (assignment_id) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (assignment_user) REFERENCES tb_user(user_id)
-);
+) ENGINE=InnoDB;
 
 -- Forum
 CREATE TABLE tb_forum_post
@@ -129,10 +147,13 @@ CREATE TABLE tb_forum_post
     post_user CHAR(10) NOT NULL,
     post_subject VARCHAR(255) NOT NULL,
     post_content TEXT,
+    post_view INT DEFAULT 0,
+    post_like INT DEFAULT 0,
+    post_dislike INT DEFAULT 0,
     post_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (post_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE tb_forum_comment
 (
@@ -142,12 +163,33 @@ CREATE TABLE tb_forum_comment
     comment_content TEXT,
     comment_like INT DEFAULT 0,
     comment_dislike INT DEFAULT 0,
-    comment_is_reply BIGINT,
     comment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (comment_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id),
-    FOREIGN KEY (comment_is_reply) REFERENCES tb_forum_comment(comment_id) ON DELETE CASCADE
-);
+    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
+) ENGINE=InnoDB;
+
+-- Material
+CREATE TABLE tb_material
+(
+    material_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    material_course INT NOT NULL,
+    material_user CHAR(10) NOT NULL,
+    material_subject VARCHAR(255) NOT NULL,
+    material_content TEXT,
+    material_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (material_course) REFERENCES tb_course(course_id),
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+) ENGINE=InnoDB;
+
+-- Downloaded material
+CREATE TABLE tb_material_downloaded
+(
+    material_id BIGINT NOT NULL,
+    material_user CHAR(10) NOT NULL,
+    material_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+) ENGINE=InnoDB;
 
 -- Notification
 CREATE TABLE tb_notification
@@ -164,7 +206,7 @@ CREATE TABLE tb_notification
     FOREIGN KEY (notification_class_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (notification_forum_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (notification_forum_comment) REFERENCES tb_forum_comment(comment_id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB;
 
 
 /*-- Create Trigger --*/
@@ -194,7 +236,7 @@ BEGIN
     DECLARE class VARCHAR(255);
     DECLARE fname VARCHAR(255);
     DECLARE user CHAR(10);
-    DECLARE roles VARCHAR(10);
+    DECLARE roles INT;
     DECLARE lecturer CHAR(10);
     DECLARE finished INT DEFAULT 0;
     DECLARE curMember CURSOR FOR 
@@ -215,7 +257,7 @@ BEGIN
         END IF;
     END WHILE wloop;
     SET finished = 0;
-    IF roles != 'Dosen' THEN
+    IF roles = 3 THEN
         INSERT INTO tb_notification (notification_user, notification_class_id, notification_class_post, notification_detail)
         VALUES (lecturer, NEW.post_class_id, NEW.post_id, CONCAT(fname, ' menambahkan post baru di ', class));
     END IF;
@@ -224,17 +266,21 @@ END//
 DELIMITER ;
 
 -- EXAMPLES
+-- Dummy Roles
+INSERT INTO tb_role (role_id, role_name) 
+VALUES (1, 'Admin'), (2, 'Dosen'), (3, 'Mahasiswa');
+
 -- Dummy Student
-INSERT INTO tb_user (user_id, user_name, user_email, user_password, user_dob, user_gender, user_address, user_phone, user_role)
-VALUES ('17.11.1247', 'Rizky Nur Hidayatullah', 'rizky.25@students.amikom.ac.id', md5('12345'), '1998-01-25', 'Laki-laki', 'Sleman','081215875574', 'Mahasiswa');
+INSERT INTO tb_user (user_id, user_name, user_email, user_password, user_dob, user_gender, user_role)
+VALUES ('17.11.1247', 'Rizky Nur Hidayatullah', 'rizky.25@students.amikom.ac.id', md5('12345'), '1998-01-25', 'Laki-laki', 3);
 
 -- Dummy Lecturer
-INSERT INTO tb_user (user_id, user_name, user_email, user_password, user_dob, user_gender, user_address, user_phone, user_office, user_blog, user_about, user_role)
-VALUES ('0518037801', 'M. RUDYANTO ARIEF, S.T, M.T', 'rudy@amikom.ac.id', md5('12345'), '1978-03-18', 'Laki-laki', 'Yogya','081234567890', 'Gedung 2 Lt 1', 'http://www.rudyantoarief.com', 'Dosen matkul pemrog web lanjut', 'Dosen');
+INSERT INTO tb_user (user_id, user_name, user_email, user_password, user_dob, user_gender, user_role)
+VALUES ('0518037801', 'M. RUDYANTO ARIEF, S.T, M.T', 'rudy@amikom.ac.id', md5('12345'), '1978-03-18', 'Laki-laki', 2);
 
 -- Dummy Course
-INSERT INTO tb_course (course_name)
-VALUES ('Pemrograman Web Lanjut');
+INSERT INTO tb_course (course_name, course_sks)
+VALUES ('Pemrograman Web Lanjut', 4);
 
 -- Dummy Forum Post
 INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content)
@@ -243,10 +289,6 @@ VALUES (1, '17.11.1247', 'Macam Framework', 'Apa saja framework yang bisa diguna
 -- Dummy Forum Comment
 INSERT INTO tb_forum_comment (comment_post, comment_user, comment_content)
 VALUES (1, '0518037801', 'Contohnya antara lain: Bootstrap, Vue, React, Angular, Semantic UI dan masih banyak lagi');
-
--- Dummy Forum Comment Reply
-INSERT INTO tb_forum_comment (comment_post, comment_user, comment_content, comment_is_reply)
-VALUES (1, '17.11.1247', 'Terima kasih banyak', 1);
 
 -- Dummy Class
 INSERT INTO tb_class (class_name, class_course, class_desc, class_lecturer)

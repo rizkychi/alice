@@ -73,7 +73,7 @@
             <div class="card-body px-lg-5 pt-0">
 
                 <!-- Form -->
-                <form id="regForm-alice" class="text-center" style="color: #757575;" action="#!">
+                <form id="regForm-alice" class="text-left" style="color: #757575;" action="#!">
                    
                     <div class="row">
                         <div class="col">
@@ -112,14 +112,16 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-8 mt-3">
+                    <div class="row align-items-start">
+                        <div class="col-md-4 align-self-center">
                             <!-- Default inline 1-->
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="rdbGender1" name="gender">
                                 <label class="custom-control-label" for="rdbGender1">Laki-laki</label>
                             </div>
+                        </div>
 
+                        <div class="col-md-4 align-self-center pl-xl-0">
                             <!-- Default inline 2-->
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="rdbGender2" name="gender">
@@ -127,7 +129,7 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-md-4 mt-sm-3">
                             <!-- Name -->
                             <div class="md-form mt-2">
                                 <input type="text" id="date-picker" class="form-control datepicker">
@@ -136,7 +138,9 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn purple-gradient font-weight-bold">Daftar</button>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn purple-gradient font-weight-bold">Daftar</button>
+                    </div>
 
 
                     <hr>
