@@ -1,5 +1,9 @@
-<!------------- Switch Page ------------->
+
 <?php
+    // include files
+    require_once('config/conf.php');
+
+    // ------------- Switch Page ------------- //
     if (isset($_GET["p"])){
         $page = $_GET["p"];
     } else {
@@ -13,8 +17,15 @@
 
     // get page title
     $page_title = ucwords($page); // uppercase first letter
+    // ------------- End Switch Page ------------- //
+
+    // Session Login
+    session_start();
+    if (!$_SESSION['login']) {
+        $page = 'landing';
+    }
 ?>
-<!------------- End Switch Page ------------->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
