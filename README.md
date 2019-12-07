@@ -23,9 +23,3 @@
 5. Klik Commit (Tanda V / centang diatas)
 6. Klik tanda titik 3 diatas, pilih Sync
 7. Done
-
-<<<<<<< HEAD
-hahhahahhah
-=======
-hahahaahahaha
->>>>>>> 54f351d70a8388c9e9ada1266e772d1bf1720ff3

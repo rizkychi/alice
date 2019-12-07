@@ -21,7 +21,7 @@ CREATE TABLE tb_role
 (
     role_id TINYINT NOT NULL PRIMARY KEY,
     role_name VARCHAR(10) NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Course
 CREATE TABLE tb_course
@@ -29,7 +29,7 @@ CREATE TABLE tb_course
     course_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     course_name VARCHAR(255) NOT NULL,
     course_sks TINYINT NOT NULL
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- User Account
 CREATE TABLE tb_user
@@ -46,7 +46,7 @@ CREATE TABLE tb_user
     user_verified BOOLEAN DEFAULT 0,
     user_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (user_role) REFERENCES tb_role(role_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Lecturer Profile
 CREATE TABLE tb_lecturer_profile 
@@ -60,9 +60,9 @@ CREATE TABLE tb_lecturer_profile
     profile_about TEXT,
     profile_status ENUM('Selo','Mengajar','Rapat','di Rumah'),
     FOREIGN KEY (profile_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Lecturer Schedule
+/*-- Lecturer Schedule
 CREATE TABLE tb_schedule
 (
     schedule_user CHAR(10) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE tb_schedule
     schedule_class VARCHAR(255),
     FOREIGN KEY (schedule_user) REFERENCES tb_user(user_id),
     FOREIGN KEY (schedule_course) REFERENCES tb_course(course_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
 
 -- Class
 CREATE TABLE tb_class (
@@ -85,7 +85,7 @@ CREATE TABLE tb_class (
     class_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_member (
     class_id INT NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE tb_class_member (
     joined DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES tb_user(user_id) ON DELETE CASCADE 
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_post
 (
@@ -111,7 +111,7 @@ CREATE TABLE tb_class_post
     post_due_date DATETIME,
     FOREIGN KEY (post_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_comment
 (
@@ -122,7 +122,7 @@ CREATE TABLE tb_class_comment
     comment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (comment_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_assignment
 (
@@ -137,7 +137,7 @@ CREATE TABLE tb_class_assignment
     FOREIGN KEY (assignment_class) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (assignment_id) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (assignment_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Forum
 CREATE TABLE tb_forum_post
@@ -153,7 +153,7 @@ CREATE TABLE tb_forum_post
     post_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (post_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_forum_comment
 (
@@ -166,7 +166,7 @@ CREATE TABLE tb_forum_comment
     comment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (comment_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Material
 CREATE TABLE tb_material
@@ -179,7 +179,7 @@ CREATE TABLE tb_material
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Downloaded material
 CREATE TABLE tb_material_downloaded
@@ -189,24 +189,25 @@ CREATE TABLE tb_material_downloaded
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
     FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Notification
 CREATE TABLE tb_notification
 (
-    notification_user CHAR(10) NOT NULL,
-    notification_class_id INT,
-    notification_class_post BIGINT,
-    notification_forum_post BIGINT,
-    notification_forum_comment BIGINT,
-    notification_detail VARCHAR(255),
-    notification_status BOOLEAN DEFAULT 0,
-    FOREIGN KEY (notification_user) REFERENCES tb_user(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (notification_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
-    FOREIGN KEY (notification_class_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (notification_forum_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (notification_forum_comment) REFERENCES tb_forum_comment(comment_id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+    notif_for_user CHAR(10) NOT NULL,
+    notif_from_user CHAR(10) NOT NULL,
+    notif_class_id INT,
+    notif_class_post BIGINT,
+    notif_forum_post BIGINT,
+    notif_type ENUM('class','forum','task'),
+    notif_status BOOLEAN DEFAULT 0,
+    notif_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (notif_for_user) REFERENCES tb_user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (notif_from_user) REFERENCES tb_user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (notif_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
+    FOREIGN KEY (notif_class_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (notif_forum_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 /*-- Create Trigger --*/
