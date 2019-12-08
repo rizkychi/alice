@@ -21,7 +21,7 @@
 
     // Session Login
     session_start();
-    if (!$_SESSION['login']) {
+    if (isset($_SESSION['login']) && !$_SESSION['login']) {
         $page = 'landing';
     }
 ?>
