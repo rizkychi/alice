@@ -1,5 +1,5 @@
 <?php
-    $query  = mysqli_query($conn, 'SELECT * FROM tb_course', MYSQLI_USE_RESULT);
+    $query  = mysqli_query($conn, 'SELECT * FROM tb_course');
 ?>
 <!-- Main layout -->
   <main>

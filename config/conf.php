@@ -8,7 +8,7 @@ $db_pass   = '';
 $db_name   = 'db_alice';
 
 //create connection
-$conn = mysqli_connect($db_server, $db_user, $db_pass);
+$conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 
 //check connection
 if ($conn->connect_error) {
