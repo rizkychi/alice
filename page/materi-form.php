@@ -17,7 +17,7 @@
     else if ($act == 'update') {
         if (isset($_GET['id'])) {
             $id     = $_GET['id'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_material WHERE post_id = $id");
+            $query  = mysqli_query($conn, "SELECT * FROM tb_material WHERE material_id = $id");
             $result = mysqli_fetch_array($query);
             $user   = $result['material_user'];
             $subject= $result['material_subject'];
