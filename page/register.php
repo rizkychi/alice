@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg scrolling-navbar navbar-light z-depth-0 white ml-md-4 mr-md-3 smooth-scroll">
     <a class="navbar-brand purple-pastel" href="#">
-        <strong><span class="font-weight-bold">A L I C E</span><span
+        <strong><span class="font-weight-bold" onclick="location ='?p=landing'">A L I C E</span><span
             class="font-weight-bold pink-pastel">.</span></strong>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
@@ -149,7 +149,7 @@
 
                     <!-- Terms of service -->
                     <p>Sudah punya akun? Masuk 
-                        <a href="../index.php">disini.</a>
+                        <a href="?p=landing">disini.</a>
 
                 </form>
                 <!-- Form -->
