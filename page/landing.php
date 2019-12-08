@@ -64,9 +64,7 @@
                 <br class="d-none d-xl-block">We are the central meeting place in which design, business and ideas
                 coexist in harmony.</strong></h5>
             <div class="mr-auto">
-                <a href="?p=register&u=student">
-                  <button type="button" class="btn purple-gradient btn-rounded ml-0">Daftar Sekarang</button>
-                </a>
+                <button type="button" class="btn purple-gradient btn-rounded ml-0" data-toggle="modal" data-target="#registerModal">Daftar Sekarang</button>
             </div>
 
           </div>
