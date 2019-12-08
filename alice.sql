@@ -27,7 +27,7 @@ CREATE TABLE tb_role
 CREATE TABLE tb_course
 (
     course_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    course_name VARCHAR(255) NOT NULL,
+    course_name VARCHAR(255) NOT NULL UNIQUE,
     course_sks TINYINT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

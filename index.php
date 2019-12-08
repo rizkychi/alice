@@ -15,15 +15,36 @@
         $page = '404';        
     }
 
+    // Session Login
+    session_start();
+    $_SESSION['login'] = true;
+    $_SESSION['role']  = 'Admin';
+
+    if (isset($_SESSION['login'])) {
+        $is_login = $_SESSION['login'];
+        $role     = $_SESSION['role'];
+    } else {
+        $is_login = false;
+        $role     = '';
+    }
+    
+    if (!$is_login && $page != 'register') {
+        $page = 'landing';
+    } else if ($is_login){
+        if ($role == 'Admin') {
+            if ($page == 'home') {
+                header('Location: http://'.$host.$uri.'/?p=admin');
+            }
+        } else {
+            if ($page == 'admin') {
+                header('Location: http://'.$host.$uri.'/?p=home');
+            }
+        }
+    }
+
     // get page title
     $page_title = ucwords($page); // uppercase first letter
     // ------------- End Switch Page ------------- //
-
-    // Session Login
-    session_start();
-    if (isset($_SESSION['login']) && !$_SESSION['login']) {
-        $page = 'landing';
-    }
 ?>
 
 <!DOCTYPE html>
@@ -42,9 +63,16 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
-        <link href="css/<?php if ($page == 'landing' || $page == 'register') echo '_';?>mdb.min.css" rel="stylesheet">
+        <link href="css/<?php if ($page == 'landing' || $page == 'register') echo '_'; else if($page == 'admin') echo 'admin_';?>mdb.min.css" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
+        <!-- DataTables.net  -->
+        <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
+        <link rel="stylesheet" href="css/addons/datatables-select.min.css">
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+
         
         <?php
             if ($page == 'akun') {
@@ -107,9 +135,19 @@
     // put default page
 ?>
     <body>
+        
         <header>
             <!-- Navbar -->
             <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
+                <?php
+                    if ($role == 'Admin') {
+                        ?>
+                            <!-- SideNav slide-out button -->
+                            <a href="#" data-activates="slide-out" class="m-1 mr-4 button-collapse text-white" style="font-size:20px;"><i
+                                class="fas fa-ellipsis-h"></i></a>
+                        <?php
+                    }
+                ?>
                 <a class="navbar-brand" href="#">ALICE</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMainContent" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -140,7 +178,7 @@
                         <?php
                             include 'action/_modals.php';    
                             if ($page == 'forum') {
-                                echo '<button class="btn btn-sm btn-outline-white" type="button" data-toggle="modal" data-target="#createForumPost">Buat post</button>';
+                                echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Buat post</button></a>';
                             }
                         ?>
                     </li>
@@ -192,8 +230,7 @@
         ?>
 
         <!-- SCRIPTS -->
-        <!-- JQuery -->
-        <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+        
         <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->
@@ -300,6 +337,22 @@
             }
             });
         </script>
+    <?php } ?>
+    <?php if ($page == 'admin') { ?>
+        <!-- Initializations -->
+        <script>
+            $(document).ready(function() {
+                // SideNav Button Initialization
+                $(".button-collapse").sideNav({
+                    slim: true
+                });
+                // SideNav Scrollbar Initialization
+                var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+                    var ps = new PerfectScrollbar(sideNavScrollbar);
+            })
+        </script>
+
+       
     <?php } ?>
     </body>
 </html>
