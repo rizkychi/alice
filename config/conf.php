@@ -7,10 +7,12 @@
     $db_pass   = '';
     $db_name   = 'db_alice';
 
-    $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
+    //creare connection
+    $conn =new mysqli($db_server, $db_user, $db_pass, $db_name);
 
-    if (mysqli_connect_errno()) {
-        die('Not connected to database '.mysqli_connect_errno());
-    }
-    
+    //check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+        }
+
 ?>
