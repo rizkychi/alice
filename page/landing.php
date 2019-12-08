@@ -1,6 +1,6 @@
 <?php
   include 'action/_modals.php';
-?>
+?>   
 <body class="coworking-page">
 
   <!-- Main navigation -->
