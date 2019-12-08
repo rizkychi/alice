@@ -12,6 +12,7 @@
         $content= '';
         $course = '';
         $button = 'Post';
+        $title  = 'Buat Post Baru';
     } else if ($act == 'update') {
         if (isset($_GET['id'])) {
             $id     = $_GET['id'];
@@ -22,6 +23,7 @@
             $content= $result['post_content'];
             $course = $result['post_course'];
             $button = 'Ubah';
+            $title  = 'Ubah Post';
         }
     }
 
@@ -33,7 +35,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="jumbotron">
-                <h2 class="display-6">Buat Post </h2>
+                <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
                 <!-- PENTING : _course.php diganti nama file action mu -->
                 <form action="action/_course.php?act=<?php echo $act; ?>" method="post">
