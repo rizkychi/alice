@@ -16,7 +16,7 @@
     } else if ($act == 'update') {
         if (isset($_GET['id'])) {
             $id     = $_GET['id'];
-            $query  = ""; //querymu ea
+            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE post_id = $id");
             $result = mysqli_fetch_array($query);
             $user   = $result['post_user'];
             $subject= $result['post_subject'];
@@ -27,8 +27,7 @@
         }
     }
 
-    //dynamic course list
-    $query = mysqli_query($conn, "SELECT * FROM tb_course");
+
 ?>
 
 <div class="container mt-4">
@@ -38,7 +37,7 @@
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
                 <!-- PENTING : _course.php diganti nama file action mu -->
-                <form action="action/_course.php?act=<?php echo $act; ?>" method="post">
+                <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
                     <div class="md-form">
@@ -53,6 +52,11 @@
                     <!--Blue select-->
                     <select class="mdb-select mt-3 w-50" name="course" searchable="Cari Mata Kuliah" required>
                         <option value="1" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
+                        <option value="2" <?php if ($act == 'add') echo 'selected'; ?>>Pemrograman Web Lanjut</option>
+                        <option value="3" <?php if ($act == 'add') echo 'selected'; ?>>Pemrograman Mobile</option>
+                        <option value="4" <?php if ($act == 'add') echo 'selected'; ?>>Data Mining</option>
+                        <option value="5" <?php if ($act == 'add') echo 'selected'; ?>>Rekayasa Perangkat Lunak</option>
+                        <option value="6" <?php if ($act == 'add') echo 'selected'; ?>>Metode Numerik</option>
                         <!-- Dynamic Course List -->
                         <?php
                             while ($result = mysqli_fetch_array($query)) {
