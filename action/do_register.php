@@ -1,23 +1,9 @@
 <?php
-$host = $_SERVER['HTTP_HOST'];
-$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-
-$db_server = 'localhost';
-$db_user   = 'root';
-$db_pass   = '';
-$db_name   = 'db_alice';
-
-//creare connection
-$conn = mysqli_connect($db_server, $db_user, $db_pass);
-
-//check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    } 
+require_once '../config/conf.php';
 
 mysqli_select_db($conn,$db_name);
 
-if (isset($_POST['daftar'])){
+if ($_POST){
     
     $id = $_POST['id'];
     $email = $_POST['email'];
@@ -26,13 +12,22 @@ if (isset($_POST['daftar'])){
     $date = $_POST['date'];
     $gender = $_POST['gender'];
     
-    $sql = "INSERT INTO tb_user (user_id, user_email, user_password, user_name, user_dob , user_gender) 
-    VALUES ('$id','$email','$pass','$fname','$date','$gender')";
+
+    if ($_POST['userRole']=='mahasiswa'){
+        $role = 3;
+    } else if ($_POST['userRole']=='dosen'){
+        $role = 2;
+    } 
+
+    $sql = " INSERT INTO tb_user (user_id, user_email, user_password, user_name, user_dob , user_gender,user_role) 
+    VALUES ('$id','$email',md5('$pass'),'$fname','$date','$gender','$role')";
     
     $simpan = mysqli_query($conn,$sql);
     if ($simpan) {
         header('location: ../index.php');
     } else { echo "GUAGAL COY"; } 
+
+    echo "<br>".$sql;
     
 }
 ?>

@@ -73,7 +73,7 @@
             <div class="card-body px-lg-5 pt-0">
 
                 <!-- Form -->
-                <form id="regForm-alice" class="text-left" style="color: #757575;" method="POST" action="do_register.php">
+                <form id="regForm-alice" class="text-left" style="color: #757575;" method="POST" action="action/do_register.php">
                    
                     <div class="row">
                         <div class="col">
@@ -137,7 +137,9 @@
                             </div>
                         </div>
                     </div>
-
+                    
+                    <input name="userRole" value="<?php echo $user;?>" hidden>
+                    
                     <div class="row justify-content-center">
                         <button type="submit" name="daftar" class="btn purple-gradient font-weight-bold">Daftar</button>
                     </div>
