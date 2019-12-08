@@ -178,7 +178,7 @@
                         <?php
                             include 'action/_modals.php';    
                             if ($page == 'forum') {
-                                echo '<button class="btn btn-sm btn-outline-white" type="button" data-toggle="modal" data-target="#createForumPost">Buat post</button>';
+                                echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Buat post</button></a>';
                             }
                         ?>
                     </li>

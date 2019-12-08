@@ -21,7 +21,7 @@
                 </div>
                 <!-- Grid column -->
                 <div class="col-md-2 mt-3 mb-3">
-                    <a href="?p=admin&v=course_form&act=add"><button class="btn btn-success" type="button">Tambah</button></a>
+                    <a href="?p=admin&v=course-form&act=add"><button class="btn btn-success" type="button">Tambah</button></a>
                 </div>
             </div>
             <!-- Grid row -->
@@ -59,7 +59,7 @@
                             echo "<td>$data[1]</td>";
                             echo "<td>$data[2]</td>";
                             echo "<td>";
-                            echo "<a href='?p=admin&v=course_form&act=update&id=$data[0]'><span class='badge badge-lg badge-primary'>UBAH</span></a>";
+                            echo "<a href='?p=admin&v=course-form&act=update&id=$data[0]'><span class='badge badge-lg badge-primary'>UBAH</span></a>";
                             echo "<a href='action/_course.php?act=delete&id=$data[0]' class='ml-2'><span class='badge badge-danger '>HAPUS</span></a>";
                             echo "</td>";
                             echo "</tr>";
