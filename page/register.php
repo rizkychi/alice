@@ -61,7 +61,10 @@
                             <!-- NIM -->
                             <div class="md-form">
                                 <input type="text" id="nim" name="id" class="form-control">
-                                <label for="nim">NIM</label>
+                                <label for="nim"><?php
+                                    if ($user == 'dosen') echo 'NIDN';
+                                    if ($user == 'mahasiswa') echo 'NIM';
+                                ?></label>
                             </div>
                         </div>
                         <div class="col">

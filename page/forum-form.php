@@ -11,7 +11,7 @@
         $subject= '';
         $content= '';
         $course = '';
-        $button = 'Post';
+        $button = 'submit';
         $title  = 'Buat Post Baru';
     } else if ($act == 'update') {
         if (isset($_GET['id'])) {
@@ -36,7 +36,7 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <!-- PENTING : _course.php diganti nama file action mu -->
+                <!-- PENTING : nama file action mu -->
                 <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
@@ -72,7 +72,7 @@
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=forum"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
-                        <button type="submit" class="btn btn-md btn-success"><?php echo $button; ?></button>
+                        <button type="submit" name = "submit" class="btn btn-md btn-success"><?php echo $button; ?></button>
                     </div>
                 </form>
                 <div class="m-5"></div>

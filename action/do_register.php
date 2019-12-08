@@ -1,8 +1,6 @@
 <?php
 require_once '../config/conf.php';
 
-mysqli_select_db($conn,$db_name);
-
 if ($_POST){
     
     $id = $_POST['id'];

@@ -181,6 +181,12 @@
                                 echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Buat post</button></a>';
                             }
                         ?>
+                        <?php
+                            include 'action/_modals.php';    
+                            if ($page == 'materi') {
+                                echo '<a href="?p=materi-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Tambah Materi</button></a>';
+                            }
+                        ?>
                     </li>
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
