@@ -149,7 +149,7 @@
 
                     <!-- Terms of service -->
                     <p>Sudah punya akun? Masuk 
-                        <a href="../index.php">disini.</a>
+                        <a href="?p=landing#login">disini.</a>
 
                 </form>
                 <!-- Form -->
