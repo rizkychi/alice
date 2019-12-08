@@ -60,3 +60,28 @@
     </div>
   </div>
 </div>
+
+<!-- Modal register -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header purple-gradient">
+        <p class="heading lead"><strong>Daftar Akun</strong></p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a href="?p=register&u=student" type="button" class="btn btn-secondary">Mahasiswa</i></a>
+        <a href="?p=register&u=lecturer" type="button" class="btn btn-outline-secondary waves-effect">Dosen</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Central Modal Medium Info-->

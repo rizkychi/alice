@@ -1,3 +1,6 @@
+<?php
+  include 'action/_modals.php';
+?>   
 <body class="coworking-page">
 
   <!-- Main navigation -->
@@ -5,7 +8,7 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg scrolling-navbar navbar-light z-depth-0 fixed-top white ml-md-4 mr-md-3 smooth-scroll">
-      <a class="navbar-brand purple-pastel" href="#">
+      <a class="navbar-brand purple-pastel" href="?=landing">
         <strong><span class="font-weight-bold">A L I C E</span><span
             class="font-weight-bold pink-pastel">.</span></strong>
       </a>
@@ -36,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link pt-0-1" href="#contact" data-offset="100">
+            <a class="nav-link pt-0-1" href="#login" data-offset="100">
               <button type="button" class="btn btn-outline-purple-pastel btn-rounded btn-md z-depth-0 m-0 pt-2">Masuk <i class="fas fa-angle-double-right"></i></button>
             </a>
           </li>
@@ -462,7 +465,7 @@
       <!-- Section: Articles -->
 
       <!-- Section: Contact Us -->
-      <section id="contact" class="mb-3">
+      <section id="login" class="mb-3">
 
         <!-- Section heading -->
         <h2 class="h1-responsive font-weight-bold text-center">Masuk ke Akun Anda</h2>
@@ -486,27 +489,29 @@
 
                   <!--Header-->
                   <div class="form-header purple-gradient">
-                    <h4 class="mb-0"><i class="fas fa-user"></i> Akun:</h4>
+                    <h4 class="mb-0"><i class="fas fa-user"></i> Masuk</h4>
                   </div>
 
                   <!--Body-->
-                  <div class="md-form">
-                    <i class="fas fa-envelope prefix"></i>
-                    <input type="text" id="orangeForm-email" class="form-control">
-                    <label for="orangeForm-email">Your email</label>
-                  </div>
+                  <form action="" method="post">
+                    <div class="md-form">
+                      <i class="far fa-id-badge prefix"></i>
+                      <input type="text" name="userID" id="orangeForm-id" class="form-control">
+                      <label for="orangeForm-id">NIM/NIDN</label>
+                    </div>
 
-                  <div class="md-form">
-                    <i class="fas fa-lock prefix"></i>
-                    <input type="password" id="orangeForm-pass" class="form-control">
-                    <label for="orangeForm-pass">Your password</label>
-                  </div>
+                    <div class="md-form">
+                      <i class="fas fa-unlock-alt prefix"></i>
+                      <input type="password" name="userPass" id="orangeForm-pass" class="form-control">
+                      <label for="orangeForm-pass">Kata Sandi</label>
+                    </div>
+                    
+                    <div class="text-center">
+                      <button type="submit" class="btn purple-gradient btn-md btn-rounded font-weight-bold">Masuk</button>
+                      <button type="button" class="btn purple-gradient btn-md btn-rounded font-weight-bold" data-toggle="modal" data-target="#registerModal">Daftar</button>
+                    </div>
 
-                  <div class="text-center">
-                    <button class="btn purple-gradient btn-md btn-rounded font-weight-bold">Masuk</button>
-                    <button class="btn purple-gradient btn-md btn-rounded font-weight-bold">Daftar</button>
-                  </div>
-
+                  </form>
                 </div>
               </div>
               <!--/Form with header-->
