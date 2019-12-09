@@ -62,17 +62,6 @@ CREATE TABLE tb_lecturer_profile
     FOREIGN KEY (profile_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*-- Lecturer Schedule
-CREATE TABLE tb_schedule
-(
-    schedule_user CHAR(10) NOT NULL,
-    schedule_course INT NOT NULL,
-    schedule_date DATE,
-    schedule_class VARCHAR(255),
-    FOREIGN KEY (schedule_user) REFERENCES tb_user(user_id),
-    FOREIGN KEY (schedule_course) REFERENCES tb_course(course_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
-
 -- Class
 CREATE TABLE tb_class (
     class_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -176,6 +165,7 @@ CREATE TABLE tb_material
     material_user CHAR(10) NOT NULL,
     material_subject VARCHAR(255) NOT NULL,
     material_content TEXT,
+    material_attachment VARCHAR(255),
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (material_user) REFERENCES tb_user(user_id)

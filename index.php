@@ -17,8 +17,6 @@
 
     // Session Login
     session_start();
-    $_SESSION['login'] = true;
-    $_SESSION['role']  = 'Admin';
 
     if (isset($_SESSION['login'])) {
         $is_login = $_SESSION['login'];
@@ -31,13 +29,13 @@
     if (!$is_login && $page != 'register') {
         $page = 'landing';
     } else if ($is_login){
-        if ($role == 'Admin') {
-            if ($page == 'home') {
-                header('Location: http://'.$host.$uri.'/?p=admin');
+        if ($role == 1) {
+            if ($page == 'home' || $page == 'landing' || $page == 'register') {
+                header("Location: http://$host$uri/?p=admin");
             }
         } else {
-            if ($page == 'admin') {
-                header('Location: http://'.$host.$uri.'/?p=home');
+            if ($page == 'admin' || $page == 'landing' || $page == 'register') {
+                header("Location: http://$host$uri/?p=home");
             }
         }
     }
@@ -140,7 +138,7 @@
             <!-- Navbar -->
             <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
                 <?php
-                    if ($role == 'Admin') {
+                    if ($role == 1) {
                         ?>
                             <!-- SideNav slide-out button -->
                             <a href="#" data-activates="slide-out" class="m-1 mr-4 button-collapse text-white" style="font-size:20px;"><i
@@ -219,7 +217,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
                             <a class="dropdown-item" href="?p=akun">Akunku</a>
-                            <a class="dropdown-item" href="#">Keluar</a>
+                            <a class="dropdown-item" href="action/do_logout.php">Keluar</a>
                         </div>
                     </li>
                     </ul>

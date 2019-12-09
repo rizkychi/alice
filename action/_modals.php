@@ -84,4 +84,34 @@
     <!--/.Content-->
   </div>
 </div>
-<!-- Central Modal Medium Info-->
+<!-- Modal register-->
+
+<!-- Modal Login Failed -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header purple-gradient">
+        <p class="heading lead"><strong>Gagal Masuk</strong></p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+          <!-- Body -->
+          <div class="col-md-10">
+            <p>NIK/NIDN atau Kata sandi tidak cocok</p>
+          </div>
+          <!-- Body -->
+          <div class="mt-2">
+              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">OK</button>
+          </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal register-->

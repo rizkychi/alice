@@ -1,5 +1,9 @@
 <?php
   include 'action/_modals.php';
+  
+  if (isset($_SESSION['login_failed']) && $_SESSION['login_failed']) {
+    echo "<script>alert('Login Gagal');</script>";
+  }
 ?>   
 <body class="coworking-page">
 
@@ -479,7 +483,7 @@
           <div class="col-lg-5 mb-lg-0 mb-4">
 
             <!-- Form -->
-            <form class="ml-lg-5">
+            <form class="ml-lg-5" action="action/do_login.php" method="POST">
 
                 <!--Form with header-->
               <div class="card wow fadeIn container" data-wow-delay="0.3s">
@@ -491,7 +495,6 @@
                   </div>
 
                   <!--Body-->
-                  <form action="do_login.php" method="post">
                     <div class="md-form">
                       <i class="far fa-id-badge prefix"></i>
                       <input type="text" name="userID" id="orangeForm-id" class="form-control">
@@ -508,8 +511,6 @@
                       <button type="submit" class="btn purple-gradient btn-md btn-rounded font-weight-bold">Masuk</button>
                       <button type="button" class="btn purple-gradient btn-md btn-rounded font-weight-bold" data-toggle="modal" data-target="#registerModal">Daftar</button>
                     </div>
-
-                  </form>
                 </div>
               </div>
               <!--/Form with header-->

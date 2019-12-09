@@ -58,7 +58,7 @@ require_once 'config/conf.php';
                                                   echo $row["profile_status"];
                                              }
                                                 } else {
-                                             echo "0 results";
+                                                    echo "No status";
                                              }
 
                                             ?>

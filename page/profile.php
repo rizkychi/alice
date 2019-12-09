@@ -44,7 +44,7 @@
          echo $row["profile_status"];
           }
            } else {
-           echo "0 results";
+           echo "No status";
            }
            ?>
         </span>
@@ -61,7 +61,7 @@
           echo $row["profile_about"];
           }
           } else {
-          echo "0 results";
+          echo "Tidak ada deskripsi";
           }
           ?>
         </p>
@@ -128,7 +128,7 @@
                       echo $row["user_email"];
                       }
                       } else {
-                      echo "0 results";
+                      echo "-";
                       }
 
                       ?>
@@ -148,7 +148,7 @@
                      echo $row["profile_phone"];
                      }
                      } else {
-                     echo "0 results";
+                     echo "-";
                      }
                      ?>
                   </p>
@@ -166,7 +166,7 @@
                    echo $row["profile_blog"];
                    }
                   } else {
-                  echo "0 results";
+                  echo "-";
                    }
                   ?>
 
@@ -187,7 +187,7 @@
                    echo $row["profile_office"];
                    }
                    } else {
-                   echo "0 results";
+                   echo "-";
                    }
                    ?>
 
@@ -206,7 +206,7 @@
                     echo $row["profile_address"];
                     }
                     } else {
-                    echo "0 results";
+                    echo "-";
                      }
                    ?>
                   </p>

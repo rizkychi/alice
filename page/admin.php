@@ -54,7 +54,7 @@
 <?php
     // check if page file doesn't exist
     if (!file_exists('page/admin/'.$view.'.php')) {
-        $view = 'course';
+        $view = 'dashboard';
     }
 
     //include view
