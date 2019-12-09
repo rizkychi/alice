@@ -200,8 +200,7 @@
                     <!--Table body-->
 
 
-                    <!-- Gan yang ini belum tak bikin data di dbnya e, baru text. ntr dikampus ya tak masukin dbnya-->
-                    <tbody>
+                        <tbody>
                         <!-- <tr>
                             <td>1</td>
                             <td>Pemrograman Web Lanjut</td>
