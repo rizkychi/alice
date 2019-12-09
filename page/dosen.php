@@ -1,3 +1,9 @@
+<?php
+
+require_once 'config/conf.php';
+
+?>
+
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 text-center">
@@ -12,8 +18,10 @@
     </div>
     <div class="row mt-4">
         <!-- Dosen Thumbnail -->
+
+        <!--Gan belum bisa manggil data per id per div e :' piyee kui tulunggg -->
         <?php
-            for ($i=0; $i < 9; $i++) { 
+            for ($i=0; $i < 4; $i++) { 
                 ?>
                     <div class="col-sm-12 col-md-4 col-xl-3 mb-4">
                         <div class="card">
@@ -23,8 +31,38 @@
                                 </div>
                                 <div class="w-75">
                                     <div class="row m-0">
-                                        <a href="?p=profile" class="w-100 stretched-link text-secondary text-truncate" style="line-height:1.1;">Dosen, S.Kom., M.Kom</a>
-                                        <span class="badge badge-pill badge-success mt-1">Selo</span>
+                                        <a href="?p=profile" class="w-100 stretched-link text-secondary text-truncate" style="line-height:1.1;">
+                                        <?php
+                                             $sql = "SELECT user_name FROM tb_user WHERE user_role=2";
+                                                $result = mysqli_query($conn, $sql);
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                               // output data of each row
+                                                 while($row = mysqli_fetch_array($result)) {
+                                                  echo $row["user_name"];
+                                             }
+                                                } else {
+                                             echo "0 results";
+                                             }
+
+                                            ?>
+                                        </a>
+                                        <span class="badge badge-pill badge-success mt-1">
+                                        <?php
+                                             $sql = "SELECT profile_status FROM tb_lecturer_profile";
+                                                $result = mysqli_query($conn, $sql);
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                               // output data of each row
+                                                 while($row = mysqli_fetch_array($result)) {
+                                                  echo $row["profile_status"];
+                                             }
+                                                } else {
+                                             echo "0 results";
+                                             }
+
+                                            ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

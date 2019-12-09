@@ -491,7 +491,7 @@
                   </div>
 
                   <!--Body-->
-                  <form action="" method="post">
+                  <form action="do_login.php" method="post">
                     <div class="md-form">
                       <i class="far fa-id-badge prefix"></i>
                       <input type="text" name="userID" id="orangeForm-id" class="form-control">

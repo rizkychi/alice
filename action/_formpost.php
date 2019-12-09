@@ -4,45 +4,55 @@
     $act = $_GET['act'];
 
     if ($act == 'add') {
-        if ($_POST) {
+        if (isset($_POST['submit'])) {
+
             $subject= $_POST['postName'];
             $content= $_POST['postContent'];
             $course = $_POST['course'];
-        
+            $id = $_POST['postID'];
+            $user = $_POST['postUser'];
 
-            $query  = mysqli_query($conn, "INSERT INTO tb_forum_post (post_subject, post_content, post_course) VALUES ('$subject', '$content', '$course')");
-
-            if (!$query) {
-                echo "<script>alert('gagal')</script>";
-            } else {
-                header('Location: ../?p=forum-post');
-            }
-        }
-    } else if ($act == 'delete') {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-
-            $query = mysqli_query($conn, "DELETE FROM tb_forum_post WHERE post_id = $id");
+            $query  = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')");
 
             if (!$query) {
-                echo "<script>alert('gagal')</script>";
+                echo "<script>alert('gagal menambahkan')</script>";
             } else {
-                header('Location: ../?p=forum-post');
+                echo "<script>alert('data ditambahkan')</script>";
+               // header('Location: ../page/forum.php');
             }
         }
-    } else if ($act == 'update') {
-        if ($_POST) {
-            $id   = $_POST['postID'];
-            $name = $_POST['courseName'];
-            $sks  = $_POST['courseSKS'];
+    } 
+    
+    
+    
+    //else if ($act == 'delete') {
+      //  if (isset($_GET['id'])) {
+        //    $id = $_GET['id'];
 
-            $query = mysqli_query($conn, "UPDATE tb_forum_post SET postFormTitle = '$subject', postFormContent = '$content' WHERE course = $course");
+          //  $query = mysqli_query($conn, "DELETE FROM tb_forum_post WHERE post_id = $id");
 
-            if (!$query) {
-                echo "<script>alert('gagal')</script>";
-            } else {
-                header('Location: ../?p=forum-post');
-            }
-        }
-    }
+            //if (!$query) {
+              //  echo "<script>alert('gagal')</script>";
+            //} else {
+              //  header('Location: ../?p=forum-post');
+            //}
+        //}
+    //} 
+    
+    
+    // else if ($act == 'update') {
+      //   if ($_POST) {
+         //    $subject= $_POST['postName'];
+        //     $content= $_POST['postContent'];
+          //   $course = $_POST['course'];
+
+       //      $query = mysqli_query($conn, "UPDATE tb_forum_post SET postFormTitle = '$subject', postFormContent = '$content' WHERE course = $course");
+
+          //   if (!$query) {
+            //     echo "<script>alert('gagal')</script>";
+           //  } else {
+            //     header('Location: ../?p=forum-post');
+            // }
+         //}
+    // }
 ?>
