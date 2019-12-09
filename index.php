@@ -230,6 +230,7 @@
             // include page file
             include 'page/'.$page.'.php';
         }
+        
 
         ?>
 
