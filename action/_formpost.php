@@ -4,7 +4,7 @@
     $act = $_GET['act'];
 
     if ($act == 'add') {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['button'])) {
 
             $subject= $_POST['postName'];
             $content= $_POST['postContent'];
@@ -12,14 +12,22 @@
             $id = $_POST['postID'];
             $user = $_POST['postUser'];
 
-            $query  = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')");
-
-            if (!$query) {
-                echo "<script>alert('gagal menambahkan')</script>";
-            } else {
-                echo "<script>alert('data ditambahkan')</script>";
-               // header('Location: ../page/forum.php');
+            $query = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')");
+            
+            if ($query) {
+              echo "<script>alert('data tersimpan')</script>";
+              //header('Location: ../?p=forum-post');
             }
+            
+            //$query  = "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')";
+            //$query_run = "$conn, $query";
+
+            //if ($query_run) {
+               // echo "<script>alert('Data disimpan')</script>";
+           // } else {
+            //    echo "<script>alert('data gagal ditambahkan')</script>";
+               // header('Location: ../page/forum.php');
+          //  }
         }
     } 
     
