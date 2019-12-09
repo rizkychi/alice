@@ -18,19 +18,7 @@
         </div>
         <h3 class="my-3 font-weight-bold">
           <strong>
-          <?php
-                $sql = "SELECT user_name FROM tb_user WHERE user_role=2";
-                $result = mysqli_query($conn, $sql);
-
-                if (mysqli_num_rows($result) > 0) {
-                 // output data of each row
-                while($row = mysqli_fetch_array($result)) {
-                  echo $row["user_name"];
-                  }
-                   } else {
-                  echo "0 results";
-                  }
-                  ?>
+                <a>Dosen</a>
           </strong>
         </h3>
         <span class="badge badge-pill badge-success">
@@ -94,7 +82,7 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">
         <i class="fas fa-calendar-alt mr-1" aria-hidden="true"></i>
-          <strong>Jadwal Mengajar</strong>
+          <strong>Daftar Kelas</strong>
         </a>
       </li>
     </ul>
@@ -256,7 +244,7 @@
                 <!--Card image-->
                 <div class="view view-cascade gradient-card-header purple-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
 
-                <a href="" class="white-text mx-3">Jadwal Mengajar Semester GANJIL Tahun Akademik 2019/2020</a>
+                <a href="" class="white-text mx-3">Kelas yang diampu</a>
 
                 </div>
                 <!--/Card image-->
@@ -271,19 +259,10 @@
                     <thead>
                         <tr class="text-uppercase">
                             <th class="th-md">
-                                <a>Hari</a>
+                                <a>No.</a>
                             </th>
                             <th class="th-md">
-                                <a href="">Jam</a>
-                            </th>
-                            <th class="th-lg">
-                                <a href="">Mata Kuliah</a>
-                            </th>
-                            <th class="th-md">
-                                <a href="">Kelas</a>
-                            </th>
-                            <th class="th-md">
-                                <a href="">Ruang</a>
+                                <a href="">Nama Kelas</a>
                             </th>
                         </tr>
                     </thead>

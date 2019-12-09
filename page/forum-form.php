@@ -11,12 +11,12 @@
         $subject= '';
         $content= '';
         $course = '';
-        $button = 'submit';
+        $button = 'Post';
         $title  = 'Buat Post Baru';
     } else if ($act == 'update') {
-        if (isset($_GET['id'])) {
-            $id     = $_GET['id'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE post_id = $id");
+        if (isset($_GET['postID'])) {
+            $id     = $_GET['postID'];
+            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
             $result = mysqli_fetch_array($query);
             $user   = $result['post_user'];
             $subject= $result['post_subject'];
@@ -51,12 +51,14 @@
                     </div>
                     <!--Blue select-->
                     <select class="mdb-select mt-3 w-50" name="course" searchable="Cari Mata Kuliah" required>
-                        <option value="1" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
-                        <option value="2" <?php if ($act == 'add') echo 'selected'; ?>>Pemrograman Web Lanjut</option>
-                        <option value="3" <?php if ($act == 'add') echo 'selected'; ?>>Pemrograman Mobile</option>
-                        <option value="4" <?php if ($act == 'add') echo 'selected'; ?>>Data Mining</option>
-                        <option value="5" <?php if ($act == 'add') echo 'selected'; ?>>Rekayasa Perangkat Lunak</option>
-                        <option value="6" <?php if ($act == 'add') echo 'selected'; ?>>Metode Numerik</option>
+                        <option value="0" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
+                        <?php
+                            $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");
+                            while ($row=mysqli_fetch_assoc($query)) {
+                                echo "<option value = '$row[course_id]'>$row[course_name]</option>";
+                            }
+                        ?>
+                        </select>
                         <!-- Dynamic Course List -->
                         <?php
                             while ($result = mysqli_fetch_array($query)) {
@@ -72,7 +74,7 @@
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=forum"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
-                        <button type="submit" name = "submit" class="btn btn-md btn-success"><?php echo $button; ?></button>
+                        <button type="submit" name = "button" class="btn btn-md btn-success"><?php echo $button; ?></button>
                     </div>
                 </form>
                 <div class="m-5"></div>
