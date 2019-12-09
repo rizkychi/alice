@@ -7,7 +7,7 @@
 
     if ($act == 'add') {
         $id     = '';
-        $user   = '';
+        $user   = $_SESSION['user'];
         $subject= '';
         $content= '';
         $course = '';
@@ -16,7 +16,7 @@
     } else if ($act == 'update') {
         if (isset($_GET['postID'])) {
             $id     = $_GET['postID'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
+            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE post_id = $id");
             $result = mysqli_fetch_array($query);
             $user   = $result['post_user'];
             $subject= $result['post_subject'];
@@ -52,15 +52,9 @@
                     <!--Blue select-->
                     <select class="mdb-select mt-3 w-50" name="course" searchable="Cari Mata Kuliah" required>
                         <option value="0" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
-                        <?php
-                            $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");
-                            while ($row=mysqli_fetch_assoc($query)) {
-                                echo "<option value = '$row[course_id]'>$row[course_name]</option>";
-                            }
-                        ?>
-                        </select>
                         <!-- Dynamic Course List -->
                         <?php
+                            $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");
                             while ($result = mysqli_fetch_array($query)) {
                                 echo "<option value='$result[0]'";
                                 if ($act == 'update' && $sks = 2) 

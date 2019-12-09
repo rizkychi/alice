@@ -4,24 +4,26 @@
     $act = $_GET['act'];
 
     if ($act == 'add') {
-        if (isset($_POST['add'])) {
+        if ($_POST) {
 
             $subject= $_POST['postName'];
             $content= $_POST['postContent'];
             $course = $_POST['course'];
-            $id = $_POST['postID'];
-            $user = $_POST['postUser'];
+            $user_id = $_POST['postUser'];
 
 // INSERT INTO tb_forum_post (post_id, post_course, post_user, post_subject, post_content, post_view, post_like, post_dislike, post_date) VALUES ('2', '1', '17.11.1229', 'How to Make CSS','just google it', '','','','');
 //            $query = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')");
            
 //yang bisa masuk db INSERT INTO tb_forum_post VALUES ('', '1', '17.11.1247','How to Make CSS','Just google it', '','','','');
 
-$query = mysqli_query($conn, "INSERT INTO tb_forum_post VALUES ('$postID', '$course', '$user','$subject','$content', '','','','')");
+          $query = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user_id','$subject','$content')");
            // INSERT INTO tb_forum_post  VALUES ('$postID', '1', '17.11.1247', 'How to Make PHP', 'Stackoverflow', '','','','');
             if (!$query) {
               echo "<script>alert('data tidak tersimpan')</script>";
               header('Location: ../?p=forum');
+            } else {
+              $last_post = mysqli_insert_id($conn);
+              header('Location: ../?p=forum&id='.$last_post);
             }
             
             //$query  = "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user', '$subject', '$content')";
