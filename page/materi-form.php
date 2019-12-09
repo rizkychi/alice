@@ -1,32 +1,14 @@
 <?php
-    if (isset($_GET['act'])){
-        $act = $_GET['act'];
-    } else {
-        die();
-    }
+    $material_id = isset ($_GET['material_id']) ? $_GET['material_id'] : false;
+    $user   = '17111262';
+    $subject= '';
+    $content= '';
+    $course = '';
+    $date = '';
+    $button = 'TAMBAH';
+    $title  = 'Unggah Materi Baru';
 
-    if ($act == 'add') {
-        $id     = '';
-        $user   = '';
-        $subject= '';
-        $content= '';
-        $course = '';
-        $button = 'TAMBAH';
-        $title  = 'Unggah Materi Baru';
-    } 
-    else if ($act == 'update') {
-        if (isset($_GET['id'])) {
-            $id     = $_GET['id'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_material WHERE material_id = $id");
-            $result = mysqli_fetch_array($query);
-            $user   = $result['material_user'];
-            $subject= $result['material_subject'];
-            $content= $result['material_content'];
-            $course = $result['material_course'];
-            $button = 'Edit';
-            $title  = 'Edit Materi';
-        }
-    }
+
 
 
 ?>
@@ -37,13 +19,14 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <form action="action/add_materi.php?act=<?php echo $act; ?>" method="post">
+                <form action="action/add_materi.php" method="post" enctype="multipart/form-data">
                 <!-- Body -->
                     <!-- User -->
                     <div class="md-form">
-                        <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" disabled>
-                        <label for="materiFormUser">John Doe<?php echo $user;?></label> <!-- hmmm coba  -->
+                        <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>
                     </div>
+                    <input type="date" name="materiDate" value="<?php echo $date; ?>" hidden>
+                    <input type="date" name="materiID" value="<?php echo $material_id; ?>" hidden>
                     <!-- Material input -->
                     <div class="md-form">
                         <input type="text" id="materiFormTitle" name="materiName" value="<?php echo $subject;?>" class="form-control" required>
@@ -56,23 +39,23 @@
                     </div>
                     <!--Material Course select-->
                     <select class="mdb-select mt-3 w-50" name="course" searchable="Cari Mata Kuliah" required>
-                        <option value="0" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
+                        <option value="0" disabled >Pilih Mata Kuliah</option>
                         <?php
-                            $query  = mysqli_query($conn, "SELECT * FROM tb_course");
+                            $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");
                             while ($row=mysqli_fetch_assoc($query)) {
                                 echo "<option value = '$row[course_id]'>$row[course_name]</option>";
                             }
                         ?>
                     </select>
                     <!-- Upload Material -->
-                    <div class="md-form">
-                        <input type="file" id="materiFormUpload" name="materiUpload" value="<?php echo $subject;?>" class="form-control" required>
+                    <!-- <div class="md-form">
+                        <input type="file" id="materiFormUpload" name="materiFile" value="" class="form-control" required>
                         
-                    </div>
+                    </div> -->
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=materi"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
-                        <button type="submit" class="btn btn-md btn-success"><?php echo $button; ?></button>
+                        <button type="submit" name= "button" class="btn btn-md btn-success" value="TAMBAH"><?php echo $button; ?></button>
                     </div>
                 </form>
                 <div class="m-5"></div>

@@ -1,3 +1,7 @@
+<?php
+    $query = mysqli_query($conn, "SELECT * FROM tb_material");
+?>
+
 <body class="fixed-sn homepage-v3">
 
   <!-- Main layout -->
