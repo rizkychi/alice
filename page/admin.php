@@ -1,5 +1,5 @@
 <?php
-    if ($role == 'Admin') {
+    if ($role == 1) {
         if (isset($_GET['v'])) {
             $view = $_GET['v'];
         } else {

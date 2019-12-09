@@ -1,4 +1,9 @@
-
+<?php
+  $profile_id = $_GET['id'];
+  $sql = "SELECT * FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_id = $profile_id";
+  $result = mysqli_query($conn, $sql);
+  $data = mysqli_fetch_array($result);
+?>
 <!--Main Layout-->
 <main>
 
@@ -18,40 +23,16 @@
         </div>
         <h3 class="my-3 font-weight-bold">
           <strong>
-                <a>Dosen</a>
+                <a><?php echo $data['user_name']; ?></a>
           </strong>
         </h3>
         <span class="badge badge-pill badge-success">
-         <?php
-         $sql = "SELECT profile_status FROM tb_lecturer_profile";
-         $result = mysqli_query($conn, $sql);
-
-         if (mysqli_num_rows($result) > 0) {
-         // output data of each row
-         while($row = mysqli_fetch_array($result)) {
-         echo $row["profile_status"];
-          }
-           } else {
-           echo "No status";
-           }
-           ?>
+          <?php echo $data['profile_status']; ?>
         </span>
 
         <!-- About Lecturer -->
         <p class="mt-3">
-        <?php
-          $sql = "SELECT profile_about FROM tb_lecturer_profile";
-          $result = mysqli_query($conn, $sql);
-
-          if (mysqli_num_rows($result) > 0) {
-          // output data of each row
-          while($row = mysqli_fetch_array($result)) {
-          echo $row["profile_about"];
-          }
-          } else {
-          echo "Tidak ada deskripsi";
-          }
-          ?>
+          <?php echo $data['profile_about']; ?>
         </p>
 
       </div>
@@ -106,19 +87,8 @@
                   <h4 class="h4"><i class="fas fa-envelope mr-3"></i>Alamat email</h4>
                   <a href="mailto:example@mail.com">
                     <p class="lead">
-                    <?php
-                      $sql = "SELECT user_email FROM tb_user WHERE user_role=2";
-                      $result = mysqli_query($conn, $sql);
-
-                      if (mysqli_num_rows($result) > 0) {
-                      // output data of each row
-                      while($row = mysqli_fetch_array($result)) {
-                      echo $row["user_email"];
-                      }
-                      } else {
-                      echo "-";
-                      }
-
+                      <?php
+                          echo $data['user_email'];
                       ?>
                     </p>
                   </a>
@@ -127,37 +97,16 @@
                   <h4 class="h4"><i class="fas fa-phone mr-3"></i>Nomor Telepon</h4>
                   <p class="lead">
                   <?php
-                     $sql = "SELECT profile_phone FROM tb_lecturer_profile";
-                     $result = mysqli_query($conn, $sql);
-
-                     if (mysqli_num_rows($result) > 0) {
-                     // output data of each row
-                     while($row = mysqli_fetch_array($result)) {
-                     echo $row["profile_phone"];
-                     }
-                     } else {
-                     echo "-";
-                     }
-                     ?>
+                    echo $data['profile_phone'];
+                  ?>
                   </p>
                 </div>
                 <div class="col-md-4 col-sm-12">
                   <h4 class="h4"><i class="fas fa-globe-americas mr-3"></i>Website</h4>
                   <a href="#" target="_blank"><p class="lead">
                   <?php
-                    $sql = "SELECT profile_blog FROM tb_lecturer_profile";
-                    $result = mysqli_query($conn, $sql);
-
-                    if (mysqli_num_rows($result) > 0) {
-                    // output data of each row
-                    while($row = mysqli_fetch_array($result)) {
-                   echo $row["profile_blog"];
-                   }
-                  } else {
-                  echo "-";
-                   }
+                    echo $data['profile_blog'];
                   ?>
-
                   </p></a>
                 </div>
               </div>
@@ -166,17 +115,7 @@
                   <h4 class="h4"><i class="fas fa-building mr-3"></i>Alamat Kantor</h4>
                   <p class="lead">
                   <?php
-                   $sql = "SELECT profile_office FROM tb_lecturer_profile";
-                   $result = mysqli_query($conn, $sql);
-
-                   if (mysqli_num_rows($result) > 0) {
-                   // output data of each row
-                   while($row = mysqli_fetch_array($result)) {
-                   echo $row["profile_office"];
-                   }
-                   } else {
-                   echo "-";
-                   }
+                    echo $data['profile_office'];
                    ?>
 
                   </p>
@@ -185,17 +124,7 @@
                   <h4 class="h4"><i class="fas fa-home mr-3"></i>Alamat Rumah</h4>
                   <p class="lead">
                   <?php
-                    $sql = "SELECT profile_address FROM tb_lecturer_profile";
-                    $result = mysqli_query($conn, $sql);
-
-                    if (mysqli_num_rows($result) > 0) {
-                    // output data of each row
-                    while($row = mysqli_fetch_array($result)) {
-                    echo $row["profile_address"];
-                    }
-                    } else {
-                    echo "-";
-                     }
+                    echo $data['profile_address'];
                    ?>
                   </p>
                 </div>
@@ -221,7 +150,7 @@
             <div class="jumbotron">
               <div class="row">
                 <div class="col-md-12 col-sm-12">
-                  <p>Kuliah  Libur</p>
+                  <p><?php echo $data['profile_info'];?></p>
                 </div>
               </div>
             </div>
@@ -273,34 +202,11 @@
 
                     <!-- Gan yang ini belum tak bikin data di dbnya e, baru text. ntr dikampus ya tak masukin dbnya-->
                     <tbody>
-                        <tr>
-                            <td>Senin</td>
-                            <td>07.00-08.40</td>
+                        <!-- <tr>
+                            <td>1</td>
                             <td>Pemrograman Web Lanjut</td>
-                            <td>PWL-3</td>
-                            <td>04.02.02</td>
-                        </tr>
-                        <tr>
-                            <td>Senin</td>
-                            <td>13.20-15.00</td>
-                            <td>Pemrograman Web Lanjut</td>
-                            <td>PWL-4</td>
-                            <td>04.04.02</td>
-                        </tr>
-                        <tr>
-                            <td>Rabu</td>
-                            <td>07.00-08.40</td>
-                            <td>Praktikum Pemrograman Web Lanjut</td>
-                            <td>PWL-4</td>
-                            <td>L.2.4.6</td>
-                        </tr>
-                        <tr>
-                            <td>Kamis</td>
-                            <td>07.00-08.40</td>
-                            <td>Pemrograman Basis Data</td>
-                            <td>PBD-2</td>
-                            <td>05.05.02</td>
-                        </tr>
+                        </tr> -->
+                        
                     </tbody>
                     <!--Table body-->
                     </table>
