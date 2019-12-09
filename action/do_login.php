@@ -2,8 +2,8 @@
 session_start();
 require_once '../config/conf.php';
 
-$id = addslashes($_POST['userID'],"");
-$pass = addslashes(md5($_POST['userPass']),"");
+$id = addslashes($_POST['userID']);
+$pass = addslashes(md5($_POST['userPass']));
 
 //menyeleksi data dengan username dan password yang sesuai
 $data = mysqli_query($conn,"SELECT * FROM tb_user WHERE user_id='$id' && user_password='$pass'");
