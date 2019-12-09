@@ -58,6 +58,7 @@ CREATE TABLE tb_lecturer_profile
     profile_office VARCHAR(255),
     profile_blog VARCHAR(255),
     profile_about TEXT,
+    profile_info TEXT,
     profile_status ENUM('Selo','Mengajar','Rapat','di Rumah'),
     FOREIGN KEY (profile_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

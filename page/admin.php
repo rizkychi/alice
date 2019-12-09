@@ -21,7 +21,10 @@
     <!-- Side navigation links -->
     <li>
       <ul class="collapsible collapsible-accordion">
-        <li><a class="collapsible-header waves-effect arrow-r active"><i
+        <li><a class=" waves-effect arrow-r" href="?p=admin&v=dashboard"><i class="sv-slim-icon fas fa-tachometer-alt"></i>
+            Dashboard</a>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r"><i
               class="sv-slim-icon fas fa-user"></i>
             User<i class="fas fa-angle-down rotate-icon"></i></a>
           <div class="collapsible-body">
@@ -40,6 +43,7 @@
         
         <li><a class=" waves-effect arrow-r" href="?p=admin&v=course"><i class="sv-slim-icon fas fa-layer-group"></i>
             Mata Kuliah</a>
+        </li>
         <li><a id="toggle" class="waves-effect"><i class="sv-slim-icon fas fa-angle-double-left"></i>Minimize
             menu</a>
         </li>
