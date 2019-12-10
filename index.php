@@ -65,7 +65,7 @@
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
         <?php
-            if ($_SESSION['role'] == 1) {
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 1 ) {
                 ?>
                     <!-- DataTables.net  -->
                     <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
