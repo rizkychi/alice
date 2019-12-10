@@ -1,8 +1,21 @@
-<?php
-  include 'action/_modals.php';
-  
+<?php  
   if (isset($_SESSION['login_failed']) && $_SESSION['login_failed']) {
-    echo "<script>alert('Login Gagal');</script>";
+    echo "<script>
+              $(document).ready(function() {
+                  $('#loginFailModal').modal('show');
+              });
+          </script>";
+    unset($_SESSION['login_failed']);
+  }
+  
+  // put modal if user not verified
+  if (isset($_SESSION['user_verified']) && $_SESSION['user_verified'] == 0) {
+    echo    "<script>
+                $(document).ready(function() {
+                    $('#notVerificateModal').modal('show');
+                });
+            </script>";
+    unset($_SESSION['user_verified']);
   }
 ?>   
 <body class="coworking-page">

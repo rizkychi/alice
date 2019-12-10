@@ -16,7 +16,7 @@
     }
 
     // Session Login
-    session_start();
+    session_start();    
 
     if (isset($_SESSION['login'])) {
         $is_login = $_SESSION['login'];
@@ -64,12 +64,22 @@
         <link href="css/<?php if ($page == 'landing' || $page == 'register') echo '_'; else if($page == 'admin') echo 'admin_';?>mdb.min.css" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
-        <!-- DataTables.net  -->
-        <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
-        <link rel="stylesheet" href="css/addons/datatables-select.min.css">
+        <?php
+            if ($_SESSION['role'] == 1) {
+                ?>
+                    <!-- DataTables.net  -->
+                    <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
+                    <link rel="stylesheet" href="css/addons/datatables-select.min.css">
+                <?php
+            }    
+        ?>
+        <!-- Animation -->
+        <link rel="stylesheet" href="css/modules/animations-extended.min.css">
 
         <!-- JQuery -->
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
         
         <?php
@@ -96,6 +106,10 @@
             .alice-class {
                 min-width: 280px;
                 max-width: 280px;
+            }
+            .alice-date {
+                -webkit-transform: translateY(-10px) scale(.8) !important;
+                transform: translateY(-10px) scale(.8) !important;
             }
             @media only screen and (min-width: 768px) {
                 /* For desktop: */
@@ -125,6 +139,8 @@
 <?php
     // put config file
     include 'config/conf.php';
+    // put modals
+    include 'action/_modals.php';    
 
     // put page file (landing / 404 / register)
     if ($page == 'landing' || $page == '404' || $page == 'register') {
@@ -174,7 +190,6 @@
                     <li class="nav-item">
                         <!-- button tambah -->
                         <?php
-                            include 'action/_modals.php';    
                             if ($page == 'forum') {
                                 echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Buat post</button></a>';
                             }
@@ -238,8 +253,6 @@
         
         <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
 
@@ -261,11 +274,11 @@
             });
         </script>
         <script>
-            $('.datepicker').pickadate({
-            // Escape any “rule” characters with an exclamation mark (!).
-                format: 'yyyy-mm-dd',
-                formatSubmit: 'yyyy-mm-dd'
-            })
+            // $('.datepicker').pickadate({
+            // // Escape any “rule” characters with an exclamation mark (!).
+            //     format: 'yyyy-mm-dd',
+            //     formatSubmit: 'yyyy-mm-dd'
+            // })
 
             $('#uploadAvatar').click(function () {
                 $('#upload_image').click();

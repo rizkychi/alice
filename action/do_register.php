@@ -1,7 +1,9 @@
 <?php
+session_start();
 require_once '../config/conf.php';
 
 if ($_POST){
+    $_SESSION['register_success'] = false;
     
     $id = $_POST['id'];
     $email = $_POST['email'];
@@ -17,15 +19,20 @@ if ($_POST){
         $role = 2;
     } 
 
-    $sql = " INSERT INTO tb_user (user_id, user_email, user_password, user_name, user_dob , user_gender,user_role) 
+    $sql = "INSERT INTO tb_user (user_id, user_email, user_password, user_name, user_dob , user_gender,user_role) 
     VALUES ('$id','$email',md5('$pass'),'$fname','$date','$gender','$role')";
     
     $simpan = mysqli_query($conn,$sql);
     if ($simpan) {
-        header('location: ../index.php');
-    } else { echo "GUAGAL COY"; } 
+        require_once 'sendmail.php';
+        $_SESSION['register_success'] = true;
+        header('Location: ../?p=register&u='.$_POST['userRole']);
+        //echo "<script>location.replace('../?p=register&u=".$_POST['userRole']."')</script>";
+    } else { echo "GUAGAL COY"; 
 
-    echo "<br>".$sql;
+        echo "<br>".$sql;
+    
+    } 
     
 }
 ?>

@@ -8,6 +8,15 @@
     } else {
         header("Location: http://$host$uri/index.php");
     }
+    
+    if (isset($_SESSION['register_success']) && $_SESSION['register_success']) {
+        echo    "<script>
+                    $(document).ready(function() {
+                        $('#registerSuccessModal').modal('show');
+                    });
+                </script>";
+        unset($_SESSION['register_success']);
+    }
 ?>
 <body class="coworking-page">
 <!-- Main navigation -->
@@ -60,7 +69,7 @@
                         <div class="col">
                             <!-- NIM -->
                             <div class="md-form">
-                                <input type="text" id="nim" name="id" class="form-control">
+                                <input type="text" id="nim" name="id" class="form-control" required>
                                 <label for="nim"><?php
                                     if ($user == 'dosen') echo 'NIDN';
                                     if ($user == 'mahasiswa') echo 'NIM';
@@ -70,7 +79,7 @@
                         <div class="col">
                             <!-- Name -->
                             <div class="md-form">
-                                <input type="text" id="fname" name="fname" class="form-control">
+                                <input type="text" id="fname" name="fname" class="form-control" required>
                                 <label for="fname">Nama Lengkap</label>
                             </div>
                         </div>
@@ -80,7 +89,7 @@
                         <div class="col">
                             <!-- Email -->
                             <div class="md-form mt-2">
-                                <input type="email" id="email" name="email" class="form-control">
+                                <input type="email" id="email" name="email" class="form-control" required>
                                 <label for="email">E-mail</label>
                             </div>
                         </div>
@@ -90,34 +99,31 @@
                         <div class="col">
                             <!-- Password -->
                             <div class="md-form mt-2">
-                                <input type="password" id="password" name="password" class="form-control">
+                                <input type="password" id="password" name="password" class="form-control" required>
                                 <label for="password">Kata Sandi</label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row align-items-start">
-                        <div class="col-md-4 align-self-center">
+                    <div class="row">
+                        <div class="col-md-7 align-self-center my-3">
                             <!-- Default inline 1-->
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="rdbGender1" name="gender" value="Laki-laki">
+                                <input type="radio" class="custom-control-input" id="rdbGender1" name="gender" value="Laki-laki" checked>
                                 <label class="custom-control-label" for="rdbGender1">Laki-laki</label>
                             </div>
-                        </div>
-
-                        <div class="col-md-4 align-self-center pl-xl-0">
                             <!-- Default inline 2-->
-                            <div class="custom-control custom-radio custom-control-inline">
+                            <div class="custom-control custom-radio custom-control-inline mr-0">
                                 <input type="radio" class="custom-control-input" id="rdbGender2" name="gender" value="Perempuan">
                                 <label class="custom-control-label" for="rdbGender2">Perempuan</label>
                             </div>
                         </div>
 
-                        <div class="col-md-4 mt-sm-3">
+                        <div class="col-md-5">
                             <!-- Name -->
-                            <div class="md-form mt-2">
-                                <input type="text" id="date-picker" class="form-control datepicker" name="date">
-                                <label for="date-picker">Tanggal Lahir</label>
+                            <div class="md-form">
+                                <input type="date" id="datepickers" class="form-control" name="date" required>
+                                <label class="alice-date" for="datepickers">Tanggal Lahir</label>
                             </div>
                         </div>
                     </div>
@@ -148,7 +154,7 @@
         <div class="col-lg-8 col-xl-7 pt-lg-4">
 
             <div class="view">
-            <img src="https://mdbootstrap.com/img/illustrations/graphics(2).png" class="img-fluid" alt="smaple image">
+            <img src="https://mdbootstrap.com/img/illustrations/graphics(2).png" class="img-fluid" alt="cover">
             </div>
 
         </div>
