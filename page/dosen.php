@@ -10,7 +10,8 @@ require_once 'config/conf.php';
             <h3 class="h3">Dosen</h3>
             <p class="mt-2">Sebagai sekolah tinggi di bidang informatika, proses belajar-mengajar di UNIVERSITAS AMIKOM didukung oleh tenaga pengajar yang berkualitas.</p>
             <!-- Search form -->
-            <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" action="dosen.php" method="get">
+
+             <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" action="dosen.php" method="get">
                 <input class="form-control w-100" type="text" name="cari" placeholder="Cari dosen" aria-label="Search">
             </form>
             <!-- Search form -->
@@ -18,7 +19,6 @@ require_once 'config/conf.php';
     </div>
     <div class="row mt-4">
         <!-- Dosen Thumbnail -->
-
         <?php
             $sql = "SELECT user_id, user_name, profile_status FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_role=2 && user_verified = 1";
             $result = mysqli_query($conn, $sql);
