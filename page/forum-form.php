@@ -36,7 +36,7 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <!-- PENTING : nama file action mu -->
+                <!-- Form action -->
                 <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
@@ -63,7 +63,7 @@
                             }
                         ?>
                     </select>
-                    <input type="text" name="postID" value="<?php echo $id; ?>" hidden>
+                    <input type="text" name="postID" value="alicealice" hidden>
                     <input type="text" name="postUser" value="<?php echo $user; ?>" hidden>
                     <!-- Body -->
                     <div class="float-right mt-4">
