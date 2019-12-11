@@ -77,8 +77,8 @@
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a href="?p=register&u=student" type="button" class="btn btn-secondary">Mahasiswa</i></a>
-        <a href="?p=register&u=lecturer" type="button" class="btn btn-outline-secondary waves-effect">Dosen</a>
+        <a href="?p=register&u=mahasiswa" type="button" class="btn btn-secondary">Mahasiswa</i></a>
+        <a href="?p=register&u=dosen" type="button" class="btn btn-outline-secondary waves-effect">Dosen</a>
       </div>
     </div>
     <!--/.Content-->

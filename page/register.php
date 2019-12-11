@@ -1,6 +1,6 @@
 <?php
     if (isset($_GET['u'])) {
-        if ($_GET['u'] == 'lecturer') {
+        if ($_GET['u'] == 'dosen') {
             $user = 'dosen';
         } else {
             $user = 'mahasiswa';
@@ -18,17 +18,20 @@
         unset($_SESSION['register_success']);
     }
 
-    if (isset($_GET['error'])){
-        $error=$_GET['error'];
+   
+
+    if (isset($_SESSION['error_pass']) && $_SESSION['error_pass'] != ""){
+        
+        $error_pass=$_SESSION['error_pass'];
+        unset($_SESSION['error_pass']);
+
     } else {
-    $error = ""; 
+    
+        $error_pass = ""; 
     }
 
-    $pesan = "";
-    if ($error == "ulangi_pass_salah"){
-        $pesan = "*Kata Sandi Tidak Sama Layaknya Perasaanmu Terhadapku";
-    }
 
+   
 
 ?>
 <body class="coworking-page">
@@ -82,11 +85,12 @@
                         <div class="col">
                             <!-- NIM -->
                             <div class="md-form">
-                                <input type="text" id="nim" name="id" class="form-control" required>
+                                <input type="text" id="nim" name="id" class="form-control" maxlength="10" required>
                                 <label for="nim"><?php
                                     if ($user == 'dosen') echo 'NIDN';
                                     if ($user == 'mahasiswa') echo 'NIM';
                                 ?></label>
+                                
                             </div>
                         </div>
                         <div class="col">
@@ -124,7 +128,7 @@
                             <div class="md-form mt-2">
                                 <input type="password" id="ulangi_pass" name="ulangi_pass" class="form-control" required>
                                 <label for="ulangi_pass">Ulangi Kata Sandi</label>
-                                <p style="color: red"><?php echo $pesan; ?></p>
+                                <p style="color: red"><?php echo $error_pass; ?></p>
                             </div>
                         </div>
                     </div>
