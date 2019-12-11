@@ -139,7 +139,7 @@
       <div class="modal-body">
         <div class="text-center">
           <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-          <p>Terima kasih telah melakukan pendaftaran. Untuk mengaktifkan akun anda, tunggu 5-10 menit kemudian silahkan cek informasi yang telah kami kirimkan pada email anda. Jika belum mendapat email, anda bisa coba untuk masuk dan kirim ulang email verifikasi.</p>
+          <p>Terima kasih telah melakukan pendaftaran. Untuk mengaktifkan akun anda, tunggu 5-10 menit kemudian silahkan cek informasi yang telah kami kirimkan pada email anda. Jika belum mendapat email, cek email spam anda atau coba untuk masuk dan kirim ulang email verifikasi.</p>
         </div>
       </div>
 
