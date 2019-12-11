@@ -1,9 +1,10 @@
 <?php
+include '../config/conf.php';
     if (isset($_GET['postID'])) {
         $post_id = $_GET['postID'];
         $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
             $result = mysqli_fetch_array($query);
-            $user   = $result['post_user'];
+            $user_id   = $result['post_user'];
             $subject= $result['post_subject'];
             $content= $result['post_content'];
             $course = $result['post_course'];
