@@ -1,15 +1,14 @@
 <?php
-    $material_id = isset ($_GET['material_id']) ? $_GET['material_id'] : false;
-    $user   = '17111262';
+    //$material_id = isset ($_GET['material_id']) ? $_GET['material_id'] : false;
+    $user   = '0518037801';
     $subject= '';
     $content= '';
     $course = '';
     $date = '';
+    $nama_file = '';
     $button = 'TAMBAH';
     $title  = 'Unggah Materi Baru';
-
-
-
+    
 
 ?>
 
@@ -19,14 +18,11 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <form action="action/add_materi.php" method="post" enctype="multipart/form-data">
+                <form action="action/add_materi.php?act=add" method="post" enctype="multipart/form-data">
                 <!-- Body -->
                     <!-- User -->
-                    <div class="md-form">
-                        <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>
-                    </div>
+                    <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>
                     <input type="date" name="materiDate" value="<?php echo $date; ?>" hidden>
-                    <input type="date" name="materiID" value="<?php echo $material_id; ?>" hidden>
                     <!-- Material input -->
                     <div class="md-form">
                         <input type="text" id="materiFormTitle" name="materiName" value="<?php echo $subject;?>" class="form-control" required>
@@ -48,14 +44,14 @@
                         ?>
                     </select>
                     <!-- Upload Material -->
-                    <!-- <div class="md-form">
-                        <input type="file" id="materiFormUpload" name="materiFile" value="" class="form-control" required>
+                    <div class="md-form">
+                        <input type="file" id="materiFormUpload" name="materiFile" value="<?php echo $nama_file;?>" class="form-control" required>
                         
-                    </div> -->
+                    </div>
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=materi"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
-                        <button type="submit" name= "button" class="btn btn-md btn-success" value="TAMBAH"><?php echo $button; ?></button>
+                        <button type="submit" name= "button" class="btn btn-md btn-success"><?php echo $button; ?></button>
                     </div>
                 </form>
                 <div class="m-5"></div>

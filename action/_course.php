@@ -1,7 +1,12 @@
 <?php
+    session_start();
     include '../config/conf.php';
 
     $act = $_GET['act'];
+    
+    if (!isset($_SESSION['role']) || $_SESSION['role'] != 1) {
+        die();
+    }
 
     if ($act == 'add') {
         if ($_POST) {
