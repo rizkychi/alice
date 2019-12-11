@@ -1,4 +1,3 @@
-
 <?php
     // include files
     require_once('config/conf.php');

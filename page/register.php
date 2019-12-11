@@ -17,6 +17,19 @@
                 </script>";
         unset($_SESSION['register_success']);
     }
+
+    if (isset($_GET['error'])){
+        $error=$_GET['error'];
+    } else {
+    $error = ""; 
+    }
+
+    $pesan = "";
+    if ($error == "ulangi_pass_salah"){
+        $pesan = "*Kata Sandi Tidak Sama Layaknya Perasaanmu Terhadapku";
+    }
+
+
 ?>
 <body class="coworking-page">
 <!-- Main navigation -->
@@ -106,6 +119,18 @@
                     </div>
 
                     <div class="row">
+                        <div class="col">
+                            <!-- Password -->
+                            <div class="md-form mt-2">
+                                <input type="password" id="ulangi_pass" name="ulangi_pass" class="form-control" required>
+                                <label for="ulangi_pass">Ulangi Kata Sandi</label>
+                                <p style="color: red"><?php echo $pesan; ?></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
                         <div class="col-md-7 align-self-center my-3">
                             <!-- Default inline 1-->
                             <div class="custom-control custom-radio custom-control-inline">
@@ -140,6 +165,7 @@
                     <!-- Terms of service -->
                     <p>Sudah punya akun? Masuk 
                         <a href="?p=landing#login">disini.</a>
+                    </p>
 
                 </form>
                 <!-- Form -->
