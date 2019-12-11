@@ -12,16 +12,24 @@ $data = mysqli_query($conn,"SELECT * FROM tb_user WHERE user_id='$id' && user_pa
 $cek = mysqli_num_rows($data);
 $ambil = mysqli_fetch_array($data);
 
-var_dump($ambil);
-
 if($cek > 0){
-    $_SESSION['login'] = true ;
     $_SESSION['user'] = $id ;
-    $_SESSION['role'] = $ambil['user_role'];   
-    if ($ambil['userRole'] == 1) {
-        header('Location: ../?p=admin');
+    $_SESSION['fname'] = $ambil['user_name'];
+    $_SESSION['email'] = $ambil['user_email'];
+    $_SESSION['activate'] = base64_encode($ambil['user_password']); 
+    $_SESSION['role'] = $ambil['user_role'];  
+
+    if ($ambil['user_verified'] == 0) {
+        $_SESSION['login'] = false ;
+        $_SESSION['user_verified'] = $ambil['user_verified'];
+        header('Location: ../?p=landing#login');
     } else {
-        header('Location: ../?p=home');
+        $_SESSION['login'] = true ;
+        if ($ambil['userRole'] == 1) {
+            header('Location: ../?p=admin');
+        } else {
+            header('Location: ../?p=home');
+        }
     }
 } else {
     $_SESSION['login_failed'] = true;

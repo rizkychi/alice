@@ -87,31 +87,90 @@
 <!-- Modal register-->
 
 <!-- Modal Login Failed -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+<!-- Central Modal Medium Danger -->
+<div class="modal fade" id="loginFailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
     <!--Content-->
     <div class="modal-content">
       <!--Header-->
-      <div class="modal-header purple-gradient">
-        <p class="heading lead"><strong>Gagal Masuk</strong></p>
+      <div class="modal-header">
+        <p class="heading lead">Gagal Masuk</p>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" class="white-text">&times;</span>
         </button>
       </div>
 
+      <!--Body-->
       <div class="modal-body">
-          <!-- Body -->
-          <div class="col-md-10">
-            <p>NIK/NIDN atau Kata sandi tidak cocok</p>
-          </div>
-          <!-- Body -->
-          <div class="mt-2">
-              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">OK</button>
-          </div>
+        <div class="text-center">
+          <i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+          <p>NIM/NIDN atau kata sandi tidak cocok. Pastikan anda mengisi dengan benar dan kemudian coba masuk kembali.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Tutup</a>
       </div>
     </div>
     <!--/.Content-->
   </div>
 </div>
-<!-- Modal register-->
+<!-- Modal Login Failed-->
+
+<!-- Modal Registration Success -->
+<div class="modal fade" id="registerSuccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Pendaftaran Berhasil</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+          <p>Terima kasih telah melakukan pendaftaran. Untuk mengaktifkan akun anda, tunggu 5-10 menit kemudian silahkan cek informasi yang telah kami kirimkan pada email anda. Jika belum mendapat email, cek email spam anda atau coba untuk masuk dan kirim ulang email verifikasi.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a href="../?p=landing#login" type="button" class="btn btn-success">Masuk</i></a>
+        <a type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal">Tutup</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal Registration Success-->
+
+<!-- Resend verification code -->
+<div class="modal fade bottom" id="notVerificateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
+  <div class="modal-dialog modal-frame modal-bottom" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row d-flex justify-content-center align-items-center">
+          <p class="pt-3 pr-2">Maaf, anda belum dapat masuk. Anda perlu mengaktifkan akun melalui link yang kami kirimkan ke email anda. Apabila belum mendapat email klik tombol dibawah.
+          </p>
+        </div>
+        <div class="row justify-content-center">
+          <a href="action/sendmail.php" target="_blank"><button type="button" class="btn btn-secondary">Kirim Ulang</button></a>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Resend verification code -->

@@ -10,8 +10,8 @@ require_once 'config/conf.php';
             <h3 class="h3">Dosen</h3>
             <p class="mt-2">Sebagai sekolah tinggi di bidang informatika, proses belajar-mengajar di UNIVERSITAS AMIKOM didukung oleh tenaga pengajar yang berkualitas.</p>
             <!-- Search form -->
-            <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto">
-                <input class="form-control w-100" type="text" placeholder="Cari dosen" aria-label="Search">
+            <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" action="dosen.php" method="get">
+                <input class="form-control w-100" type="text" name="cari" placeholder="Cari dosen" aria-label="Search">
             </form>
             <!-- Search form -->
         </div>
