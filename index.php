@@ -65,7 +65,7 @@
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
         <?php
-            if ($_SESSION['role'] == 1) {
+            if ($role == 1) {
                 ?>
                     <!-- DataTables.net  -->
                     <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
@@ -168,7 +168,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMainContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item <?php if ($page == 'home') echo 'active'; ?>">
+                        <li class="nav-item <?php if ($page == 'home' || $page == 'admin') echo 'active'; ?>">
                             <a class="nav-link px-3 font-weight-normal" href="?p=home">Home
                             <span class="sr-only">(current)</span>
                             </a>
@@ -231,7 +231,11 @@
                             alt="avatar image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
-                            <a class="dropdown-item" href="?p=akun">Akunku</a>
+                            <?php
+                                if ($role != 1) {
+                                    ?><a class="dropdown-item" href="?p=akun">Akunku</a><?php
+                                }
+                            ?>
                             <a class="dropdown-item" href="action/do_logout.php">Keluar</a>
                         </div>
                     </li>
@@ -240,8 +244,64 @@
             </nav>
         <header>
         <!-- End Navbar -->
+
         <?php
-        
+            if ($role == 1) {
+                if (isset($_GET['v'])) {
+                    $active_view = $_GET['v'];
+                }
+                ?>
+                    <!-- Sidebar navigation -->
+                    <div id="slide-out" class="side-nav fixed wide sn-bg-1">
+                    <ul class="custom-scrollbar">
+                        <!-- Logo -->
+                        <li>
+                        <div class="logo-wrapper sn-ad-avatar-wrapper">
+                            <h4 class="h4 my-2 ml-2">Panel Admin</h4>
+                        </div>
+                        </li>
+                        <!--/. Logo -->
+                        <!-- Side navigation links -->
+                        <li>
+                        <ul class="collapsible collapsible-accordion">
+                            <li><a class=" waves-effect arrow-r" href="?p=admin&v=dashboard"><i class="sv-slim-icon fas fa-tachometer-alt"></i>
+                                Dashboard</a>
+                            </li>
+                            <li><a class="collapsible-header waves-effect arrow-r"><i
+                                class="sv-slim-icon fas fa-user"></i>
+                                User<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                <li><a href="?p=admin&v=lecturer" class="waves-effect">
+                                    <span class="sv-slim"> D </span>
+                                    <span class="sv-normal">Dosen</span></a>
+                                </li>
+                                <li><a href="?p=admin&v=student" class="waves-effect">
+                                    <span class="sv-slim"> M </span>
+                                    <span class="sv-normal">Mahasiswa</span></a>
+                                </li>
+                                </ul>
+                            </div>
+                            </li>
+                            
+                            <li><a class=" waves-effect arrow-r" href="?p=admin&v=course"><i class="sv-slim-icon fas fa-layer-group"></i>
+                                Mata Kuliah</a>
+                            </li>
+                            <li><a id="toggle" class="waves-effect"><i class="sv-slim-icon fas fa-angle-double-left"></i>Minimize
+                                menu</a>
+                            </li>
+                        </ul>
+                        </li>
+                        <!--/. Side navigation links -->
+                    </ul>
+                    <div class="sidenav-bg rgba-blue-strong"></div>
+                    </div>
+                    <!--/. Sidebar navigation -->
+                <?php
+            }
+        ?>
+
+        <?php
             // include page file
             include 'page/'.$page.'.php';
         }
@@ -356,7 +416,7 @@
             });
         </script>
     <?php } ?>
-    <?php if ($page == 'admin') { ?>
+    <?php if ($role == 1) { ?>
         <!-- Initializations -->
         <script>
             $(document).ready(function() {
