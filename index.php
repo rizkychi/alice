@@ -77,6 +77,8 @@
 
         <!-- JQuery -->
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
@@ -109,6 +111,9 @@
             .alice-date {
                 -webkit-transform: translateY(-10px) scale(.8) !important;
                 transform: translateY(-10px) scale(.8) !important;
+            }
+            .alice-dropdown::after {
+                content: none;
             }
             @media only screen and (min-width: 768px) {
                 /* For desktop: */
@@ -310,8 +315,6 @@
 
         <!-- SCRIPTS -->
         
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="js/popper.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
 

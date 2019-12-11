@@ -1,7 +1,6 @@
 <?php
-include '../config/conf.php';
-    if (isset($_GET['postID'])) {
-        $post_id = $_GET['postID'];
+    if (isset($_GET['id'])) {
+        $post_id = $_GET['id'];
        // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
        $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post");
             $result = mysqli_fetch_array($query);
@@ -18,13 +17,28 @@ include '../config/conf.php';
         <!-- Card -->
         <div class="card card-body mb-5">
             <div class="post-data mb-4">
-                <p class="font-small dark-grey-text mb-1">
-                    <strong>Penulis:</strong> Anna Doe</p>
-                <p class="font-small grey-text">
-                    15/09/2017 pada 4:03 pm</p>
-                <a>
-                    <span class="badge badge-danger"><?php echo $subject; ?></span>
-                </a>
+                <div class="row justify-content-between">
+                    <div class="col-md-4 mb-3">
+                        <p class="font-small dark-grey-text mb-1">
+                            <strong>Penulis:</strong> Anna Doe</p>
+                        <p class="font-small grey-text">
+                            15/09/2017 pada 4:03 pm</p>
+                        <a>
+                            <span class="badge badge-danger"><?php echo $subject; ?></span>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Basic dropdown -->
+                        <a id="alice=dropdown" class="dropdown-toggle float-right m-0 alice-dropdown" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h" style="font-size:20px;"></i></a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alice-dropdown">
+                            <a class="dropdown-item" href="#">Ubah</a>
+                            <a class="dropdown-item" href="#">Hapus</a>
+                        </div>
+                        <!-- Basic dropdown -->
+                    </div>
+                </div>
             </div>
             <!-- Title -->
             <h2 class="font-weight-bold">
