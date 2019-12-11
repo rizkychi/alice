@@ -40,6 +40,6 @@
         echo "<script>alert('gagal menambahkan')</script>";
     } else {
         echo "<script>alert('data ditambahkan')</script>";
-        // header('Location: ../page/forum.php');
+        // header('Location: ../page/materi.php');
     }
 ?>
