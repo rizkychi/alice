@@ -85,7 +85,7 @@
                         <div class="col">
                             <!-- NIM -->
                             <div class="md-form">
-                                <input type="text" id="nim" name="id" class="form-control" maxlength="10" required>
+                                <input type="text" id="nim" name="id" class="form-control" minlength="10" maxlength="10" required>
                                 <label for="nim"><?php
                                     if ($user == 'dosen') echo 'NIDN';
                                     if ($user == 'mahasiswa') echo 'NIM';
@@ -116,7 +116,7 @@
                         <div class="col">
                             <!-- Password -->
                             <div class="md-form mt-2">
-                                <input type="password" id="password" name="password" class="form-control" required>
+                                <input type="password" id="password" name="password" minlength="8" class="form-control" required>
                                 <label for="password">Kata Sandi</label>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                         <div class="col">
                             <!-- Password -->
                             <div class="md-form mt-2">
-                                <input type="password" id="ulangi_pass" name="ulangi_pass" class="form-control" required>
+                                <input type="password" id="ulangi_pass" name="ulangi_pass" minlength="8" class="form-control" required>
                                 <label for="ulangi_pass">Ulangi Kata Sandi</label>
                                 <p style="color: red"><?php echo $error_pass; ?></p>
                             </div>
