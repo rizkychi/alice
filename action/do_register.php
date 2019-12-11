@@ -21,15 +21,15 @@ if ($_POST){
         $role = 2;
     } 
 
-    if ($pass == $ulangi_pass){
+    if ($pass != $ulangi_pass) {
+        $_SESSION['error_pass'] = "*Kata sandi salah";
+        header('Location: ../?p=register&u='.$_POST['userRole']);
+    } 
+    else {
         $sql = "INSERT INTO tb_user (user_id, user_email, user_password, user_name, user_dob , user_gender,user_role) 
         VALUES ('$id','$email',md5('$pass'),'$fname','$date','$gender','$role')";
         
-        $simpan = mysqli_query($conn,$sql); }
-
-    else {
-        header('Location: ../?p=register&error=ulangi_pass_salah&u='.$_POST['userRole']);
-    }
+        $simpan = mysqli_query($conn,$sql); } 
 
     if ($simpan) {
         require_once 'sendmail.php';
