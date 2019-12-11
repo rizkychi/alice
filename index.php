@@ -195,7 +195,7 @@
                         ?>
                         <?php
                             include 'action/_modals.php';    
-                            if ($page == 'materi') {
+                            if ($page == 'materi' && $role == 2) {
                                 echo '<a href="?p=materi-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Tambah Materi</button></a>';
                             }
                         ?>
