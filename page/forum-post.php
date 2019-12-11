@@ -2,7 +2,8 @@
 include '../config/conf.php';
     if (isset($_GET['postID'])) {
         $post_id = $_GET['postID'];
-        $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
+       // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
+       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post");
             $result = mysqli_fetch_array($query);
             $user_id   = $result['post_user'];
             $subject= $result['post_subject'];
@@ -22,7 +23,7 @@ include '../config/conf.php';
                 <p class="font-small grey-text">
                     15/09/2017 pada 4:03 pm</p>
                 <a>
-                    <span class="badge badge-danger">Mata Kuliah</span>
+                    <span class="badge badge-danger"><?php echo $subject; ?></span>
                 </a>
             </div>
             <!-- Title -->
