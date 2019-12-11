@@ -5,7 +5,7 @@ include '../config/conf.php';
        // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
        $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post");
             $result = mysqli_fetch_array($query);
-            $user_id   = $result['post_user'];
+            $user_id = $result['post_user'];
             $subject= $result['post_subject'];
             $content= $result['post_content'];
             $course = $result['post_course'];
