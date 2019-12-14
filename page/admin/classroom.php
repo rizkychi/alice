@@ -1,5 +1,9 @@
 <?php
-    $query  = mysqli_query($conn, 'SELECT user_id, user_name, user_email, user_created, user_verified FROM tb_user WHERE user_role = 2');
+    $query  = mysqli_query($conn, 'SELECT tb_class.class_id, class_name, user_name, course_name, COUNT(tb_class_member.user_id) AS class_member, class_code, class_created 
+                                    FROM tb_class 
+                                    JOIN tb_user ON tb_class.class_lecturer = tb_user.user_id 
+                                    JOIN tb_course ON tb_class.class_course = tb_course.course_id
+                                    JOIN tb_class_member ON tb_class.class_id = tb_class_member.class_id');
 ?>
 <!-- Main layout -->
   <main>
@@ -16,7 +20,7 @@
                 <div class="col-xl-5 col-lg-12 mr-0 pb-2">
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header purple-gradient">
-                    <h2 class="h2-responsive mb-0 font-weight-500">Dosen</h2>
+                    <h2 class="h2-responsive mb-0 font-weight-500">Kelas</h2>
                     </div>
                 </div>
                 <!-- Grid column -->
@@ -32,21 +36,22 @@
           <section>
             <div class="card card-cascade narrower z-depth-0 mt-5">
               <div class="view view-cascade gradient-card-header bg-secondary narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
-                <a href="" class="white-text mx-3">Daftar Dosen</a>
+                <a href="" class="white-text mx-3">Daftar Kelas</a>
               </div>
               <div class="px-4">
                 <div class="table-responsive p-2">
                   <!--Table-->
-                  <table id="dataTableLecturer" class="table table-hover mb-0">
+                  <table id="dataTableClassroom" class="table table-hover mb-0">
                     <!-- Table head -->
                     <thead>
                       <tr>
                         <th class="th-lg" style="width:15px;min-width:15px;"><a>No.</a></th>
-                        <th class="th-lg"><a>NIM</a></th>
-                        <th class="th-lg"><a>Nama</a></th>
-                        <th class="th-lg"><a>Email</a></th>
-                        <th class="th-lg"><a>Pendaftaran</a></th>
-                        <th class="th-lg"><a>Verifikasi</a></th>
+                        <th class="th-lg"><a>Nama Kelas</a></th>
+                        <th class="th-lg"><a>Dosen</a></th>
+                        <th class="th-lg"><a>Mata Kuliah</a></th>
+                        <th class="th-lg"><a>Siswa</a></th>
+                        <th class="th-lg"><a>Kode</a></th>
+                        <th class="th-lg"><a>Tanggal</a></th>
                         <th class="th-lg"><a>Aksi</a></th>
                       </tr>
                     </thead>
@@ -57,26 +62,17 @@
                       <?php
                         $i = 1;
                         while ($data = mysqli_fetch_array($query)) {
-                            if ($data[4] == 1) {
-                              $is_verified = 'Sudah';
-                              $unverified = 'un';
-                              $btn_verify = 'warning';
-                            } else {
-                              $is_verified = 'Belum';
-                              $unverified = '';
-                              $btn_verify = 'success';
-                            }
                             echo "<tr>";
                             echo "<td>$i</td>";
-                            echo "<td>$data[0]</td>";
                             echo "<td>$data[1]</td>";
                             echo "<td>$data[2]</td>";
                             echo "<td>$data[3]</td>";
-                            echo "<td>$is_verified</td>";
+                            echo "<td>$data[4]</td>";
+                            echo "<td>$data[5]</td>";
+                            echo "<td>$data[6]</td>";
                             echo "<td>";
-                            //echo "<a href='?p=admin&v=course-form&act=update&id=$data[0]'><span class='badge badge-lg badge-primary'>UBAH</span></a>";
-                            echo "<a href='action/_user.php?act=delete&id=$data[0]&v=student' class='ml-2'><span class='badge badge-danger'>HAPUS</span></a>";
-                            echo "<a href='action/_user.php?act=".$unverified."verify&id=$data[0]&v=lecturer' class='ml-2'><span class='badge badge-$btn_verify'>".strtoupper($unverified)."VERIFIKASI</span></a>";
+                            echo "<a href='action/_classroom.php?act=delete&id=$data[0]&v=classroom' class='ml-2'><span class='badge badge-danger'>HAPUS</span></a>";
+                            //echo "<a href='?p=forum&id=$data[0]' class='ml-2'><span class='badge badge-primary'>LIHAT</span></a>";
                             echo "</td>";
                             echo "</tr>";
                             $i++;
@@ -101,10 +97,10 @@
   <!-- Main layout -->
 
 <script>
-    $('#dataTableLecturer').DataTable({
+    $('#dataTableClassroom').DataTable({
         columnDefs: [{
             orderable: false,
-            targets: 6
+            targets: 7
         }]
     });
     $('.dataTables_length').addClass('bs-select');
