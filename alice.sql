@@ -228,11 +228,15 @@ BEGIN
     DECLARE id CHAR(10);
     DECLARE role INT;
     DECLARE verify INT;
+    DECLARE exist INT ;
     SET id = NEW.user_id;
     SET role = NEW.user_role;
     SET verify = NEW.user_verified;
-    IF (role = 2 AND verify = 1) THEN
+    SET exist = (SELECT COUNT(*) FROM tb_lecturer_profile WHERE profile_user = id);
+    IF EXIST = 0 THEN
+        IF (role = 2 AND verify = 1) THEN
         INSERT INTO tb_lecturer_profile (profile_user, profile_status) VALUES (id, 'Selo');
+        END IF;
     END IF;
     IF (role = 2 AND verify = 0) THEN
         DELETE FROM tb_lecturer_profile WHERE profile_user = id;

@@ -37,16 +37,16 @@
               <div class="px-4">
                 <div class="table-responsive p-2">
                   <!--Table-->
-                  <table id="dataTableStudent" class="table table-hover mb-0">
+                  <table id="dataTableStudent" class="table table-hover table-fixed mb-0">
                     <!-- Table head -->
                     <thead>
                       <tr>
-                        <th class="th-lg" style="width:15px;min-width:15px;"><a>No.</a></th>
-                        <th class="th-lg"><a>NIM</a></th>
+                        <th style="width:100px;"><a>No.</a></th>
+                        <th style="width:150px;"><a>NIM</a></th>
                         <th class="th-lg"><a>Nama</a></th>
                         <th class="th-lg"><a>Email</a></th>
                         <th class="th-lg"><a>Pendaftaran</a></th>
-                        <th class="th-lg"><a>Verifikasi</a></th>
+                        <th style="width: 150px;"><a>Verifikasi</a></th>
                         <th class="th-lg"><a>Aksi</a></th>
                       </tr>
                     </thead>
@@ -70,11 +70,11 @@
                             echo "<td>$i</td>";
                             echo "<td>$data[0]</td>";
                             echo "<td>$data[1]</td>";
-                            echo "<td>$data[2]</td>";
+                            echo "<td class='text-truncate'>$data[2]</td>";
                             echo "<td>$data[3]</td>";
                             echo "<td>$is_verified</td>";
                             echo "<td>";
-                            //echo "<a href='?p=admin&v=course-form&act=update&id=$data[0]'><span class='badge badge-lg badge-primary'>UBAH</span></a>";
+                            echo "<a href='?p=admin&v=user-form&act=update&id=$data[0]'><span class='badge badge-lg badge-primary'>UBAH</span></a>";
                             echo "<a href='action/_user.php?act=delete&id=$data[0]&v=student' class='ml-2'><span class='badge badge-danger'>HAPUS</span></a>";
                             echo "<a href='action/_user.php?act=".$unverified."verify&id=$data[0]&v=student' class='ml-2'><span class='badge badge-$btn_verify'>".strtoupper($unverified)."VERIFIKASI</span></a>";
                             echo "</td>";

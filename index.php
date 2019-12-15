@@ -115,6 +115,12 @@
             .alice-dropdown::after {
                 content: none;
             }
+            .md-form input:read-only {
+                color: rgba(0, 0, 0, 0.3) !important;
+            }
+            .md-form input:-moz-read-only { /* For Firefox */
+                color: rgba(0, 0, 0, 0.3) !important;
+            }
             @media only screen and (min-width: 768px) {
                 /* For desktop: */
                 .alice-notif {
