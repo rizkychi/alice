@@ -18,8 +18,9 @@
     session_start();    
 
     if (isset($_SESSION['login'])) {
-        $is_login = $_SESSION['login'];
-        $role     = $_SESSION['role'];
+        $is_login  = $_SESSION['login'];
+        $role      = $_SESSION['role'];
+        $userPhoto = $_SESSION['user_photo'];
     } else {
         $is_login = false;
         $role     = '';
@@ -237,7 +238,7 @@
                     </li>
                     <li class="nav-item avatar dropdown my-1 ml-1">
                         <a class="nav-link dropdown-toggle rounded-circle" id="navbarMainContent-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
+                        <img src="img/alice-img/<?php echo $userPhoto; ?>" class="rounded-circle z-depth-0"
                             alt="avatar image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
@@ -379,9 +380,9 @@
             $image_crop = $('#image_demo').croppie({
                 enableExif: true,
                 viewport: {
-                width:200,
-                height:200,
-                type:'square' //circle
+                width:128,
+                height:128,
+                type:'circle' //circle
                 },
                 boundary:{
                 width:300,
@@ -420,6 +421,10 @@
                 })
             });
         });  
+
+        $(document).ajaxStop(function(){
+            window.location.reload();
+        });
         </script>
     <?php } ?>
     <?php if ($page == 'materi') { ?>
