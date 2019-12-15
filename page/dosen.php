@@ -34,7 +34,7 @@ require_once 'config/conf.php';
                                 </div>
                                 <div class="w-75">
                                     <div class="row m-0">
-                                    <div class="class" id="myDosen">
+                                    <div id="myDosen">
                                     <?php
                                         echo "<a href='?p=profile&id=$row[0]' class='w-100 stretched-link text-secondary text-truncate' style='line-height:1.1;'>";
                                         echo $row[1];
@@ -60,8 +60,8 @@ require_once 'config/conf.php';
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
             a = document.getElementById("myDosen");
-            for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
+            for (i = 0; i < a.length; i++) {
+            a = a[i].getElementsByTagName("a")[0];
             txtValue = a.textContent || a.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
             a[i].style.display = "";
