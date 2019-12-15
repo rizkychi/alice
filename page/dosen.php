@@ -12,7 +12,7 @@ require_once 'config/conf.php';
             <!-- Search form -->
 
              <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" action="dosen.php" method="get">
-                <input class="form-control w-100" type="text" name="cari" placeholder="Cari dosen" aria-label="Search">
+                <input class="form-control w-100" type="text" name="cari" placeholder="Cari dosen" aria-label="Search" id="myInput" onkeyup="myFunction()">
             </form>
             <!-- Search form -->
         </div>
@@ -34,13 +34,14 @@ require_once 'config/conf.php';
                                 </div>
                                 <div class="w-75">
                                     <div class="row m-0">
+                                    <div class="class" id="myDosen">
                                     <?php
                                         echo "<a href='?p=profile&id=$row[0]' class='w-100 stretched-link text-secondary text-truncate' style='line-height:1.1;'>";
                                         echo $row[1];
                                         echo "</a>";
-                                        echo "<span class='badge badge-pill badge-success mt-1'>$row[2]</span>";
-                                                       
+                                        echo "<span class='badge badge-pill badge-success mt-1'>$row[2]</span>";          
                                     ?>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -52,6 +53,25 @@ require_once 'config/conf.php';
             echo "0 Result";
         }
         ?>
+
+        <script>
+        function myFunction() {
+            var input, filter,a, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            a = document.getElementById("myDosen");
+            for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+            } else {
+            li[i].style.display = "none";
+             }
+            }
+            }
+        </script>
+
         <!-- ./Dosen Thumbnail -->
     </div>
 </div>
