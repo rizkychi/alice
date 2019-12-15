@@ -110,8 +110,7 @@ CREATE TABLE tb_class_comment
     comment_user CHAR(10) NOT NULL,
     comment_content TEXT,
     comment_date DATETIME DEFAULT NOW(),
-    FOREIGN KEY (comment_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (comment_post) REFERENCE tb_user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_assignment
