@@ -1,6 +1,6 @@
 <?php
     // include files
-    require_once('config/conf.php');
+    // require_once('config/conf.php');
 
     // ------------- Switch Page ------------- //
     if (isset($_GET["p"])){

@@ -1,17 +1,23 @@
 <?php
+    
+    $id = $_SESSION['user'];
+    $role   = $_SESSION['role'];
+    
+    $sql = mysqli_query($conn,"SELECT * FROM tb_user WHERE user_id ='".$id."'");
+    $data = mysqli_fetch_array($sql);
+    
+    $fname  = $data['user_name'];
+    $email  = $data['user_email'];
+    $dob    = $data['user_dob'];  
+    $gender = $data['user_gender'];
 
-    $role   = '2';
-    $fname  = 'Rizky Nur H';
-    $email  = 'rizky@gmail.com';
-    $dob    = '1998-01-25';   
-    $gender = 'Laki-laki';
-
-    if ($role == '2') {
+    
+    if ($role == '3') {
         $address = 'Amikom';
         $office  = 'Amikom';
-        $phone   = '08123456789';
+        $phone   = '088888888';
         $blog    = 'www.amikom.ac.id';
-        $about   = 'Dummy account';
+        $about   = 'Gak ada isinya';
     }
 ?>
 <!-- Main layout -->
@@ -88,14 +94,14 @@
             <!-- Card content -->
             <div class="card-body card-body-cascade text-center px-5">
                 <!-- Edit Form -->
-                <form>
+                <form method="POST" action="action/do_update.php">
 
                 <!-- First row -->
                 <div class="row">
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form1" class="form-control validate" value="17.11.1247" disabled>
+                            <input type="text" id="form1" class="form-control validate" value="<?php echo $id; ?>" disabled>
                             <label for="form1" data-error="wrong" data-success="right">
                                 <?php 
                                     if ($role == '3') 
@@ -112,7 +118,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form2" class="form-control validate" value="<?php echo $fname;?>" required>
+                            <input type="text" name="fname" id="form2" class="form-control validate" value="<?php echo $fname;?>" required>
                             <label for="form2" data-error="wrong" data-success="right">Nama Lengkap</label>
                         </div>
                     </div>
@@ -125,7 +131,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
+                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
                             <label for="form76">Alamat Email</label>
                         </div>
                     </div>
@@ -133,7 +139,7 @@
                     <!-- Second column -->
                     <div class="col-md-3">
                         <div class="md-form mb-0">
-                            <input type="text" id="date-picker" class="form-control datepicker mb-5" value="<?php echo $dob;?>" required>
+                            <input type="text" name="date" id="date-picker" class="form-control datepicker mb-5" value="<?php echo $dob;?>" required>
                             <label for="date-picker" data-error="wrong" data-success="right">Tanggal Lahir</label>
                         </div>
                     </div>
@@ -218,7 +224,7 @@
                     <!-- Fourth row -->
                     <div class="row">
                         <div class="col-md-12 text-center my-4">
-                            <input type="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
+                            <input type="submit" name="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
                         </div>
                     </div>
                     <!-- Fourth row -->
