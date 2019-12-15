@@ -20,7 +20,7 @@ require_once 'config/conf.php';
     <div class="row mt-4">
         <!-- Dosen Thumbnail -->
         <?php
-            $sql = "SELECT user_id, user_name, profile_status FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_role=2 AND user_verified = 1 ORDER BY user_name ASC";
+            $sql = "SELECT user_id, user_name, profile_status, user_photo FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_role=2 AND user_verified = 1 ORDER BY user_name ASC";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
@@ -28,9 +28,9 @@ require_once 'config/conf.php';
                 ?>
                     <div class="col-sm-12 col-md-4 col-xl-3 mb-4">
                         <div class="card">
-                            <div class="card-body p-2 d-flex">
+                            <div class="card-body p-2 d-flex align-items-center">
                                 <div class="flex-shrink-1 mr-2">
-                                    <img src="img/alice-img/avatar.png" class="img-fluid rounded-circle alice-avatar" alt="Avatar">
+                                    <img src="img/alice-img/<?php echo $row[3];?>" class="img-fluid rounded-circle alice-avatar" alt="Avatar">
                                 </div>
                                 <div class="w-75">
                                     <div class="row m-0">
@@ -39,7 +39,7 @@ require_once 'config/conf.php';
                                         echo "<a href='?p=profile&id=$row[0]' class='w-100 stretched-link text-secondary text-truncate' style='line-height:1.1;'>";
                                         echo $row[1];
                                         echo "</a>";
-                                        echo "<span class='badge badge-pill badge-success mt-1'>$row[2]</span>";          
+                                        echo "<span class='badge badge-pill badge-success mt-1 mr-5'>$row[2]</span>";          
                                     ?>
                                     </div>
                                     </div>
