@@ -64,9 +64,9 @@ require_once 'config/conf.php';
             a = li[i].getElementsByTagName("a")[0];
             txtValue = a.textContent || a.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
+            a[i].style.display = "";
             } else {
-            li[i].style.display = "none";
+            a[i].style.display = "none";
              }
             }
             }
