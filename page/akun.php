@@ -224,8 +224,11 @@
                 ?>
 
                     <!-- Fourth row -->
-                    <div class="row">
-                        <div class="col-md-12 text-center my-4">
+                    <div class="row justify-content-between">
+                        <div class="col text-center my-4">
+                            <button type="button" class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#alertDeleteAccount">Hapus Akun</button>
+                        </div>
+                        <div class="col text-center my-4">
                             <input type="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
                         </div>
                     </div>

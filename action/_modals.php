@@ -174,3 +174,39 @@
   </div>
 </div>
 <!-- Resend verification code -->
+
+
+<!-- Modal alert delete account-->
+<!-- Central Modal Medium Danger -->
+<div class="modal fade" id="alertDeleteAccount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Hapus Akun</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+          <p>Apakah anda yakin ingin menghapus akun ini? Sekali anda hapus, data anda akan hilang selamanya.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Batal</a>
+        <a type="button" class="btn btn-danger waves-effect" href="action/do_delete.php">Hapus</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal alert delete account-->
