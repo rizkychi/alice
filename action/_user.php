@@ -35,19 +35,44 @@
             }
         }
     } else if ($act == 'update') {
-        // if ($_POST) {
-        //     $id   = $_POST['courseID'];
-        //     $name = $_POST['courseName'];
-        //     $sks  = $_POST['courseSKS'];
+        if ($_POST) {
+            $uid    = $_POST['userId'];
+            $name   = $_POST['userName'];
+            $gender = $_POST['userGender'];
+            $dob    = $_POST['userDate'];
+            $role   = $_POST['userRole'];
+            $view   = $_POST['userView'];
 
-        //     $query = mysqli_query($conn, "UPDATE tb_course SET course_name = '$name', course_sks = '$sks' WHERE course_id = $id");
+            if ($role == 2) {
+                $address = $_POST['userAddress'];
+                $phone   = $_POST['userPhone'];
+                $office  = $_POST['userOffice'];
+                $blog    = $_POST['userBlog'];
+                $about   = $_POST['userAbout'];
+                $info    = $_POST['userInfo'];
+                $status  = $_POST['userStatus'];
+            }
 
-        //     if (!$query) {
-        //         echo "<script>alert('gagal')</script>";
-        //     } else {
-        //         header('Location: ../?p=admin&v=course');
-        //     }
-        // }
+            $query = mysqli_query($conn, "UPDATE tb_user SET user_name = '$name', user_gender = '$gender', user_dob = '$dob' WHERE user_id = '$uid'");
+
+            if ($role == 2) {
+                $query_profile = mysqli_query($conn, "UPDATE tb_lecturer_profile 
+                                                        SET profile_address = '$address',
+                                                            profile_phone = '$phone',
+                                                            profile_office = '$office',
+                                                            profile_blog = '$blog',
+                                                            profile_about = '$about',
+                                                            profile_info = '$info',
+                                                            profile_status = '$status'
+                                                        WHERE profile_user = '$uid'");
+            }
+
+            if (!$query) {
+                echo "<script>alert('gagal')</script>";
+            } else {
+                header("Location: ../?p=admin&v=$view");
+            }
+        }
     } else if ($act == 'verify') {
         if (isset($_GET['id'])) {
             $uid  = $_GET['id'];

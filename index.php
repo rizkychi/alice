@@ -18,8 +18,9 @@
     session_start();    
 
     if (isset($_SESSION['login'])) {
-        $is_login = $_SESSION['login'];
-        $role     = $_SESSION['role'];
+        $is_login  = $_SESSION['login'];
+        $role      = $_SESSION['role'];
+        $userPhoto = $_SESSION['user_photo'];
     } else {
         $is_login = false;
         $role     = '';
@@ -77,6 +78,8 @@
 
         <!-- JQuery -->
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
@@ -109,6 +112,15 @@
             .alice-date {
                 -webkit-transform: translateY(-10px) scale(.8) !important;
                 transform: translateY(-10px) scale(.8) !important;
+            }
+            .alice-dropdown::after {
+                content: none;
+            }
+            .md-form input:read-only {
+                color: rgba(0, 0, 0, 0.3) !important;
+            }
+            .md-form input:-moz-read-only { /* For Firefox */
+                color: rgba(0, 0, 0, 0.3) !important;
             }
             @media only screen and (min-width: 768px) {
                 /* For desktop: */
@@ -226,7 +238,7 @@
                     </li>
                     <li class="nav-item avatar dropdown my-1 ml-1">
                         <a class="nav-link dropdown-toggle rounded-circle" id="navbarMainContent-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
+                        <img src="img/alice-img/<?php echo $userPhoto; ?>" class="rounded-circle z-depth-0"
                             alt="avatar image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
@@ -269,20 +281,38 @@
                             <li><a class="collapsible-header waves-effect arrow-r"><i
                                 class="sv-slim-icon fas fa-user"></i>
                                 User<i class="fas fa-angle-down rotate-icon"></i></a>
-                            <div class="collapsible-body">
-                                <ul>
-                                <li><a href="?p=admin&v=lecturer" class="waves-effect">
-                                    <span class="sv-slim"> D </span>
-                                    <span class="sv-normal">Dosen</span></a>
-                                </li>
-                                <li><a href="?p=admin&v=student" class="waves-effect">
-                                    <span class="sv-slim"> M </span>
-                                    <span class="sv-normal">Mahasiswa</span></a>
-                                </li>
-                                </ul>
-                            </div>
+                                <div class="collapsible-body">
+                                    <ul>
+                                    <li><a href="?p=admin&v=lecturer" class="waves-effect">
+                                        <span class="sv-slim"> D </span>
+                                        <span class="sv-normal">Dosen</span></a>
+                                    </li>
+                                    <li><a href="?p=admin&v=student" class="waves-effect">
+                                        <span class="sv-slim"> M </span>
+                                        <span class="sv-normal">Mahasiswa</span></a>
+                                    </li>
+                                    </ul>
+                                </div>
                             </li>
-                            
+                            <li><a class="collapsible-header waves-effect arrow-r"><i
+                                class="sv-slim-icon fas fa-copy"></i>
+                                Post<i class="fas fa-angle-down rotate-icon"></i></a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                    <li><a href="?p=admin&v=post-forum" class="waves-effect">
+                                        <span class="sv-slim"> F </span>
+                                        <span class="sv-normal">Forum</span></a>
+                                    </li>
+                                    <li><a href="?p=admin&v=post-material" class="waves-effect">
+                                        <span class="sv-slim"> M </span>
+                                        <span class="sv-normal">Material</span></a>
+                                    </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a class=" waves-effect arrow-r" href="?p=admin&v=classroom"><i class="sv-slim-icon fas fa-chalkboard-teacher"></i>
+                                Kelas</a>
+                            </li>
                             <li><a class=" waves-effect arrow-r" href="?p=admin&v=course"><i class="sv-slim-icon fas fa-layer-group"></i>
                                 Mata Kuliah</a>
                             </li>
@@ -310,8 +340,6 @@
 
         <!-- SCRIPTS -->
         
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="js/popper.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
 
@@ -352,9 +380,9 @@
             $image_crop = $('#image_demo').croppie({
                 enableExif: true,
                 viewport: {
-                width:200,
-                height:200,
-                type:'square' //circle
+                width:128,
+                height:128,
+                type:'circle' //circle
                 },
                 boundary:{
                 width:300,
@@ -393,6 +421,10 @@
                 })
             });
         });  
+
+        $(document).ajaxStop(function(){
+            window.location.reload();
+        });
         </script>
     <?php } ?>
     <?php if ($page == 'materi') { ?>
