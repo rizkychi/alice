@@ -2,7 +2,7 @@
     if (isset($_GET['id'])) {
         $post_id = $_GET['id'];
        // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
-       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_name");
+       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
             $result = mysqli_fetch_array($query);
             $user_id = $result['post_user'];
             $subject= $result['post_subject'];
@@ -13,26 +13,26 @@
 
 <!-- comment -->
 <?php
-    if (isset($_GET['act'])){
-        $act = $_GET['act'];
-    } else {
-        die();
-    }
+    // if (isset($_GET['act'])){
+    //     $act = $_GET['act'];
+    // } else {
+    //     //die();
+    // }
 
-    if ($act == 'add') {
-        $id     = '';
-        $user   = $_SESSION['user'];
-        $comments = '';
-        $button = 'Post';
-    } else if ($act == 'update') {
-        if (isset($_GET['comment_id'])) {
-            $id     = $_GET['comment_id'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_comment WHERE comment_id = $id");
-            $result = mysqli_fetch_array($query);
-            $user   = $result['comment_user'];
-            $button = 'Post';
-        }
-    }
+    // if ($act == 'add') {
+    //     $id     = '';
+    //     $user   = $_SESSION['user'];
+    //     $comments = '';
+    //     $button = 'Post';
+    // } else if ($act == 'update') {
+    //     if (isset($_GET['comment_id'])) {
+    //         $id     = $_GET['comment_id'];
+    //         $query  = mysqli_query($conn, "SELECT * FROM tb_forum_comment WHERE comment_id = $id");
+    //         $result = mysqli_fetch_array($query);
+    //         $user   = $result['comment_user'];
+    //         $button = 'Post';
+    //     }
+    // }
 
 
 ?>
@@ -48,7 +48,7 @@
                 <div class="row justify-content-between">
                     <div class="col-md-4 mb-3">
                         <p class="font-small dark-grey-text mb-1">
-                            <strong>Penulis:</strong> Anna Doe</p>
+                            <strong>Penulis:</strong><?php echo $user_id; ?></p>
                         <p class="font-small grey-text">
                             15/09/2017 pada 4:03 pm</p>
                         <a>
