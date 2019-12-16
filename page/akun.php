@@ -20,8 +20,9 @@
         $address = $result_dsn['profile_address'];
         $office =  $result_dsn['profile_office'];
         $phone = $result_dsn['profile_phone'];
-        $blog= $result_dsn['profile_blog'];
-        $about= $result_dsn['profile_about'];
+        $blog = $result_dsn['profile_blog'];
+        $about = $result_dsn['profile_about'];
+        $info = $result_dsn['profile_info'];
     }
 
     if (isset($_SESSION['error_pass']) && $_SESSION['error_pass'] != ""){
@@ -234,7 +235,17 @@
                     </div>
                 </div>
                 <!-- Fifth row -->
-
+                <!-- Sixth row -->
+                <div class="row">
+                    <!-- First column -->
+                    <div class="col-md-12">
+                        <div class="md-form mt-0">
+                            <textarea type="text" name="info" id="form78" class="md-textarea form-control" rows="3"><?php echo $info;?></textarea>
+                            <label for="form78"> Informasi Perkuliahan </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sixth row -->
                 <?php
                     }
                 ?>
