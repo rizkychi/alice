@@ -33,15 +33,13 @@ require_once 'config/conf.php';
                                     <img src="img/alice-img/<?php echo $row[3];?>" class="img-fluid rounded-circle alice-avatar" alt="Avatar">
                                 </div>
                                 <div class="w-75">
-                                    <div class="row m-0">
-                                    <div id="myDosen">
+                                    <div class="row m-0" id="myDosen">
                                     <?php
                                         echo "<a href='?p=profile&id=$row[0]' class='w-100 stretched-link text-secondary text-truncate' style='line-height:1.1;'>";
                                         echo $row[1];
                                         echo "</a>";
                                         echo "<span class='badge badge-pill badge-success mt-1 mr-5'>$row[2]</span>";          
                                     ?>
-                                    </div>
                                     </div>
                                 </div>
                             </div>

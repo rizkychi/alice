@@ -1,5 +1,4 @@
 <?php
-    //$material_id = isset ($_GET['material_id']) ? $_GET['material_id'] : false;
     $user   = '0518037801';
     $subject= '';
     $content= '';
@@ -18,7 +17,7 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <form action="action/add_materi.php?act=add" method="post" enctype="multipart/form-data">
+                <form action="action/add_materi.php" method="post" enctype="multipart/form-data">
                 <!-- Body -->
                     <!-- User -->
                     <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>
