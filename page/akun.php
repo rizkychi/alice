@@ -20,8 +20,9 @@
         $address = $result_dsn['profile_address'];
         $office =  $result_dsn['profile_office'];
         $phone = $result_dsn['profile_phone'];
-        $blog= $result_dsn['profile_blog'];
-        $about= $result_dsn['profile_about'];
+        $blog = $result_dsn['profile_blog'];
+        $about = $result_dsn['profile_about'];
+        $info = $result_dsn['profile_info'];
     }
 
     if (isset($_SESSION['error_pass']) && $_SESSION['error_pass'] != ""){
@@ -119,7 +120,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" disabled>
+                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" readonly >
                             <label for="form1" data-error="wrong" data-success="right">
                                 <?php 
                                     if ($role == '3') 
@@ -149,7 +150,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
+                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" readonly>
                             <label for="form76">Alamat Email</label>
                         </div>
                     </div>
@@ -169,7 +170,7 @@
                             <option value="Perempuan" <?php //if ($gender == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
                         </select> -->
                         <div class="md-form mb-0">
-                            <input type="text" id="jk" class="form-control" value="<?php echo $gender;?>" disabled>
+                            <input type="text" id="jk" class="form-control" value="<?php echo $gender;?>" readonly>
                             <label for="jk" data-error="wrong" data-success="right">Jenis Kelamin</label>
                         </div>
                     </div>
@@ -234,7 +235,17 @@
                     </div>
                 </div>
                 <!-- Fifth row -->
-
+                <!-- Sixth row -->
+                <div class="row">
+                    <!-- First column -->
+                    <div class="col-md-12">
+                        <div class="md-form mt-0">
+                            <textarea type="text" name="info" id="form78" class="md-textarea form-control" rows="3"><?php echo $info;?></textarea>
+                            <label for="form78"> Informasi Perkuliahan </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sixth row -->
                 <?php
                     }
                 ?>

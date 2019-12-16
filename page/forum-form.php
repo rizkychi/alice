@@ -63,7 +63,6 @@
                             }
                         ?>
                     </select>
-                    <input type="text" name="postID" value="alicealice" hidden>
                     <input type="text" name="postUser" value="<?php echo $user; ?>" hidden>
                     <!-- Body -->
                     <div class="float-right mt-4">
