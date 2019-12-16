@@ -16,8 +16,9 @@ if($cek > 0){
     $_SESSION['user'] = $id ;
     $_SESSION['fname'] = $ambil['user_name'];
     $_SESSION['email'] = $ambil['user_email'];
-    $_SESSION['activate'] = base64_encode($ambil['user_password']); 
+    $_SESSION['activate'] = base64_encode($ambil['user_password']); //email verification
     $_SESSION['role'] = $ambil['user_role'];  
+    $_SESSION['user_photo'] = $ambil['user_photo'];
 
     if ($ambil['user_verified'] == 0) {
         $_SESSION['login'] = false ;

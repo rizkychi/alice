@@ -110,8 +110,7 @@ CREATE TABLE tb_class_comment
     comment_user CHAR(10) NOT NULL,
     comment_content TEXT,
     comment_date DATETIME DEFAULT NOW(),
-    FOREIGN KEY (comment_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (comment_post) REFERENCE tb_user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_assignment
@@ -216,6 +215,31 @@ BEGIN
         SET exist = (SELECT COUNT(class_code) FROM tb_class WHERE class_code = code);
     END WHILE;
     SET NEW.class_code = code;
+END//
+DELIMITER ;
+
+-- Generate lecturer profile
+DELIMITER //
+CREATE TRIGGER tg_generate_profile 
+AFTER UPDATE 
+ON tb_user FOR EACH ROW
+BEGIN 
+    DECLARE id CHAR(10);
+    DECLARE role INT;
+    DECLARE verify INT;
+    DECLARE exist INT ;
+    SET id = NEW.user_id;
+    SET role = NEW.user_role;
+    SET verify = NEW.user_verified;
+    SET exist = (SELECT COUNT(*) FROM tb_lecturer_profile WHERE profile_user = id);
+    IF EXIST = 0 THEN
+        IF (role = 2 AND verify = 1) THEN
+        INSERT INTO tb_lecturer_profile (profile_user, profile_status) VALUES (id, 'Selo');
+        END IF;
+    END IF;
+    IF (role = 2 AND verify = 0) THEN
+        DELETE FROM tb_lecturer_profile WHERE profile_user = id;
+    END IF;
 END//
 DELIMITER ;
 

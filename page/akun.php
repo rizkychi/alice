@@ -1,5 +1,13 @@
 <?php
 
+    if (isset($_SESSION['user'])) {
+        $uid = $_SESSION['user'];
+    }
+
+    $query  = mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'");
+    $result = mysqli_fetch_array($query);
+    $photo  = $result['user_photo']; 
+
     $role   = '2';
     $fname  = 'Rizky Nur H';
     $email  = 'rizky@gmail.com';
@@ -33,12 +41,12 @@
             <!-- Card image -->
             <!-- Card content -->
             <div class="card-body card-body-cascade text-center">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="User Photo" class="z-depth-1 mb-3 mx-auto rounded-circle" />
+                <img src="img/alice-img/<?php echo $photo; ?>" alt="User Photo" class="z-depth-1 mb-3 mx-auto rounded-circle" />
                 <p class="text-muted"><small>Foto profil akan terganti otomatis</small></p>
                 <div class="row justify-content-center">
                     <input type="file" name="upload_image" id="upload_image" accept="image/*" hidden/>
                     <button id="uploadAvatar" class="btn btn-info btn-rounded btn-sm">Unggah foto baru</button><br>
-                    <button class="btn btn-danger btn-rounded btn-sm">Hapus</button>
+                    <a href="action/delete_picture.php"><button class="btn btn-danger btn-rounded btn-sm">Hapus</button></a>
                 </div>
             </div>
             <!-- Card content -->
@@ -216,8 +224,11 @@
                 ?>
 
                     <!-- Fourth row -->
-                    <div class="row">
-                        <div class="col-md-12 text-center my-4">
+                    <div class="row justify-content-between">
+                        <div class="col text-center my-4">
+                            <button type="button" class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#alertDeleteAccount">Hapus Akun</button>
+                        </div>
+                        <div class="col text-center my-4">
                             <input type="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
                         </div>
                     </div>
