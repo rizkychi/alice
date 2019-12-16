@@ -510,13 +510,13 @@
                   <!--Body-->
                     <div class="md-form">
                       <i class="far fa-id-badge prefix"></i>
-                      <input type="text" name="userID" id="orangeForm-id" class="form-control">
+                      <input type="text" name="userID" id="orangeForm-id" minlength="10" maxlength="10" class="form-control">
                       <label for="orangeForm-id">NIM/NIDN</label>
                     </div>
 
                     <div class="md-form">
                       <i class="fas fa-unlock-alt prefix"></i>
-                      <input type="password" name="userPass" id="orangeForm-pass" class="form-control">
+                      <input type="password" minlength="8" name="userPass" id="orangeForm-pass" class="form-control">
                       <label for="orangeForm-pass">Kata Sandi</label>
                     </div>
                     

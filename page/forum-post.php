@@ -10,6 +10,34 @@
             $course = $result['post_course'];
     }    
 ?>
+
+<!-- comment -->
+<?php
+    if (isset($_GET['act'])){
+        $act = $_GET['act'];
+    } else {
+        die();
+    }
+
+    if ($act == 'add') {
+        $id     = '';
+        $user   = $_SESSION['user'];
+        $comments = '';
+        $button = 'Post';
+    } else if ($act == 'update') {
+        if (isset($_GET['comment_id'])) {
+            $id     = $_GET['comment_id'];
+            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_comment WHERE comment_id = $id");
+            $result = mysqli_fetch_array($query);
+            $user   = $result['comment_user'];
+            $button = 'Post';
+        }
+    }
+
+
+?>
+
+
 <!-- Main news -->
 <div class="col-xl-12 col-md-12">
     <!-- Post -->
@@ -88,7 +116,7 @@
 
             <div class="row px-4">
                 <h4>Komentar</h4>
-                <form action="" method="post" class="col-md-12">
+                <form action="action/_forumcomment.php??act=<?php echo $act; ?>" method="post" class="col-md-12">
                     <div class="form-group purple-border mt-2 mb-1">
                         <textarea class="form-control" name="comments" rows="3" placeholder="Tulis komentar..." required></textarea>
                     </div>

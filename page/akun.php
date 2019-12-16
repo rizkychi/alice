@@ -6,21 +6,34 @@
 
     $query  = mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'");
     $result = mysqli_fetch_array($query);
-    $photo  = $result['user_photo']; 
 
-    $role   = '2';
-    $fname  = 'Rizky Nur H';
-    $email  = 'rizky@gmail.com';
-    $dob    = '1998-01-25';   
-    $gender = 'Laki-laki';
+    $photo  = $result['user_photo']; 
+    $fname  = $result['user_name'];
+    $email  = $result['user_email'];
+    $dob    = $result['user_dob'];  
+    $gender = $result['user_gender'];
 
     if ($role == '2') {
-        $address = 'Amikom';
-        $office  = 'Amikom';
-        $phone   = '08123456789';
-        $blog    = 'www.amikom.ac.id';
-        $about   = 'Dummy account';
+        $query_dsn = mysqli_query($conn, "SELECT * FROM tb_lecturer_profile WHERE profile_user = '$uid'");
+        $result_dsn = mysqli_fetch_array($query_dsn);
+
+        $address = $result_dsn['profile_address'];
+        $office =  $result_dsn['profile_office'];
+        $phone = $result_dsn['profile_phone'];
+        $blog= $result_dsn['profile_blog'];
+        $about= $result_dsn['profile_about'];
     }
+
+    if (isset($_SESSION['error_pass']) && $_SESSION['error_pass'] != ""){
+        
+        $error_pass=$_SESSION['error_pass'];
+        unset($_SESSION['error_pass']);
+
+    } else {
+    
+        $error_pass = ""; 
+    }
+
 ?>
 <!-- Main layout -->
 <main>
@@ -61,23 +74,26 @@
             </div>
             <!-- Card image -->
             <!-- Card content -->
+            <form method="post" action="action/update_pass.php">
             <div class="card-body card-body-cascade text-center">
                 <div class="col-md-12">
                     <div class="md-form mb-0">
-                        <input type="password" id="pwnew" class="form-control" required>
+                        <input type="password" name="pwnew" id="pwnew" minlength="8" class="form-control" required>
                         <label for="pwnew" >Kata sandi baru</label>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="md-form mb-0">
-                        <input type="password" id="pwnew2" class="form-control" required>
+                        <input type="password" name="pwnew2" id="pwnew2" minlength="8" class="form-control" required>
                         <label for="pwnew2" >Ulangi kata sandi</label>
+                        <p style="color: red"><?php echo $error_pass; ?></p>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4">
-                    <button class="btn btn-info btn-rounded btn-sm">Perbarui Kata Sandi</button><br>
+                    <button name="ganti_pass" class="btn btn-info btn-rounded btn-sm">Perbarui Kata Sandi</button><br>
                 </div>
             </div>
+            </form>
             <!-- Card content -->
             </div>
             <!-- Card -->
@@ -96,14 +112,14 @@
             <!-- Card content -->
             <div class="card-body card-body-cascade text-center px-5">
                 <!-- Edit Form -->
-                <form>
+                <form method="POST" action="action/do_update.php">
 
                 <!-- First row -->
                 <div class="row">
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form1" class="form-control validate" value="17.11.1247" disabled>
+                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" disabled>
                             <label for="form1" data-error="wrong" data-success="right">
                                 <?php 
                                     if ($role == '3') 
@@ -120,7 +136,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form2" class="form-control validate" value="<?php echo $fname;?>" required>
+                            <input type="text" name="fname" id="form2" class="form-control validate" value="<?php echo $fname;?>" required>
                             <label for="form2" data-error="wrong" data-success="right">Nama Lengkap</label>
                         </div>
                     </div>
@@ -133,7 +149,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
+                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
                             <label for="form76">Alamat Email</label>
                         </div>
                     </div>
@@ -141,7 +157,7 @@
                     <!-- Second column -->
                     <div class="col-md-3">
                         <div class="md-form mb-0">
-                            <input type="text" id="date-picker" class="form-control datepicker mb-5" value="<?php echo $dob;?>" required>
+                            <input type="text" name="date" id="date-picker" class="form-control datepicker mb-5" value="<?php echo $dob;?>" required>
                             <label for="date-picker" data-error="wrong" data-success="right">Tanggal Lahir</label>
                         </div>
                     </div>
@@ -169,7 +185,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="adrresshome" class="form-control validate" value="<?php echo $address;?>">
+                            <input type="text" name="address" id="adrresshome" class="form-control validate" value="<?php echo $address;?>">
                             <label for="adrresshome" data-error="wrong" data-success="right">Alamat Rumah</label>
                         </div>
                     </div>
@@ -177,7 +193,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="adrressoffice" class="form-control validate" value="<?php echo $office;?>">
+                            <input type="text" name="office" id="adrressoffice" class="form-control validate" value="<?php echo $office;?>">
                             <label for="adrressoffice" data-error="wrong" data-success="right">Alamat Kantor</label>
                         </div>
                     </div>
@@ -191,7 +207,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="phone" class="form-control validate" value="<?php echo $phone;?>">
+                            <input type="text" name="phone" id="phone" class="form-control validate" value="<?php echo $phone;?>">
                             <label for="phone" data-error="wrong" data-success="right">Nomor Telepon</label>
                         </div>
                     </div>
@@ -199,7 +215,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="blog" class="form-control validate" value="<?php echo $blog;?>">
+                            <input type="text" name="blog" id="blog" class="form-control validate" value="<?php echo $blog;?>">
                             <label for="blog" data-error="wrong" data-success="right">Alamat Blog</label>
                         </div>
                     </div>
@@ -212,7 +228,7 @@
                     <!-- First column -->
                     <div class="col-md-12">
                         <div class="md-form mt-0">
-                            <textarea type="text" id="form78" class="md-textarea form-control" rows="3"><?php echo $about;?></textarea>
+                            <textarea type="text" name="about" id="form78" class="md-textarea form-control" rows="3"><?php echo $about;?></textarea>
                             <label for="form78">Tentang saya</label>
                         </div>
                     </div>
@@ -229,7 +245,7 @@
                             <button type="button" class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#alertDeleteAccount">Hapus Akun</button>
                         </div>
                         <div class="col text-center my-4">
-                            <input type="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
+                            <input type="submit" name="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
                         </div>
                     </div>
                     <!-- Fourth row -->

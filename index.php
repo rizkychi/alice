@@ -1,6 +1,6 @@
 <?php
     // include files
-    require_once('config/conf.php');
+    // require_once('config/conf.php');
 
     // ------------- Switch Page ------------- //
     if (isset($_GET["p"])){
@@ -20,7 +20,10 @@
     if (isset($_SESSION['login'])) {
         $is_login  = $_SESSION['login'];
         $role      = $_SESSION['role'];
-        $userPhoto = $_SESSION['user_photo'];
+
+        $query     = mysqli_query($conn, 'SELECT user_photo FROM tb_user WHERE user_id = "'.$_SESSION['user'].'"');
+        $result    = mysqli_fetch_array($query);
+        $userPhoto = $result[0];
     } else {
         $is_login = false;
         $role     = '';
@@ -238,8 +241,8 @@
                     </li>
                     <li class="nav-item avatar dropdown my-1 ml-1">
                         <a class="nav-link dropdown-toggle rounded-circle" id="navbarMainContent-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="img/alice-img/<?php echo $userPhoto; ?>" class="rounded-circle z-depth-0"
-                            alt="avatar image">
+                       <?php echo '<img src="img/alice-img/'.$userPhoto.'" class="rounded-circle z-depth-0"
+                            alt="avatar image">' ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
                             <?php
