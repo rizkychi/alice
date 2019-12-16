@@ -1,24 +1,39 @@
 <?php
-    
-    $id = $_SESSION['user'];
-    $role   = $_SESSION['role'];
-    
-    $sql = mysqli_query($conn,"SELECT * FROM tb_user WHERE user_id ='".$id."'");
-    $data = mysqli_fetch_array($sql);
-    
-    $fname  = $data['user_name'];
-    $email  = $data['user_email'];
-    $dob    = $data['user_dob'];  
-    $gender = $data['user_gender'];
 
-    
-    if ($role == '3') {
-        $address = 'Amikom';
-        $office  = 'Amikom';
-        $phone   = '088888888';
-        $blog    = 'www.amikom.ac.id';
-        $about   = 'Gak ada isinya';
+    if (isset($_SESSION['user'])) {
+        $uid = $_SESSION['user'];
     }
+
+    $query  = mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'");
+    $result = mysqli_fetch_array($query);
+
+    $photo  = $result['user_photo']; 
+    $fname  = $result['user_name'];
+    $email  = $result['user_email'];
+    $dob    = $result['user_dob'];  
+    $gender = $result['user_gender'];
+
+    if ($role == '2') {
+        $query_dsn = mysqli_query($conn, "SELECT * FROM tb_lecturer_profile WHERE profile_user = '$uid'");
+        $result_dsn = mysqli_fetch_array($query_dsn);
+
+        $address = $result_dsn['profile_address'];
+        $office =  $result_dsn['profile_office'];
+        $phone = $result_dsn['profile_phone'];
+        $blog= $result_dsn['profile_blog'];
+        $about= $result_dsn['profile_about'];
+    }
+
+    if (isset($_SESSION['error_pass']) && $_SESSION['error_pass'] != ""){
+        
+        $error_pass=$_SESSION['error_pass'];
+        unset($_SESSION['error_pass']);
+
+    } else {
+    
+        $error_pass = ""; 
+    }
+
 ?>
 <!-- Main layout -->
 <main>
@@ -39,12 +54,12 @@
             <!-- Card image -->
             <!-- Card content -->
             <div class="card-body card-body-cascade text-center">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="User Photo" class="z-depth-1 mb-3 mx-auto rounded-circle" />
+                <img src="img/alice-img/<?php echo $photo; ?>" alt="User Photo" class="z-depth-1 mb-3 mx-auto rounded-circle" />
                 <p class="text-muted"><small>Foto profil akan terganti otomatis</small></p>
                 <div class="row justify-content-center">
                     <input type="file" name="upload_image" id="upload_image" accept="image/*" hidden/>
                     <button id="uploadAvatar" class="btn btn-info btn-rounded btn-sm">Unggah foto baru</button><br>
-                    <button class="btn btn-danger btn-rounded btn-sm">Hapus</button>
+                    <a href="action/delete_picture.php"><button class="btn btn-danger btn-rounded btn-sm">Hapus</button></a>
                 </div>
             </div>
             <!-- Card content -->
@@ -59,23 +74,26 @@
             </div>
             <!-- Card image -->
             <!-- Card content -->
+            <form method="post" action="action/update_pass.php">
             <div class="card-body card-body-cascade text-center">
                 <div class="col-md-12">
                     <div class="md-form mb-0">
-                        <input type="password" id="pwnew" class="form-control" required>
+                        <input type="password" name="pwnew" id="pwnew" minlength="8" class="form-control" required>
                         <label for="pwnew" >Kata sandi baru</label>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="md-form mb-0">
-                        <input type="password" id="pwnew2" class="form-control" required>
+                        <input type="password" name="pwnew2" id="pwnew2" minlength="8" class="form-control" required>
                         <label for="pwnew2" >Ulangi kata sandi</label>
+                        <p style="color: red"><?php echo $error_pass; ?></p>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4">
-                    <button class="btn btn-info btn-rounded btn-sm">Perbarui Kata Sandi</button><br>
+                    <button name="ganti_pass" class="btn btn-info btn-rounded btn-sm">Perbarui Kata Sandi</button><br>
                 </div>
             </div>
+            </form>
             <!-- Card content -->
             </div>
             <!-- Card -->
@@ -101,7 +119,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form1" class="form-control validate" value="<?php echo $id; ?>" disabled>
+                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" disabled>
                             <label for="form1" data-error="wrong" data-success="right">
                                 <?php 
                                     if ($role == '3') 
@@ -167,7 +185,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="adrresshome" class="form-control validate" value="<?php echo $address;?>">
+                            <input type="text" name="address" id="adrresshome" class="form-control validate" value="<?php echo $address;?>">
                             <label for="adrresshome" data-error="wrong" data-success="right">Alamat Rumah</label>
                         </div>
                     </div>
@@ -175,7 +193,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="adrressoffice" class="form-control validate" value="<?php echo $office;?>">
+                            <input type="text" name="office" id="adrressoffice" class="form-control validate" value="<?php echo $office;?>">
                             <label for="adrressoffice" data-error="wrong" data-success="right">Alamat Kantor</label>
                         </div>
                     </div>
@@ -189,7 +207,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="phone" class="form-control validate" value="<?php echo $phone;?>">
+                            <input type="text" name="phone" id="phone" class="form-control validate" value="<?php echo $phone;?>">
                             <label for="phone" data-error="wrong" data-success="right">Nomor Telepon</label>
                         </div>
                     </div>
@@ -197,7 +215,7 @@
                     <!-- Second column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="blog" class="form-control validate" value="<?php echo $blog;?>">
+                            <input type="text" name="blog" id="blog" class="form-control validate" value="<?php echo $blog;?>">
                             <label for="blog" data-error="wrong" data-success="right">Alamat Blog</label>
                         </div>
                     </div>
@@ -210,7 +228,7 @@
                     <!-- First column -->
                     <div class="col-md-12">
                         <div class="md-form mt-0">
-                            <textarea type="text" id="form78" class="md-textarea form-control" rows="3"><?php echo $about;?></textarea>
+                            <textarea type="text" name="about" id="form78" class="md-textarea form-control" rows="3"><?php echo $about;?></textarea>
                             <label for="form78">Tentang saya</label>
                         </div>
                     </div>
@@ -222,8 +240,11 @@
                 ?>
 
                     <!-- Fourth row -->
-                    <div class="row">
-                        <div class="col-md-12 text-center my-4">
+                    <div class="row justify-content-between">
+                        <div class="col text-center my-4">
+                            <button type="button" class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#alertDeleteAccount">Hapus Akun</button>
+                        </div>
+                        <div class="col text-center my-4">
                             <input type="submit" name="submit" value="Perbarui Akun" class="btn btn-info btn-rounded">
                         </div>
                     </div>
