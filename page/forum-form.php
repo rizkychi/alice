@@ -64,7 +64,7 @@
                         ?>
                     </select>
                     <input type="text" name="postID" value="alicealice" hidden>
-                    <input type="text" name="postUser" value="<?php echo $user; ?>" hidden>
+                    <input type="text" name="postUser" value="<?php echo $user_id; ?>" hidden>
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=forum"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
