@@ -39,7 +39,7 @@
     if (!$query) {
         echo "<script>alert('gagal menambahkan')</script>";
     } else {
-        echo "<script>alert('data ditambahkan')</script>";
-        // header('Location: ../page/materi.php');
+        // echo "<script>alert('data ditambahkan')</script>";
+        header('Location: ../?p=materi');
     }
 ?>

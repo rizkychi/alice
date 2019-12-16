@@ -1,5 +1,10 @@
 <?php
-    $query = mysqli_query($conn, "SELECT * FROM tb_material");
+
+    require_once 'config/conf.php';
+    $i=0;
+    $j=0;
+    
+    
 ?>
 
 <body class="fixed-sn homepage-v3">
@@ -13,7 +18,7 @@
         <div class="col-xl-12 col-md-12">
         <?php
           if (isset($_GET['id'])) {
-              include 'forum-post.php';
+              include 'materi-post.php';
           } else {
               ?>
                 <!-- Section: Magazine posts -->
@@ -30,46 +35,58 @@
                             </div>
                             <div class="col-md-10">
                                 <div class="carousel-inner v-2" role="listbox">
-                                    <?php
-                                        for ($i=0; $i < 6; $i++) { 
-                                            ?>
-                                                <div class="carousel-item <?php if ($i == 1) echo 'active'; ?>">
-                                                    <div class="col-12 col-md-4 my-2">
-                                                        <!-- Card -->
-                                                        <div class="card">
-                                                            <!-- Card content -->
-                                                            <div class="card-body">
-                                                                <!-- Title -->
-                                                                <h6 class="card-title"><strong>POST TITLE</strong></h6>
-                                                                <a href="#"><span class="w-75 badge badge-pill badge-success text-truncate z-depth-0">
-                                                                Nama mata kuliasdasdasdasdah</span></a>
-                                                                <hr class="mt-1">
-                                                                <div class="row mb-3">
-                                                                    <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
-                                                                    123123 </p>
-                                                                    <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
-                                                                    27/08/2017</p>
-                                                                </div>
-                                                                <p class="col-md-12 font-small my-3">tidak ada deskripsi</p>
-                                                                <hr>
-                                                                <div class="row">
-                                                                    <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
-                                                                    <a href="?p=profile&id=" class="text-secondary">
-                                                                    Anna Smith</a></p>
-                                                                    <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
-                                                                    <a href="?p=materi-post&id=" class="text-secondary">
-                                                                    Lihat materi <i class="fas fa-angle-right"></i></a></p>
-                                                                </div>
+                                <?php
+                                $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user ORDER BY tb_material.material_date DESC");                                
+                                
+                                    while ($row=mysqli_fetch_assoc($query)) { 
+                                           $i++;                                                           
+                                        ?>
+                                            <div class="carousel-item <?php if ($i ==1  ) echo 'active'; ?>">
+                                                <div class="col-12 col-md-4 my-2">
+                                                    <!-- Card -->
+                                                    <div class="card">
+                                                        <!-- Card content -->
+                                                        <div class="card-body">
+                                                            
+                                                            <!-- Title -->
+                                                            <h6 class="card-title"><strong><?php echo $row['material_subject'] ?></strong></h6>
+                                                            <a href="#"><span class="w-75 badge badge-pill badge-success text-truncate z-depth-0">
+                                                            <?php echo $row['course_name']?></span></a>
+                                                            <hr class="mt-1">
+                                                            <div class="row mb-3">
+                                                                <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
+                                                                <?php 
+                                                                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
+                                                                while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
+                                                                <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
+                                                                <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
                                                             </div>
-                                                            <!-- Card content -->
+                                                            <p class="col-md-12 font-small my-3"><?php echo substr($row['material_content'],0,30) ?></p>
+                                                            <hr>
+                                                            <div class="row">
+                                                                <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
+                                                                <a href="?p=profile&id=" class="text-secondary">
+                                                                <?php echo $row['user_name'] ?></a></p>
+                                                                <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
+                                                                <a href="?p=materi-post&id=<?php echo $row['material_id']?>" class="text-secondary">
+                                                                Lihat materi <i class="fas fa-angle-right"></i></a></p>
+                                                            </div>
+                                                        
+                                                            
                                                         </div>
-                                                        <!-- Card -->
+                                                        
+                                                        <!-- Card content -->
                                                     </div>
+                                                    
+                                                    <!-- Card -->
                                                 </div>
-                                            <?php
+                                                
+                                            </div>
+                                        <?php
                                         }
-                                    ?>
+                                    ?>      
                                 </div>
+                                
                             </div>
                             <div class="col-md-1 d-none d-md-block d-lg-block">
                                 <a class="" href="#carousel-example-multi" data-slide="next"><i
@@ -91,33 +108,37 @@
                             <div class="col-md-10">
                                 <div class="carousel-inner v-2" role="listbox">
                                     <?php
-                                        for ($i=0; $i < 6; $i++) { 
+                                        $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user ORDER BY tb_material.material_date ASC");                                
+                                        while ($row=mysqli_fetch_assoc($query)) { 
+                                               $j++; 
                                             ?>
-                                                <div class="carousel-item <?php if ($i == 1) echo 'active'; ?>">
+                                                <div class="carousel-item <?php if ($j == 1) echo 'active'; ?>">
                                                     <div class="col-12 col-md-4 my-2">
                                                         <!-- Card -->
                                                         <div class="card">
                                                             <!-- Card content -->
                                                             <div class="card-body">
                                                                 <!-- Title -->
-                                                                <h6 class="card-title"><strong>POST TITLE</strong></h6>
+                                                                <h6 class="card-title"><strong><?php echo $row['material_subject'] ?></strong></h6>
                                                                 <a href="#"><span class="w-75 badge badge-pill badge-success text-truncate z-depth-0">
-                                                                Nama mata kuliasdasdasdasdah</span></a>
+                                                                <?php echo $row['course_name']?></span></span></a>
                                                                 <hr class="mt-1">
                                                                 <div class="row mb-3">
                                                                     <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
-                                                                    123123 </p>
+                                                                    <?php 
+                                                                    $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
+                                                                    while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
-                                                                    27/08/2017</p>
+                                                                    <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
                                                                 </div>
-                                                                <p class="col-md-12 font-small my-3">tidak ada deskripsi</p>
+                                                                <p class="col-md-12 font-small my-3"><?php echo substr($row['material_content'],0,30) ?></p></p>
                                                                 <hr>
                                                                 <div class="row">
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
                                                                     <a href="?p=profile&id=" class="text-secondary">
-                                                                    Anna Smith</a></p>
+                                                                    <?php echo $row['user_name'] ?></a></a></p>
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
-                                                                    <a href="?p=materi-post&id=" class="text-secondary">
+                                                                    <a class="text-secondary" href="?p=materi-post&id=<?php echo $row['material_id']?>" >
                                                                     Lihat materi <i class="fas fa-angle-right"></i></a></p>
                                                                 </div>
                                                             </div>
@@ -139,7 +160,68 @@
                     </div>
                 
                     <div class="row justify-content-center mb-4">
-                        <a href="#" class="btn btn-secondary">Lihat semua materi</a>
+                        <a href="#" class="btn btn-secondary" data-toggle="collapse" data-target="#fullmateri">Lihat semua materi</a>                    
+                    <!-- Grid row -->
+                    <div id="fullmateri" class="collapse">
+                        <div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
+                            <div class="row align-items-center controls-top">
+                                <div class="col-md-1 d-none d-md-block d-lg-block">
+                                    <!-- <a class="" href="#carousel-example-multi" data-slide="prev"><i
+                                        class="fas fa-chevron-left"></i></a> -->
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="carousel-inner v-2" role="listbox">
+                                        <?php
+                                        $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user ORDER BY tb_material.material_date DESC");                                
+                                        while ($row=mysqli_fetch_assoc($query)) { 
+                                                ?>
+                                                    
+                                                        <div class="col-12 col-md-4 my-2">
+                                                            <!-- Card -->
+                                                            <div class="card">
+                                                                <!-- Card content -->
+                                                                <div class="card-body">
+                                                                    <!-- Title -->
+                                                                    <h6 class="card-title"><strong><?php echo $row['material_subject'] ?></strong></h6>
+                                                                    <a href="#"><span class="w-75 badge badge-pill badge-success text-truncate z-depth-0">
+                                                                    <?php echo $row['course_name']?></span></span></a>
+                                                                    <hr class="mt-1">
+                                                                    <div class="row mb-3">
+                                                                        <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
+                                                                        <?php 
+                                                                        $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
+                                                                        while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
+                                                                        <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
+                                                                        <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
+                                                                    </div>
+                                                                    <p class="col-md-12 font-small my-3"><?php echo substr($row['material_content'],0,30) ?></p></p>
+                                                                    <hr>
+                                                                    <div class="row">
+                                                                        <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
+                                                                        <a href="?p=profile&id=" class="text-secondary">
+                                                                        <?php echo $row['user_name'] ?></a></a></p>
+                                                                        <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
+                                                                        <a href="?p=materi-post&id=<?php echo $row['material_id']?>" class="text-secondary">
+                                                                        Lihat materi <i class="fas fa-angle-right"></i></a></p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Card content -->
+                                                            </div>
+                                                            <!-- Card -->
+                                                        </div>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 d-none d-md-block d-lg-block">
+                                    <!-- <a class="" href="#carousel-example-multi" data-slide="next"><i
+                                        class="fas fa-chevron-right"></i></a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     </div>
                     
                 </section>

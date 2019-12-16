@@ -1,4 +1,9 @@
-<div class="container">
+<?php
+    require_once 'config/conf.php';
+    $materi_id = $_GET['id'];
+    $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user WHERE tb_material.material_id='$materi_id'");        
+    $row=mysqli_fetch_assoc($query)
+?><div class="container">
     <!-- News jumbotron -->
     <div class="col-md-11 jumbotron text-center hoverable p-0 mt-5 row mx-auto">
         <div class="col-md-4 p-0 align-self-stretch" style="background-image:url(img/cover.jpg);
@@ -9,15 +14,16 @@
             <!-- Excerpt -->
             <div class="row d-flex justify-content-between px-3">
                 <a href="#!" class="green-text">
-                    <h6 class="h6 pb-1"><i class="fas fa-layer-group mr-2"></i> Mata kuliah</h6>
+                    <h6 class="h6 pb-1"><i class="fas fa-layer-group mr-2"></i> <?php echo $row['course_name']?></h6>
                 </a>
-                <h6 class="h6 pb-1"><i class="far fa-calendar mr-2"></i> 23/02/2009</h6>
+                <h6 class="h6 pb-1"><i class="far fa-calendar mr-2"></i><?php echo date('d-m-Y', strtotime($row['material_date'])) ?></h6>
             </div>
-            <h4 class="h4 mb-4">This is title of the news</h4>
-            <p class="font-weight-normal">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque, totam
-                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
-            <p class="font-weight-normal">by <a href="#" class="text-secondary"><strong>Carine Fox</strong></a><i class="fas fa-download ml-3"></i> 123123</p>
+            <h4 class="h4 mb-4"><?php echo $row['material_subject'] ?></h4>
+            <p class="font-weight-normal"><?php echo $row['material_content'] ?></p>
+            <p class="font-weight-normal">by <a href="#" class="text-secondary"><strong><?php echo $row['user_name'] ?></strong></a><i class="fas fa-download ml-3"></i>
+            <?php 
+                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
+                while ($result = mysqli_fetch_assoc($data)){echo count($result); }?></p>
             <a href="#" class="btn btn-success">UNDUH</a>
         </div>
     </div>
