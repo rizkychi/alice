@@ -120,7 +120,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" disabled>
+                            <input type="text" id="form1" class="form-control validate" value="<?php echo $uid; ?>" readonly >
                             <label for="form1" data-error="wrong" data-success="right">
                                 <?php 
                                     if ($role == '3') 
@@ -150,7 +150,7 @@
                     <!-- First column -->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" required>
+                            <input type="email" name="email" id="form76" class="form-control validate mb-sm-0" value="<?php echo $email;?>" readonly>
                             <label for="form76">Alamat Email</label>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                             <option value="Perempuan" <?php //if ($gender == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
                         </select> -->
                         <div class="md-form mb-0">
-                            <input type="text" id="jk" class="form-control" value="<?php echo $gender;?>" disabled>
+                            <input type="text" id="jk" class="form-control" value="<?php echo $gender;?>" readonly>
                             <label for="jk" data-error="wrong" data-success="right">Jenis Kelamin</label>
                         </div>
                     </div>
