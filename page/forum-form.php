@@ -13,7 +13,7 @@
         $course = '';
         $button = 'Post';
         $title  = 'Buat Post Baru';
-    } else if ($act == 'update') {
+    } else if ($act == 'update') {\
         if (isset($_GET['postID'])) {
             $id     = $_GET['postID'];
             $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE post_id = $id");
