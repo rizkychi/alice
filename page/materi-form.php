@@ -1,14 +1,29 @@
 <?php
+
+    $materi_id=isset ($_GET['materi_id']) ? $_GET['materi_id'] : false;
+
     $user   = '0518037801';
     $subject= '';
     $content= '';
     $course = '';
     $date = '';
     $nama_file = '';
-    $button = 'TAMBAH';
+    $button = 'add';
     $title  = 'Unggah Materi Baru';
-    
 
+    if($materi_id) {
+        $query = mysqli_query($conn, "SELECT * FROM tb_material WHERE material_id = $materi_id");
+        $row = mysqli_fetch_assoc($query);
+
+        $title = 'Edit Materi';
+        $button = 'SIMPAN';
+        $materi_id = $row['material_id'];
+        $subject = $row ['material_subject'];
+        $content = $row ['material_content'];
+        $course = $row ['material_course'];
+        $date = $row ['material_date'];
+        $nama_file = $row ['material_attachment'];
+    }
 ?>
 
 <div class="container mt-4">
@@ -17,7 +32,7 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <form action="action/add_materi.php" method="post" enctype="multipart/form-data">
+                <form action="action/add_materi.php?materi_id=<?php echo $row['material_id']?>" method="post" enctype="multipart/form-data">
                 <!-- Body -->
                     <!-- User -->
                     <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>
@@ -50,7 +65,7 @@
                     <!-- Body -->
                     <div class="float-right mt-4">
                         <a href="?p=materi"><button type="button" class="btn btn-md btn-danger">Batal</button></a>
-                        <button type="submit" name= "button" class="btn btn-md btn-success"><?php echo $button; ?></button>
+                        <input type="submit" name= "button" class="btn btn-md btn-success" value="<?php echo $button; ?>"/>
                     </div>
                 </form>
                 <div class="m-5"></div>

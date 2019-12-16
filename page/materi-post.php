@@ -32,7 +32,7 @@
             <a href="#" class="btn btn-success">UNDUH</a>
             <?php
             if ( $role == 2) {                            
-                echo "<a href='#' class='btn btn-warning'>EDIT</a>";
+                echo "<a href='?p=materi-form&materi_id=$row[material_id]' class='btn btn-warning'>EDIT</a>";
                 echo "<a href='action/delete_materi.php?materi_id=$row[material_id]' class='btn btn-danger'>HAPUS</a>";
             }
             ?>
