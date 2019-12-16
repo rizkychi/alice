@@ -20,7 +20,10 @@
     if (isset($_SESSION['login'])) {
         $is_login  = $_SESSION['login'];
         $role      = $_SESSION['role'];
-        $userPhoto = $_SESSION['user_photo'];
+        $query     = mysqli_query($conn, 'SELECT user_photo FROM tb_user WHERE user_id = "'.$_SESSION['user'].'"');
+        $result    = mysqli_fetch_array($query);
+        $userPhoto = $result[0];
+
     } else {
         $is_login = false;
         $role     = '';
