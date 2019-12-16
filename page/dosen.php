@@ -2,6 +2,8 @@
 
 require_once 'config/conf.php';
 
+
+
 ?>
 
 <div class="container">
@@ -11,8 +13,8 @@ require_once 'config/conf.php';
             <p class="mt-2">Sebagai sekolah tinggi di bidang informatika, proses belajar-mengajar di UNIVERSITAS AMIKOM didukung oleh tenaga pengajar yang berkualitas.</p>
             <!-- Search form -->
 
-             <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" action="dosen.php" method="get">
-                <input class="form-control w-100" type="text" name="cari" placeholder="Cari dosen" aria-label="Search" id="myInput" onkeyup="myFunction()">
+             <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" method="get">
+                <input class="form-control w-100" type="text" name="keyword" placeholder="Cari dosen" aria-label="Search">
             </form>
             <!-- Search form -->
         </div>
@@ -20,7 +22,7 @@ require_once 'config/conf.php';
     <div class="row mt-4">
         <!-- Dosen Thumbnail -->
         <?php
-            $sql = "SELECT user_id, user_name, profile_status, user_photo FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_role=2 AND user_verified = 1 ORDER BY user_name ASC";
+            $sql = "SELECT user_id, user_name, profile_status, user_photo FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_role=2 AND user_verified = 1 AND user_name LIKE '%$keyword%' ORDER BY user_name ASC";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
