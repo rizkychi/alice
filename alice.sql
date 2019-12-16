@@ -41,7 +41,7 @@ CREATE TABLE tb_user
     user_dob DATE NOT NULL,
     user_gender ENUM('Laki-laki','Perempuan') NOT NULL,
     user_role TINYINT NOT NULL,
-    user_photo VARCHAR(255) DEFAULT 'avatar.jpg',
+    user_photo VARCHAR(255) DEFAULT 'avatar.png',
     user_exp INT DEFAULT 0,
     user_verified BOOLEAN DEFAULT 0,
     user_created DATETIME DEFAULT NOW(),

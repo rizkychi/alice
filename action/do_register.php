@@ -44,7 +44,7 @@ if ($_POST){
         } 
         else 
         { echo "GUAGAL COY"; 
-        
+            $sql;
         } 
     }     
 }
