@@ -65,7 +65,7 @@
                                                             <hr>
                                                             <div class="row">
                                                                 <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
-                                                                <a href="?p=profile&id=" class="text-secondary">
+                                                                <a href="?p=profile&id=<?php echo $row['material_user']?>" class="text-secondary">
                                                                 <?php echo $row['user_name'] ?></a></p>
                                                                 <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
                                                                 <a href="?p=materi-post&id=<?php echo $row['material_id']?>" class="text-secondary">
@@ -135,7 +135,7 @@
                                                                 <hr>
                                                                 <div class="row">
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
-                                                                    <a href="?p=profile&id=" class="text-secondary">
+                                                                    <a href="?p=profile&id=<?php echo $row['material_user']?>" class="text-secondary">
                                                                     <?php echo $row['user_name'] ?></a></a></p>
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
                                                                     <a class="text-secondary" href="?p=materi-post&id=<?php echo $row['material_id']?>" >
@@ -198,7 +198,7 @@
                                                                     <hr>
                                                                     <div class="row">
                                                                         <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text text-truncate"><i class="far fa-user"></i>
-                                                                        <a href="?p=profile&id=" class="text-secondary">
+                                                                        <a href="?p=profile&id=<?php echo $row['material_user']?>" class="text-secondary">
                                                                         <?php echo $row['user_name'] ?></a></a></p>
                                                                         <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text">
                                                                         <a href="?p=materi-post&id=<?php echo $row['material_id']?>" class="text-secondary">
