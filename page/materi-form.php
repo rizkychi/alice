@@ -8,7 +8,7 @@
     $course = '';
     $date = '';
     $nama_file = '';
-    $button = 'add';
+    $button = 'TAMBAH';
     $title  = 'Unggah Materi Baru';
 
     if($materi_id) {
@@ -32,7 +32,7 @@
             <div class="jumbotron">
                 <h2 class="display-6"><?php echo $title; ?></h2>
                 <hr class="my-4">
-                <form action="action/add_materi.php?materi_id=<?php echo $row['material_id']?>" method="post" enctype="multipart/form-data">
+                <form action="action/add_materi.php?<?php if($materi_id){ echo 'materi_id='.$row['material_id'];}?>" method="post" enctype="multipart/form-data">
                 <!-- Body -->
                     <!-- User -->
                     <input type="text" id="materiFormUser" name="materiUser" value="<?php echo $user;?>" class="form-control" hidden>

@@ -32,6 +32,15 @@
     if (!$is_login && $page != 'register') {
         $page = 'landing';
     } else if ($is_login){
+        // keyword search
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            $page    = 'dosen';
+        } else {
+            $keyword = "";
+        }
+
+        // Default path
         if ($role == 1) {
             if ($page == 'home' || $page == 'landing' || $page == 'register') {
                 header("Location: http://$host$uri/?p=admin");
@@ -42,6 +51,7 @@
             }
         }
     }
+
 
     // get page title
     $page_title = ucwords($page); // uppercase first letter
@@ -211,7 +221,7 @@
                         <?php
                             include 'action/_modals.php';    
                             if ($page == 'materi' && $role == 2) {
-                                echo '<a href="?p=materi-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Tambah Materi</button></a>';
+                                echo '<a href="?p=materi-form"><button class="btn btn-sm btn-outline-white" type="button">Tambah Materi</button></a>';
                             }
                         ?>
                     </li>
