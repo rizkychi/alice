@@ -9,17 +9,16 @@
     $nama_file = $_FILES["materiFile"]["name"];
     move_uploaded_file($_FILES["materiFile"]["tmp_name"],"../filemateri/".$nama_file);
 
-    echo $button;
 
     if($button == "TAMBAH") {
         mysqli_query($conn, "INSERT INTO tb_material (material_course, material_user, material_subject, material_content, material_attachment) VALUES ('$course', '$user','$subject','$content', '$nama_file')");
+        header('Location: ../?p=materi');
     }
     else if($button == "SIMPAN") {
         $materi_id=$_GET['materi_id'];
         mysqli_query($conn, "UPDATE tb_material SET material_course='$course', material_user='$user', material_subject='$subject', material_content='$content', material_attachment='$nama_file' WHERE material_id='$materi_id'");
-        echo $materi_id;
+        header('Location: ../?p=materi');
     }
 
-        echo "<script>alert('data ditambahkan')</script>";
-        header('Location: ../?p=materi');
+        
 ?>

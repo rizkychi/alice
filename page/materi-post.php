@@ -2,7 +2,7 @@
     require_once 'config/conf.php';
     $materi_id = $_GET['id'];
     $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user WHERE tb_material.material_id='$materi_id'");        
-    $row=mysqli_fetch_assoc($query);
+    $row= mysqli_fetch_assoc($query);
     $role = $_SESSION['role'];
 ?>
 

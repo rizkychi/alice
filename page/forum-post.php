@@ -2,12 +2,13 @@
     if (isset($_GET['id'])) {
         $post_id = $_GET['id'];
        // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
-       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
+       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content, post_date FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
             $result = mysqli_fetch_array($query);
             $user_id = $result['post_user'];
             $subject= $result['post_subject'];
             $content= $result['post_content'];
             $course = $result['post_course'];
+            $post_date = $result['post_date'];
     }    
 ?>
 
@@ -50,7 +51,7 @@
                         <p class="font-small dark-grey-text mb-1">
                             <strong>Penulis:</strong><?php echo $user_id; ?></p>
                         <p class="font-small grey-text">
-                            15/09/2017 pada 4:03 pm</p>
+                        <?php echo $post_date; ?> </p>
                         <a>
                             <span class="badge badge-danger"><?php echo $course; ?></span>
                         </a>
