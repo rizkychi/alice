@@ -48,7 +48,7 @@
                 <div class="row justify-content-between">
                     <div class="col-md-4 mb-3">
                         <p class="font-small dark-grey-text mb-1">
-                            <strong>Penulis:</strong> Anna Doe</p>
+                            <strong>Penulis:</strong><?php echo $user_id; ?></p>
                         <p class="font-small grey-text">
                             15/09/2017 pada 4:03 pm</p>
                         <a>
