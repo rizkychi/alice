@@ -2,7 +2,7 @@
     if (isset($_GET['id'])) {
         $post_id = $_GET['id'];
        // $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE postID = $id");
-       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id");
+       $query  = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_name");
             $result = mysqli_fetch_array($query);
             $user_id = $result['post_user'];
             $subject= $result['post_subject'];
