@@ -9,6 +9,8 @@
         $exist  = mysqli_num_rows($query);
         $result = mysqli_fetch_array($query);
 
+        echo $exist;
+        die();
         if ($exist > 0) {
             $query = mysqli_query($conn, "UPDATE tb_user SET user_verified = '1' WHERE user_id = '$result[1]' && user_password = '$result[2]'");
             if ($query) {
