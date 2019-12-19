@@ -42,7 +42,7 @@
                     <thead>
                       <tr>
                         <th style="width:100px;"><a>No.</a></th>
-                        <th style="width:150px;"><a>NIM</a></th>
+                        <th style="width:150px;"><a>NIDN</a></th>
                         <th class="th-lg"><a>Nama</a></th>
                         <th class="th-lg"><a>Email</a></th>
                         <th class="th-lg"><a>Pendaftaran</a></th>

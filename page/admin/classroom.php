@@ -1,5 +1,5 @@
 <?php
-    $query  = mysqli_query($conn, 'SELECT tb_class.class_id, class_name, user_name, course_name, COUNT(tb_class_member.user_id) AS class_member, class_code, class_created 
+    $query  = mysqli_query($conn, 'SELECT tb_class.class_id, class_name, user_name, course_name, COUNT(tb_class_member.user_id) AS class_member, class_code, class_created, class_suspended 
                                     FROM tb_class 
                                     JOIN tb_user ON tb_class.class_lecturer = tb_user.user_id 
                                     JOIN tb_course ON tb_class.class_course = tb_course.course_id
@@ -41,17 +41,17 @@
               <div class="px-4">
                 <div class="table-responsive p-2">
                   <!--Table-->
-                  <table id="dataTableClassroom" class="table table-hover mb-0">
+                  <table id="dataTableClassroom" class="table table-hover table-fixed mb-0">
                     <!-- Table head -->
                     <thead>
                       <tr>
-                        <th class="th-lg" style="width:15px;min-width:15px;"><a>No.</a></th>
+                        <th style="width: 110px"><a>No.</a></th>
                         <th class="th-lg"><a>Nama Kelas</a></th>
                         <th class="th-lg"><a>Dosen</a></th>
                         <th class="th-lg"><a>Mata Kuliah</a></th>
-                        <th class="th-lg"><a>Siswa</a></th>
-                        <th class="th-lg"><a>Kode</a></th>
-                        <th class="th-lg"><a>Tanggal</a></th>
+                        <th style="width: 150px"><a>Siswa</a></th>
+                        <th style="width: 150px"><a>Kode</a></th>
+                        <th class="th-lg"><a>Dibuat</a></th>
                         <th class="th-lg"><a>Aksi</a></th>
                       </tr>
                     </thead>
@@ -62,6 +62,13 @@
                       <?php
                         $i = 1;
                         while ($data = mysqli_fetch_array($query)) {
+                            if ($data[7] == 0) {
+                              $unsuspend = '';
+                              $btn_suspend = 'warning';
+                            } else {
+                              $unsuspend = 'un';
+                              $btn_suspend = 'success';
+                            }
                             echo "<tr>";
                             echo "<td>$i</td>";
                             echo "<td>$data[1]</td>";
@@ -72,7 +79,7 @@
                             echo "<td>$data[6]</td>";
                             echo "<td>";
                             echo "<a href='action/_classroom.php?act=delete&id=$data[0]&v=classroom' class='ml-2'><span class='badge badge-danger'>HAPUS</span></a>";
-                            //echo "<a href='?p=forum&id=$data[0]' class='ml-2'><span class='badge badge-primary'>LIHAT</span></a>";
+                            echo "<a href='action/_classroom.php?act=".$unsuspend."suspend&id=$data[0]&v=classroom' class='ml-2'><span class='badge badge-$btn_suspend'>".strtoupper($unsuspend)."SUSPEND</span></a>";
                             echo "</td>";
                             echo "</tr>";
                             $i++;

@@ -72,6 +72,7 @@ CREATE TABLE tb_class (
     class_lecturer CHAR(10) NOT NULL,
     class_header VARCHAR(255) DEFAULT 'header_img_class.jpg',
     class_code CHAR(6) UNIQUE,
+    class_suspended BOOLEAN DEFAULT 0,
     class_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id)

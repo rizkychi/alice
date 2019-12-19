@@ -34,7 +34,7 @@
           <section>
             <div class="card card-cascade narrower z-depth-0 mt-5">
               <div class="view view-cascade gradient-card-header bg-secondary narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
-                <a href="" class="white-text mx-3">Daftar Post Material</a>
+                <a href="" class="white-text mx-3">Daftar Post Materi</a>
               </div>
               <div class="px-4">
                 <div class="table-responsive p-2">
