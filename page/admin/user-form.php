@@ -52,7 +52,7 @@
                         <input type="text" id="userFormEmail" name="userEmail" value="<?php echo $result['user_email'];?>" class="form-control" readonly>
                         <label for="userFormEmail">Email</label>
                     </div>
-                    <div class="row mt-0 align-items-end">
+                    <div class="row mt-0">
                         <div class="col-md-6">
                             <!-- Dob -->
                             <div class="md-form mt-0">
@@ -62,11 +62,15 @@
                         </div>
                         <div class="col-md-6">
                             <!-- Blue select -->
-                            <select class="mdb-select pb-2" id="userFormGender" name="userGender" required>
+                            <!-- <select class="mdb-select pb-2" id="userFormGender" name="userGender" readonly>
                                 <option value="1" disabled>Pilih Jenis Kelamin</option>
-                                <option value="Laki-laki" <?php if ($result['user_gender'] == 'Laki-laki') echo 'selected'; ?>>Laki-Laki</option>
-                                <option value="Perempuan" <?php if ($result['user_gender'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
-                            </select>
+                                <option value="Laki-laki" <?php //if ($result['user_gender'] == 'Laki-laki') echo 'selected'; ?>>Laki-Laki</option>
+                                <option value="Perempuan" <?php //if ($result['user_gender'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
+                            </select> -->
+                            <div class="md-form mb-0 mt-0">
+                                <input type="text" id="userFormGender" class="form-control" value="<?php echo $result['user_gender'];?>" readonly>
+                                <label for="userFormGender">Jenis Kelamin</label>
+                            </div>
                         </div>
                     </div>
                     <?php

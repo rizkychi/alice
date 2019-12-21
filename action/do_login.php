@@ -20,6 +20,8 @@ if($cek > 0){
     $_SESSION['role'] = $ambil['user_role'];  
     $_SESSION['user_photo'] = $ambil['user_photo'];
 
+    $query = mysqli_query($conn, "INSERT INTO tb_visit (visit_id) VALUES ('$id')");
+
     if ($ambil['user_verified'] == 0) {
         $_SESSION['login'] = false ;
         $_SESSION['user_verified'] = $ambil['user_verified'];

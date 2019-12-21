@@ -8,6 +8,12 @@
     $usr_lect_notverif  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_role = '2' AND user_verified = '0'"));
     $usr_stdn_verif     = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_role = '3' AND user_verified = '1'"));
     $usr_stdn_notverif  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_role = '3' AND user_verified = '0'"));
+
+    $query_traffic = mysqli_query($conn, "SELECT DATE_FORMAT(visit_date, '%d/%m') AS day, COUNT(*) AS count FROM tb_visit WHERE visit_date >= NOW() + INTERVAL -7 DAY AND visit_date < NOW() + INTERVAL 0 DAY GROUP BY DAY(visit_date)");
+    $traffic = array();
+    while ($result = mysqli_fetch_assoc($query_traffic)){
+      $traffic[] = $result;
+    }
 ?>
 <!-- Main layout -->
 <main>
@@ -729,13 +735,27 @@ $(document).ready(function(){
     var myLineChart = new Chart(ctxL, {
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [<?php 
+                $i = 1;
+                foreach ($traffic as $value) {
+                  if ($i != 1) echo ",";
+                  echo '"'.$value['day'].'"';
+                  $i++;
+                }
+              ?>],
             datasets: [{
-            label: "My First dataset",
+            label: "Pengunjung",
             fillColor: "#fff",
             backgroundColor: 'rgba(255, 255, 255, .3)',
             borderColor: 'rgba(255, 255, 255)',
-            data: [0, 10, 5, 2, 20, 30, 45],
+            data: [<?php 
+                $i = 1;
+                foreach ($traffic as $value) {
+                  if ($i != 1) echo ",";
+                  echo $value['count'];
+                  $i++;
+                }
+              ?>],
             }]
         },
         options: {

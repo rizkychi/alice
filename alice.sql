@@ -200,6 +200,14 @@ CREATE TABLE tb_notification
     FOREIGN KEY (notif_forum_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- visitor
+CREATE TABLE tb_visit
+(
+    visit_id CHAR(10),
+    visit_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (visit_id) REFERENCES tb_user(user_id) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*-- Create Trigger --*/
 -- Generate class code
