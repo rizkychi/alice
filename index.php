@@ -60,14 +60,19 @@
     function fn_title($conn, $id) {
         $query  = mysqli_query($conn, "SELECT user_exp FROM tb_user WHERE user_id = '$id'");
         $exp = mysqli_fetch_row($query)[0];
-        if ($exp <= 0) {
-            echo "Pemula";
-        } else if ($exp < 1000) {
-            echo "Amatir";
+        if ($exp <= 0) { 
+            echo "Belum Ada Title";
+        } else if ($exp <= 300) {
+            echo "Mahasiswa Awam";
+        } else if ($exp <= 1000) {
+            echo "Belajar Adalah Koentji";
+        } else if ($exp <= 2200) {
+            echo "Bukan Mahasiswa Gaib";
+        } else if ($exp <= 4000) {
+            echo "Mahasiswa Teladan";
         } else {
-            echo "Dewa";
-        }
-        // dan seterusnya;
+            echo "Calon Dosen" ;
+        } 
     }
 ?>
 

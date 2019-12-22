@@ -12,6 +12,7 @@
     $email  = $result['user_email'];
     $dob    = $result['user_dob'];  
     $gender = $result['user_gender'];
+    $exp = $result['user_exp'];
 
     if ($role == '2') {
         $query_dsn = mysqli_query($conn, "SELECT * FROM tb_lecturer_profile WHERE profile_user = '$uid'");
@@ -56,6 +57,7 @@
             <!-- Card content -->
             <div class="card-body card-body-cascade text-center">
                 <img src="img/alice-img/<?php echo $photo; ?>" alt="User Photo" class="z-depth-1 mb-3 mx-auto rounded-circle" />
+                <p class="text-muted"><small><?php if ($role == '3') echo fn_title($conn,$uid).' <br>Skor : '.$exp.' XP'; ?></small></p>
                 <p class="text-muted"><small>Foto profil akan terganti otomatis</small></p>
                 <div class="row justify-content-center">
                     <input type="file" name="upload_image" id="upload_image" accept="image/*" hidden/>
