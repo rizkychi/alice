@@ -290,6 +290,19 @@ BEGIN
 END//
 DELIMITER ;
 
+-- PROCEDURE
+-- Add experience
+DELIMITER //
+CREATE PROCEDURE sp_exp 
+(
+    uid CHAR(10),
+    exp INT
+)
+BEGIN
+    UPDATE tb_user SET user_exp = user_exp + exp WHERE user_id = uid;
+END//
+DELIMITER ;
+
 -- EXAMPLES
 -- Dummy Roles
 INSERT INTO tb_role (role_id, role_name) 
@@ -322,3 +335,6 @@ VALUES ('PWL-03', 1, 'Ini kelas pwl', '0518037801');
 -- Dummy Join A Class
 INSERT INTO tb_class_member(class_id, user_id)
 VALUES (1,'17.11.1247');
+
+-- Dummy experience
+CALL sp_exp ('17.11.1247',100)
