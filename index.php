@@ -51,11 +51,24 @@
             }
         }
     }
-
+    // ------------- End Switch Page ------------- //
 
     // get page title
     $page_title = ucwords($page); // uppercase first letter
-    // ------------- End Switch Page ------------- //
+
+    // get title based on experience
+    function fn_title($conn, $id) {
+        $query  = mysqli_query($conn, "SELECT user_exp FROM tb_user WHERE user_id = '$id'");
+        $exp = mysqli_fetch_row($query)[0];
+        if ($exp <= 0) {
+            echo "Pemula";
+        } else if ($exp < 1000) {
+            echo "Amatir";
+        } else {
+            echo "Dewa";
+        }
+        // dan seterusnya;
+    }
 ?>
 
 <!DOCTYPE html>
