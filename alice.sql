@@ -179,7 +179,8 @@ CREATE TABLE tb_material_downloaded
     material_user CHAR(10) NOT NULL,
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
-    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id),
+    UNIQUE KEY (material_id, material_user) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Notification
@@ -338,3 +339,7 @@ VALUES (1,'17.11.1247');
 
 -- Dummy experience
 CALL sp_exp ('17.11.1247',100)
+
+-- Dummy material downloaded
+INSERT INTO tb_material_downloaded (material_id, material_user)
+VALUES (2, "17.11.1247") ON DUPLICATE KEY UPDATE material_date = CURRENT_TIMESTAMP

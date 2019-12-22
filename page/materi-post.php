@@ -27,9 +27,9 @@
             <p class="font-weight-normal"><?php echo $row['material_content'] ?></p>
             <p class="font-weight-normal">by <a href="?p=profile&id=<?php echo $row['material_user']?>" class="text-secondary"><strong><?php echo $row['user_name'] ?></strong></a><i class="fas fa-download ml-3"></i>
             <?php 
-                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
-                while ($result = mysqli_fetch_assoc($data)){echo count($result); }?></p>
-            <a href="#" class="btn btn-success">UNDUH</a>
+                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = '$materi_id'");
+                echo mysqli_num_rows($data); ?></p>
+            <a href="filemateri/<?php echo $row['material_attachment']; ?>" class="btn btn-success" id="btn_download">UNDUH</a>
             <?php
             if ( $role == 2) {                            
                 echo "<a href='?p=materi-form&materi_id=$row[material_id]' class='btn btn-warning'>EDIT</a>";
@@ -42,3 +42,18 @@
 </div>
 <!-- News jumbotron -->
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#btn_download').click(function(){
+            $.ajax({
+                url:"action/download_counter.php",
+                type: "POST",
+                data:{
+                    material_id: "<?php echo $row['material_id']; ?>",
+                    material_user: "<?php echo $_SESSION['user']; ?>"
+                }
+            });
+        });
+    });
+</script>
