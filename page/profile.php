@@ -1,6 +1,6 @@
 <?php
   $profile_id = $_GET['id'];
-  $sql = "SELECT * FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_id = $profile_id";
+  $sql = "SELECT * FROM tb_user JOIN tb_lecturer_profile ON tb_user.user_id = tb_lecturer_profile.profile_user WHERE user_id = '$profile_id'";
   $result = mysqli_query($conn, $sql);
   $data = mysqli_fetch_array($result);
 ?>
