@@ -194,7 +194,8 @@
         
         <header>
             <!-- Navbar -->
-            <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
+            <div style="height: 80px;"></div>
+            <nav class="mb-2 navbar fixed-top navbar-expand-lg navbar-dark secondary-color lighten-1 scrolling-navbar">
                 <?php
                     if ($role == 1) {
                         ?>
@@ -390,8 +391,7 @@
                 $(this).closest('.select-outline').find('.caret').toggleClass('active');
             });
             });
-        </script>
-        <script>
+            
             // $('.datepicker').pickadate({
             // // Escape any “rule” characters with an exclamation mark (!).
             //     format: 'yyyy-mm-dd',
