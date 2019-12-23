@@ -49,6 +49,73 @@
     </div>
 </div>
 
+<br>
+<br>
+<h4 class="font-weight-bold mt-2"><strong>INFORMASI PERKULIAHAN</strong></h4>
+                <hr class="red title-hr">
+
+<!-- Table with panel -->
+<div class="card card-cascade narrower">
+
+<!--Card image-->
+<br>
+<br>
+
+<div class="view view-cascade gradient-card-header purple-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
+
+<a href="" class="white-text mx-3">Jadwal Kuliah</a>
+
+</div>
+<!--/Card image-->
+
+<div class="px-4">
+
+<div class="table-wrapper table-responsive">
+    <!--Table-->
+    <table class="table table-hover mb-0">
+
+    <!--Table head-->
+    <thead>
+        <tr class="text-uppercase">
+            <th class="th-md">
+                <a>Hari</a>
+            </th>
+            <th class="th-md">
+                <a href="">Mata Kuliah</a>
+            </th>
+            <th class="th-md">
+                <a href="">Jam</a>
+            </th>
+            <th class="th-md">
+                <a href="">Dosen</a>
+            </th>
+            <th class="th-md">
+                <a href="">Ruang</a>
+            </th>
+        </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+
+
+        <tbody>
+        <!-- <tr>
+            <td>1</td>
+            <td>Pemrograman Web Lanjut</td>
+        </tr> -->
+        
+    </tbody>
+    <!--Table body-->
+    </table>
+    <!--Table-->
+</div>
+
+</div>
+
+</div>
+<!-- Table with panel -->
+
           
 
         </div>
