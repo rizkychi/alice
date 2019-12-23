@@ -21,19 +21,31 @@
                 header("Location: ../?p=admin&v=$view");
             }
         }
-    } else if ($act == 'update') {
-        // if ($_POST) {
-        //     $id   = $_POST['courseID'];
-        //     $name = $_POST['courseName'];
-        //     $sks  = $_POST['courseSKS'];
+    } else if ($act == 'suspend') {
+        if (isset($_GET['id'])) {
+            $uid  = $_GET['id'];
+            $view = $_GET['v'];
 
-        //     $query = mysqli_query($conn, "UPDATE tb_course SET course_name = '$name', course_sks = '$sks' WHERE course_id = $id");
+            $query = mysqli_query($conn, "UPDATE tb_class SET class_suspended = '1' WHERE class_id = '$uid'");
 
-        //     if (!$query) {
-        //         echo "<script>alert('gagal')</script>";
-        //     } else {
-        //         header('Location: ../?p=admin&v=course');
-        //     }
-        // }
+            if (!$query) {
+                echo "<script>alert('gagal')</script>";
+            } else {
+                header("Location: ../?p=admin&v=$view");
+            }
+        }
+    } else if ($act == 'unsuspend') {
+        if (isset($_GET['id'])) {
+            $uid  = $_GET['id'];
+            $view = $_GET['v'];
+
+            $query = mysqli_query($conn, "UPDATE tb_class SET class_suspended = '0' WHERE class_id = '$uid'");
+
+            if (!$query) {
+                echo "<script>alert('gagal')</script>";
+            } else {
+                header("Location: ../?p=admin&v=$view");
+            }
+        }
     } 
 ?>

@@ -32,6 +32,15 @@
     if (!$is_login && $page != 'register') {
         $page = 'landing';
     } else if ($is_login){
+        // keyword search
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            $page    = 'dosen';
+        } else {
+            $keyword = "";
+        }
+
+        // Default path
         if ($role == 1) {
             if ($page == 'home' || $page == 'landing' || $page == 'register') {
                 header("Location: http://$host$uri/?p=admin");
@@ -42,10 +51,29 @@
             }
         }
     }
+    // ------------- End Switch Page ------------- //
 
     // get page title
     $page_title = ucwords($page); // uppercase first letter
-    // ------------- End Switch Page ------------- //
+
+    // get title based on experience
+    function fn_title($conn, $id) {
+        $query  = mysqli_query($conn, "SELECT user_exp FROM tb_user WHERE user_id = '$id'");
+        $exp = mysqli_fetch_row($query)[0];
+        if ($exp <= 0) { 
+            echo "Belum Ada Title";
+        } else if ($exp <= 300) {
+            echo "Mahasiswa Awam";
+        } else if ($exp <= 1000) {
+            echo "Belajar Adalah Koentji";
+        } else if ($exp <= 2200) {
+            echo "Bukan Mahasiswa Gaib";
+        } else if ($exp <= 4000) {
+            echo "Mahasiswa Teladan";
+        } else {
+            echo "Calon Dosen" ;
+        } 
+    }
 ?>
 
 <!DOCTYPE html>
@@ -166,7 +194,8 @@
         
         <header>
             <!-- Navbar -->
-            <nav class="mb-2 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
+            <div style="height: 80px;"></div>
+            <nav class="mb-2 navbar fixed-top navbar-expand-lg navbar-dark secondary-color lighten-1 scrolling-navbar">
                 <?php
                     if ($role == 1) {
                         ?>
@@ -362,8 +391,7 @@
                 $(this).closest('.select-outline').find('.caret').toggleClass('active');
             });
             });
-        </script>
-        <script>
+            
             // $('.datepicker').pickadate({
             // // Escape any “rule” characters with an exclamation mark (!).
             //     format: 'yyyy-mm-dd',
@@ -461,9 +489,8 @@
                 // SideNav Scrollbar Initialization
                 var sideNavScrollbar = document.querySelector('.custom-scrollbar');
                     var ps = new PerfectScrollbar(sideNavScrollbar);
-            })
+            });
         </script>
-
        
     <?php } ?>
     </body>

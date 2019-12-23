@@ -72,6 +72,7 @@ CREATE TABLE tb_class (
     class_lecturer CHAR(10) NOT NULL,
     class_header VARCHAR(255) DEFAULT 'header_img_class.jpg',
     class_code CHAR(6) UNIQUE,
+    class_suspended BOOLEAN DEFAULT 0,
     class_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_course) REFERENCES tb_course(course_id),
     FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id)
@@ -178,7 +179,8 @@ CREATE TABLE tb_material_downloaded
     material_user CHAR(10) NOT NULL,
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
-    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id),
+    UNIQUE KEY (material_id, material_user) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Notification
@@ -197,6 +199,14 @@ CREATE TABLE tb_notification
     FOREIGN KEY (notif_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (notif_class_post) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (notif_forum_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- visitor
+CREATE TABLE tb_visit
+(
+    visit_id CHAR(10),
+    visit_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (visit_id) REFERENCES tb_user(user_id) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -281,6 +291,19 @@ BEGIN
 END//
 DELIMITER ;
 
+-- PROCEDURE
+-- Add experience
+DELIMITER //
+CREATE PROCEDURE sp_exp 
+(
+    uid CHAR(10),
+    exp INT
+)
+BEGIN
+    UPDATE tb_user SET user_exp = user_exp + exp WHERE user_id = uid;
+END//
+DELIMITER ;
+
 -- EXAMPLES
 -- Dummy Roles
 INSERT INTO tb_role (role_id, role_name) 
@@ -313,3 +336,10 @@ VALUES ('PWL-03', 1, 'Ini kelas pwl', '0518037801');
 -- Dummy Join A Class
 INSERT INTO tb_class_member(class_id, user_id)
 VALUES (1,'17.11.1247');
+
+-- Dummy experience
+CALL sp_exp ('17.11.1247',100)
+
+-- Dummy material downloaded
+INSERT INTO tb_material_downloaded (material_id, material_user)
+VALUES (2, "17.11.1247") ON DUPLICATE KEY UPDATE material_date = CURRENT_TIMESTAMP

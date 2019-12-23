@@ -51,7 +51,7 @@
                         <p class="font-small dark-grey-text mb-1">
                             <strong>Penulis:</strong><?php echo $user_id; ?></p>
                         <p class="font-small grey-text">
-                        <?php echo $post_date; ?> </p>
+                        <?php echo $post_date; ?></p>
                         <a>
                             <span class="badge badge-danger"><?php echo $course; ?></span>
                         </a>
@@ -117,7 +117,7 @@
 
             <div class="row px-4">
                 <h4>Komentar</h4>
-                <form action="action/_forumcomment.php?act=add" method="post" class="col-md-12">
+                <form action="action/_forumcomment.php??act=<?php echo $act; ?>" method="post" class="col-md-12">
                     <div class="form-group purple-border mt-2 mb-1">
                         <textarea class="form-control" name="comments" rows="3" placeholder="Tulis komentar..." required></textarea>
                     </div>

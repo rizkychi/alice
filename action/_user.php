@@ -38,7 +38,6 @@
         if ($_POST) {
             $uid    = $_POST['userId'];
             $name   = $_POST['userName'];
-            $gender = $_POST['userGender'];
             $dob    = $_POST['userDate'];
             $role   = $_POST['userRole'];
             $view   = $_POST['userView'];
@@ -53,7 +52,7 @@
                 $status  = $_POST['userStatus'];
             }
 
-            $query = mysqli_query($conn, "UPDATE tb_user SET user_name = '$name', user_gender = '$gender', user_dob = '$dob' WHERE user_id = '$uid'");
+            $query = mysqli_query($conn, "UPDATE tb_user SET user_name = '$name', user_dob = '$dob' WHERE user_id = '$uid'");
 
             if ($role == 2) {
                 $query_profile = mysqli_query($conn, "UPDATE tb_lecturer_profile 

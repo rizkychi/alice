@@ -1,8 +1,12 @@
 <?php
     include '../config/conf.php';
 
-    $act = $_GET['act'];
+    session_start();
+    if (isset($_SESSION['user'])) {
+      $uid = $_SESSION['user'];
+  }
 
+    $act = $_GET['act'];
     if ($act == 'add') {
         if ($_POST) {
 
@@ -17,11 +21,13 @@
 //yang bisa masuk db INSERT INTO tb_forum_post VALUES ('', '1', '17.11.1247','How to Make CSS','Just google it', '','','','');
 
           $query = mysqli_query($conn, "INSERT INTO tb_forum_post (post_course, post_user, post_subject, post_content) VALUES ('$course', '$user_id','$subject','$content')");
-           // INSERT INTO tb_forum_post  VALUES ('$postID', '1', '17.11.1247', 'How to Make PHP', 'Stackoverflow', '','','','');
+          
+          // INSERT INTO tb_forum_post  VALUES ('$postID', '1', '17.11.1247', 'How to Make PHP', 'Stackoverflow', '','','','');
             if (!$query) {
               echo "<script>alert('data tidak tersimpan')</script>";
               header('Location: ../?p=forum');
             } else {
+              mysqli_query($conn,"CALL sp_exp ('$uid',100)");
               $last_post = mysqli_insert_id($conn);
               header('Location: ../?p=forum&id='.$last_post);
             }
