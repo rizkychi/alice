@@ -26,5 +26,26 @@
                 header("Location: ../?p=home");
             }
         }
+    } else if ($act == 'add') {
+        if ($_POST) {
+            $uid     = $_POST['classUser'];
+            $cname   = $_POST['className'];
+            $cdesc   = $_POST['classDesc'];
+            $ccourse = $_POST['classCourse'];
+
+            $query   = mysqli_query($conn, "INSERT INTO tb_class (class_name, class_course, class_desc, class_lecturer) VALUES ('$cname', '$ccourse', '$cdesc', '$uid')");
+            header("Location: ../?p=classroom");
+        }
+    } else if ($act == 'update') {
+        if ($_POST) {
+            $uid     = $_POST['classUser'];
+            $cid     = $_POST['classId'];
+            $cname   = $_POST['className'];
+            $cdesc   = $_POST['classDesc'];
+            $ccourse = $_POST['classCourse'];
+
+            $query   = mysqli_query($conn, "UPDATE tb_class SET class_name = '$cname', class_course = '$ccourse', class_desc = '$cdesc', class_lecturer = '$uid' WHERE class_id = '$cid'");
+            header("Location: ../?p=classroom");
+        }
     }
 ?>
