@@ -61,7 +61,7 @@
         $query  = mysqli_query($conn, "SELECT user_exp FROM tb_user WHERE user_id = '$id'");
         $exp = mysqli_fetch_row($query)[0];
         if ($exp <= 0) { 
-            echo "Belum Ada Title";
+            echo "Maba";
         } else if ($exp <= 300) {
             echo "Mahasiswa Awam";
         } else if ($exp <= 1000) {
@@ -96,7 +96,7 @@
         <!-- Your custom styles (optional) -->
         <link href="css/style.css" rel="stylesheet">
         <?php
-            if ($role == 1) {
+            if ($role == 1 || $page == 'home') {
                 ?>
                     <!-- DataTables.net  -->
                     <link rel="stylesheet" type="text/css" href="css/addons/datatables.min.css">
@@ -234,13 +234,13 @@
                         <!-- button tambah -->
                         <?php
                             if ($page == 'forum') {
-                                echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white" type="button">Buat post</button></a>';
+                                echo '<a href="?p=forum-form&act=add"><button class="btn btn-sm btn-outline-white mt-1 mb-0" type="button">Buat post</button></a>';
                             }
                         ?>
                         <?php
                             include 'action/_modals.php';    
                             if ($page == 'materi' && $role == 2) {
-                                echo '<a href="?p=materi-form"><button class="btn btn-sm btn-outline-white" type="button">Tambah Materi</button></a>';
+                                echo '<a href="?p=materi-form"><button class="btn btn-sm btn-outline-white mt-1 mb-0" type="button">Tambah Materi</button></a>';
                             }
                         ?>
                     </li>

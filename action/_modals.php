@@ -210,3 +210,67 @@
   </div>
 </div>
 <!-- Modal alert delete account-->
+
+<!--Modal: Join a Class-->
+<div class="modal fade" id="modalJoinClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Body-->
+      <div class="modal-body text-center mb-1">
+
+        <h5 class="mt-1 mb-4">Gabung ke kelas</h5>
+
+        <form action="action/classroom.php?act=join" method="post">
+            <input type="text" name="userId" value="<?php echo $_SESSION['user']; ?>" hidden>
+          <div class="md-form ml-0 mr-0">
+            <input type="text" id="classCode" name="classCode" class="form-control form-control-sm ml-0" required>
+            <label data-error="wrong" data-success="right" for="classCode" class="ml-0">Masukkan kode kelas</label>
+          </div>
+
+          <div class="text-center mt-3">
+            <button class="btn btn-purple mt-1">Gabung <i class="fas fa-sign-in-alt ml-1"></i></button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: Join a Class-->
+
+<!-- Modal Login Failed -->
+<!-- Central Modal Medium Danger -->
+<div class="modal fade" id="modalJoinFail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Gagal Bergabung</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+          <p>Kode kelas tidak ditemukan. Pastikan anda mengisi dengan benar dan kemudian coba gabung kembali.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Tutup</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal Login Failed-->

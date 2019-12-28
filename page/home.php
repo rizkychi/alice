@@ -1,225 +1,326 @@
-<body class="fixed-sn homepage-v3">
+<?php
+    $uid = $_SESSION['user'];
 
-  <!-- Main layout -->
-  <main class="pt-4">
-    <div class="container-fluid">
-      <!-- Magazine -->
+    $status          = mysqli_fetch_array(mysqli_query($conn, "SELECT profile_status FROM tb_lecturer_profile WHERE profile_user = '$uid'"))[0];
+    $profile         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'"));  
+    $assignment      = mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$uid'");
+    $recent_post     = mysqli_query($conn, "SELECT post_id, post_subject, post_view, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post WHERE post_user = '$uid' ORDER BY post_date DESC");
+    $recent_material = mysqli_query($conn, "SELECT material_id, material_subject, (SELECT COUNT(*) FROM tb_material_downloaded WHERE tb_material_downloaded.material_id = tb_material.material_id) AS material_download FROM tb_material WHERE material_user = '$uid' ORDER BY material_date DESC");
+    
+    // put modal if failed join
+    if (isset($_SESSION['errorJoinClass']) && $_SESSION['errorJoinClass']) {
+      echo    "<script>
+                  $(document).ready(function() {
+                      $('#modalJoinFail').modal('show');
+                  });
+              </script>";
+      unset($_SESSION['errorJoinClass']);
+    }
+
+    //form
+    if ($_POST) {
+      if ($role == 2) {
+        $getStatus = $_POST['userStatus'];
+        $query     = mysqli_query($conn, "UPDATE tb_lecturer_profile SET profile_status = '$getStatus' WHERE profile_user = '$uid'");
+        echo "<meta http-equiv='refresh' content='0'>";
+      }
+    }
+?>
+
+<!-- DataTables  -->
+<script type="text/javascript" src="js/addons/datatables.min.js"></script>
+<!-- DataTables Select  -->
+<script type="text/javascript" src="js/addons/datatables-select.min.js"></script>
+
+<?php
+  if ($role == 2) {  
+?>
+<!-- Main layout Lecturer-->
+
+<main>
+
+  <div class="container">
+
+    <!-- Section: data tables -->
+    <section class="mt-md-4 pb-3">
+
       <div class="row">
-        <!-- Main news -->
-        <div class="col-xl-8 col-md-12">
-        
-        <div class="container-fluid">
-        <h4 class="font-weight-bold mt-2"><strong>DAFTAR KELAS YANG DIIKUTI</strong></h4>
-         <hr class="red title-hr">
-     <div class="d-flex flex-wrap justify-content-start">    
-        <?php
-            for ($i=0; $i < 2; $i++) { 
-                ?>
-                    <div class="alice-class m-3">
-                        <div class="card">
-                            <!-- Card image -->
-                            <div class="view overlay">
-                                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/food.jpg" alt="Card image cap">
-                                <a>
-                                    <div class="mask rgba-white-slight"></div>
-                                </a>
-                            </div>
-                            <!-- Button -->
-                            <a class="btn-floating btn-action ml-auto mr-4 purple-gradient"><i class="fas fa-chevron-right pl-1"></i></a>
-                            <!-- Card content -->
-                            <div class="card-body">
-                                <!-- Title -->
-                                <h4 class="card-title">Nama kelas</h4>
-                                <hr>
-                                <!-- Text -->
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                            <!-- Card footer -->
-                            <div class="rounded-bottom purple-gradient lighten-3 text-center pt-3">
-                                <ul class="list-unstyled list-inline font-small">
-                                    <!-- <li class="list-inline-item pr-2 white-text"><i class="far fa-clock pr-1"></i>05/10/2015</li> -->
-                                    <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fas fa-user pr-1"></i>12 Siswa</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                <?php
-            }
-        ?>
-    </div>
-</div>
 
-<br>
-<br>
-<h4 class="font-weight-bold mt-2"><strong>INFORMASI PERKULIAHAN</strong></h4>
-                <hr class="red title-hr">
+        <div class="col-xl-4 col-md-6">
 
-<!-- Table with panel -->
-<div class="card card-cascade narrower">
-
-<!--Card image-->
-<br>
-<br>
-
-<div class="view view-cascade gradient-card-header purple-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
-
-<a href="" class="white-text mx-3">Jadwal Kuliah</a>
-
-</div>
-<!--/Card image-->
-
-<div class="px-4">
-
-<div class="table-wrapper table-responsive">
-    <!--Table-->
-    <table class="table table-hover mb-0">
-
-    <!--Table head-->
-    <thead>
-        <tr class="text-uppercase">
-            <th class="th-md">
-                <a>Hari</a>
-            </th>
-            <th class="th-md">
-                <a href="">Mata Kuliah</a>
-            </th>
-            <th class="th-md">
-                <a href="">Jam</a>
-            </th>
-            <th class="th-md">
-                <a href="">Dosen</a>
-            </th>
-            <th class="th-md">
-                <a href="">Ruang</a>
-            </th>
-        </tr>
-    </thead>
-    <!--Table head-->
-
-    <!--Table body-->
-
-
-        <tbody>
-        <!-- <tr>
-            <td>1</td>
-            <td>Pemrograman Web Lanjut</td>
-        </tr> -->
-        
-    </tbody>
-    <!--Table body-->
-    </table>
-    <!--Table-->
-</div>
-
-</div>
-
-</div>
-<!-- Table with panel -->
-
-          
-
-        </div>
-        <!-- Main news -->
-
-        <!-- Sidebar -->
-        <div class="col-xl-4 col-md-12 widget-column mt-0">
-
-            <!-- Section: Categories -->
-                    
-            <section class="section mb-5">
-                <h4 class="font-weight-bold mt-2"><strong>DAFTAR TUGAS</strong></h4>
-                <hr class="red title-hr">
-                <ul class="list-group z-depth-1 mt-4">
-                <?php
-            $sql = "SELECT course_id,course_name,course_sks FROM tb_course";
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_array($result)) {
-                ?>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a><?php echo $row[1];?></a>
-                                    <span class="badge badge-danger badge-pill">3</span>
-                                </li>
-            <?php
-              } 
-             } else {
-                 echo "0 Result";
-             }
-            ?>
-                    <li class="list-group-item d-flex justify-content-center align-items-center">
-                        <a href="#" class="text-secondary">Lihat Selengkapnya</a>
-                    </li>
-                </ul>
-
-
-            </section>
-            <!-- Section: Categories -->
-
-            <!-- Section: Featured posts -->
-            <section class="section widget-content mt-5">
-                <!-- Heading -->
-                <h4 class="font-weight-bold mt-2"><strong>POST POPULER</strong></h4>
-                <hr class="red title-hr">
-                <!-- Heading -->
-
-                <div class="card card-body pb-0 mt-4 mb-4">
-                <?php
-                $sql = "SELECT post_id,post_user,post_subject,post_content,post_date FROM tb_forum_post";
-                 $result = mysqli_query($conn, $sql);
-                 if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_array($result)) {
-                ?>
-                                <div class="single-post">
-                                    <!-- Grid row -->
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <!-- Image -->
-                                            <div class="view overlay rgba-white-slight">
-                                                <img src="img/alice-img/avatar.png"
-                                                    class="img-fluid rounded-0 w-75 ml-2" alt="Avatar">
-                                                <a>
-                                                    <div class="mask waves-light"></div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Excerpt -->
-                                        <div class="col-8">
-                                            <div class="post-data">
-                                                <a href="?p=forum&id=1" class="text-secondary stretched-link"><strong><?php echo $row[2];?></strong></a>
-                                                <p class="font-small mb-0 text-black-50">
-                                                <?php echo $row[4];?>
-                                                </p>
-                                                <a class="font-small mb-0"><i class="fas fa-comment-alt"></i>
-                                                    114
-                                                </a>
-                                                <a class="font-small mb-0 ml-3"><i class="fas fa-eye"></i></i>
-                                                    114
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Excerpt -->
-                                    </div>
-                                    <!-- Grid row -->
-                                </div>
-                                <?php
-              } 
-             } else {
-                 echo "0 Result";
-             }
-            ?>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="h5-responsive my-2">Status</h5>
+              <hr class="purple">
+              <form action="" method="post">
+                <!-- Blue select -->
+                <select class="mdb-select mt-2" id="userFormStatus" name="userStatus" required>
+                    <option value="1" disabled>Pilih Status Mengajar</option>
+                    <option value="Selo" <?php if ($status == 'Selo') echo 'selected'; ?>>Selo</option>
+                    <option value="Mengajar" <?php if ($status == 'Mengajar') echo 'selected'; ?>>Mengajar</option>
+                    <option value="Rapat" <?php if ($status == 'Rapat') echo 'selected'; ?>>Rapat</option>
+                    <option value="di Rumah" <?php if ($status == 'di Rumah') echo 'selected'; ?>>di Rumah</option>
+                </select>
+                <div class="float-right">
+                  <input type="submit" value="Perbarui" class="btn btn-secondary btn-rounded btn-sm z-depth-1">
                 </div>
-            </section>
-            <!-- Section: Featured posts -->
+              </form>
+            </div>
+          </div>
+
+          <div class="card mb-md-0 mb-4">
+            <div class="card-body">
+              <h5 class="h5-responsive my-2">Tugas</h5>
+              <hr class="purple">
+              <div class="list-group list-panel">
+                <?php 
+                  if (mysqli_num_rows($assignment) > 0) {
+                      while ($result = mysqli_fetch_array($assignment)) {
+                          ?>
+                            <a href="?p=admin&v=user-form&act=update&id=<?php echo $result['user_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['user_name']; ?>
+                              <i class="fas fa-external-link-alt ml-1" data-toggle="tooltip" data-placement="top"
+                                title="Klik untuk melihat"></i>
+                            </a>
+                          <?php
+                      }
+                  } else {
+                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
 
         </div>
-        <!-- Sidebar -->
+
+        <div class="col-xl-8 col-md-6">
+          <div class="row">
+              <div class="col-md-12">
+                <a href="?p=class-form&act=add" class="btn purple-gradient btn-rounded waves-effect font-weight-bold btn-dash float-right">
+                    Buat Kelas 
+                </a>
+                <a href="?p=forum-form&act=add" class="btn purple-gradient btn-rounded waves-effect font-weight-bold btn-dash float-right">
+                    Tulis Post 
+                </a>
+                <a href="?p=materi-form" class="btn purple-gradient btn-rounded waves-effect font-weight-bold btn-dash float-right">
+                    Unggah Materi
+                </a>
+              </div>
+          </div>
+
+          <div class="card my-4">
+            <div class="card-body">
+              <div class="table-responsive p-2">
+                <table id="dataTablePost" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_post)){
+                            echo "<tr>";
+                            echo "<td><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
+                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+                  Lihat post lainnya
+              </a>
+            </div>
+          </div>
+
+          <div class="card my-4">
+            <div class="card-body">
+              <div class="table-responsive p-2">
+                <table id="dataTableMaterial" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_material)){
+                            echo "<tr>";
+                            echo "<td><a href='?p=forum&id=$result[material_id]'>$result[material_subject]</a></td>";
+                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[material_download]</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <a href="?p=materi" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+                  Lihat materi lainnya
+              </a>
+            </div>
+          </div>
+
+        </div>
 
       </div>
-      <!-- Magazine -->
 
-    </div>
+    </section>
+    <!-- Section: data tables -->
 
-  </main>
-  <!-- Main layout -->
+  </div>
+
+</main>
+<!-- Main layout -->
+<?php
+  } else if ($role == 3) {
+?>
+<!-- Main layout Students-->
+<main>
+
+  <div class="container">
+
+    <!-- Section: data tables -->
+    <section class="mt-md-4 pb-3">
+
+      <div class="row">
+
+        <div class="col-xl-4 col-md-6">
+
+          <div class="card mb-4">
+            <div class="card-body row justify-content-center">
+              <div class="col-md-4">
+                  <img src="img/reward.png" alt="reward" class="img-fluid">
+              </div>
+              <div class="col-md-12">
+                  <h5 class="h5-responsive my-2 text-center"><?php fn_title($conn, $uid); ?></h5>
+                  <?php
+                      $exp = $profile['user_exp'];
+                      if ($exp <= 0) { 
+                          $min = 0;
+                          $max = 300;
+                      } else if ($exp <= 300) {
+                          $min = 0;
+                          $max = 300;
+                      } else if ($exp <= 1000) {
+                          $min = 300;
+                          $max = 1000;
+                      } else if ($exp <= 2200) {
+                          $min = 1000;
+                          $max = 2200;
+                      } else if ($exp <= 4000) {
+                          $min = 2200;
+                          $max = 4000;
+                      } else {
+                          $min = 4000;
+                          $max = 9999;
+                          $exp = 9999;
+                      } 
+                      $bar_percent = (float)(($exp-$min)/($max-$min)*100);
+                  ?>
+                  <p class="font-weight-light font-italic text-center" style="line-height: 0.9;"><?php echo $profile['user_exp'];?> exp <br><span style="font-size: 12px;">(selanjutnya: <?php echo $max;?>)</span></p>
+                  <div class="progress md-progress mt-4">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $bar_percent;?>%" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-md-0 mb-4">
+            <div class="card-body">
+              <h5 class="h5-responsive my-2">Tugas</h5>
+              <hr class="purple">
+              <div class="list-group list-panel">
+                <?php 
+                  if (mysqli_num_rows($assignment) > 0) {
+                      while ($result = mysqli_fetch_array($assignment)) {
+                          ?>
+                            <a href="?p=admin&v=user-form&act=update&id=<?php echo $result['user_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['user_name']; ?>
+                              <i class="fas fa-external-link-alt ml-1" data-toggle="tooltip" data-placement="top"
+                                title="Klik untuk melihat"></i>
+                            </a>
+                          <?php
+                      }
+                  } else {
+                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8 col-md-6">
+          <div class="row">
+              <div class="col-md-12">
+                  <a data-toggle="modal" data-target="#modalJoinClass" class="btn purple-gradient btn-rounded waves-effect font-weight-bold btn-dash float-right">
+                      Gabung Kelas    
+                  </a>
+                  <a href="?p=forum-form&act=add" class="btn purple-gradient btn-rounded waves-effect font-weight-bold btn-dash float-right">
+                      Tulis Post 
+                  </a>
+              </div>
+          </div>
+          <div class="card my-4">
+            <div class="card-body">
+              <div class="table-responsive p-2">
+                <table id="dataTablePost" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_post)){
+                            echo "<tr>";
+                            echo "<td><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
+                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+                  Lihat post lainnya
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- Section: data tables -->
+
+  </div>
+
+</main>
+<?php } ?>
+
+<script>
+    $('#dataTablePost').DataTable({
+        "pagingType" : "simple_numbers",
+        "ordering" : false,
+        "pageLength" : 5
+    });
+    $('#dataTableMaterial').DataTable({
+        "pagingType" : "simple_numbers",
+        "ordering" : false,
+        "pageLength" : 5
+    });
+    $('#dataTablePost_length label').replaceWith("<label>Post Saya</label>");
+    $('#dataTableMaterial_length label').replaceWith("<label>Materi Saya</label>");
+    $('.dataTables_wrapper').css("padding","10px");
+</script>
