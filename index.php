@@ -35,7 +35,7 @@
         // keyword search
         if (isset($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
-            $page    = 'dosen';
+            $page    = $_GET['p'];
         } else {
             $keyword = "";
         }
@@ -194,7 +194,11 @@
         
         <header>
             <!-- Navbar -->
-            <div style="height: 80px;"></div>
+            <?php
+                if ($page != 'class') {
+                    ?><div style="height: 80px;"></div><?php
+                }
+            ?>
             <nav class="mb-2 navbar fixed-top navbar-expand-lg navbar-dark secondary-color lighten-1 scrolling-navbar">
                 <?php
                     if ($role == 1) {
@@ -379,6 +383,16 @@
             // Tooltips Initialization
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            $(document).ready(function() {
+                $('.submit-on-enter').keydown(function(event) {
+                    // enter has keyCode = 13, change it if you want to use another button
+                    if (event.keyCode == 13) {
+                        this.form.submit();
+                        return false;
+                    }
+                });
             });
         </script>
         <!-- Your custom scripts (optional) -->

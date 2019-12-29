@@ -13,8 +13,9 @@ require_once 'config/conf.php';
             <p class="mt-2">Sebagai sekolah tinggi di bidang informatika, proses belajar-mengajar di UNIVERSITAS AMIKOM didukung oleh tenaga pengajar yang berkualitas.</p>
             <!-- Search form -->
 
-             <form class="w-50 md-form form-inline active-purple-3 active-purple-4 mx-auto" method="get">
-                <input class="form-control w-100" type="text" name="keyword" placeholder="Cari dosen" aria-label="Search">
+             <form class="w-50 mx-auto py-2" method="get">
+                <input type="text" name="p" value="dosen" hidden>
+                <input class="form-control w-100 submit-on-enter btn-rounded" type="text" name="keyword" placeholder="Cari dosen" aria-label="Search">
             </form>
             <!-- Search form -->
         </div>

@@ -17,16 +17,6 @@
     $n_material_dl   = mysqli_num_rows($recent_download);
     $n_material_up   = mysqli_num_rows($recent_material);
 
-    // put modal if failed join
-    if (isset($_SESSION['errorJoinClass']) && $_SESSION['errorJoinClass']) {
-      echo    "<script>
-                  $(document).ready(function() {
-                      $('#modalJoinFail').modal('show');
-                  });
-              </script>";
-      unset($_SESSION['errorJoinClass']);
-    }
-
     //form
     if ($_POST) {
       if ($role == 2) {
