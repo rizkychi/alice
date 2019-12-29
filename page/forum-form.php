@@ -13,18 +13,19 @@
         $course = '';
         $button = 'Post';
         $title  = 'Buat Post Baru';
-    } else if ($act == 'update') {
-        if (isset($_GET['postID'])) {
-            $id     = $_GET['postID'];
-            $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post WHERE post_id = $id");
-            $result = mysqli_fetch_array($query);
-            $user   = $result['post_user'];
-            $subject= $result['post_subject'];
-            $content= $result['post_content'];
-            $course = $result['post_course'];
-            $button = 'Ubah';
-            $title  = 'Ubah Post';
-        }
+    } elseif ($act == 'update') {
+         $post_id = $_GET['id'];
+        $query = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content, post_date FROM tb_forum_post 
+       JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
+        $row = mysqli_fetch_array($query);
+        $title = 'Edit Post';
+        $button = 'SIMPAN';
+       
+        $subject = $row ['post_subject'];
+        $content = $row ['post_content'];
+        $course = $row ['post_course'];
+        $date = $row ['post_date'];
+        //var_dump($row);
     }
 
 
@@ -40,6 +41,7 @@
                 <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
+                    <input type="hidden" name="post_id" value="<?= $post_id?>">
                     <div class="md-form">
                         <input type="text" id="postFormTitle" name="postName" value="<?php echo $subject;?>" class="form-control" required>
                         <label for="postFormTitle">Judul post</label>
@@ -51,7 +53,7 @@
                     </div>
                     <!--Blue select-->
                     <select class="mdb-select mt-3 w-50" name="course" searchable="Cari Mata Kuliah" required>
-                        <option value="0" disabled <?php if ($act == 'add') echo 'selected'; ?>>Pilih Mata Kuliah</option>
+                        <option value="0" disabled <?php if ($act == 'add' or 'update') echo 'selected'; ?>>Pilih Mata Kuliah</option>
                         <!-- Dynamic Course List -->
                         <?php
                             $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");

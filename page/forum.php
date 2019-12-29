@@ -194,16 +194,27 @@
                 <h4 class="font-weight-bold mt-2"><strong>KATEGORI</strong></h4>
                 <hr class="red title-hr">
                 <ul class="list-group z-depth-1 mt-4">
-                    <?php
-                        for ($i=0; $i < 6; $i++) { 
-                            ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a>Mata kuliah</a>
-                                    <span class="badge badge-danger badge-pill">4</span>
-                                </li>
-                            <?php
-                        }    
+                <?php
+                //$sql = "SELECT course_id,course_name,course_sks FROM tb_course";
+                $sql = "SELECT course_name FROM tb_course INNER JOIN tb_forum_post on course_id = post_course group by course_name";
+               $count = "SELECT COUNT(post_id) FROM tb_forum_post GROUP by post_course";
+                $result = mysqli_query($conn, $sql);
+               // $hitung = mysqli_query($conn, $count);
+                if (mysqli_num_rows($result) > 0) {
+                    // output data of each row
+                    while($row = mysqli_fetch_array($result)) {
                     ?>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a><?php echo $row[0];?></a>
+                                        <span class="badge badge-danger badge-pill">4</span>
+                                    </li>
+                <?php
+                  } 
+                 } else {
+                     echo "0 Result";
+                 }
+                ?>
+
                     <li class="list-group-item d-flex justify-content-center align-items-center">
                         <a href="#" class="text-secondary">Lihat Selengkapnya</a>
                     </li>
