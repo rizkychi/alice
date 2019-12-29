@@ -2,11 +2,21 @@
     $uid = $_SESSION['user'];
 
     $status          = mysqli_fetch_array(mysqli_query($conn, "SELECT profile_status FROM tb_lecturer_profile WHERE profile_user = '$uid'"))[0];
-    $profile         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'"));  
+    $profile         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'")); 
+
     $assignment      = mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$uid'");
     $recent_post     = mysqli_query($conn, "SELECT post_id, post_subject, post_view, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post WHERE post_user = '$uid' ORDER BY post_date DESC");
     $recent_material = mysqli_query($conn, "SELECT material_id, material_subject, (SELECT COUNT(*) FROM tb_material_downloaded WHERE tb_material_downloaded.material_id = tb_material.material_id) AS material_download FROM tb_material WHERE material_user = '$uid' ORDER BY material_date DESC");
-    
+    $recent_comment  = mysqli_query($conn, "SELECT comment_post, comment_content, comment_user, post_subject FROM tb_forum_comment c JOIN tb_forum_post p ON c.comment_post = p.post_id  WHERE comment_user = '$uid'");
+    $recent_download = mysqli_query($conn, "SELECT d.material_id, material_subject, course_name FROM tb_material_downloaded d JOIN tb_material m ON d.material_id = m.material_id JOIN tb_course ON m.material_course = course_id WHERE d.material_user = '$uid'");
+
+    $n_class         = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class_member WHERE user_id = '$uid'"));
+    $n_class_created = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class WHERE class_lecturer = '$uid'"));
+    $n_post          = mysqli_num_rows($recent_post);
+    $n_comment       = mysqli_num_rows($recent_comment);
+    $n_material_dl   = mysqli_num_rows($recent_download);
+    $n_material_up   = mysqli_num_rows($recent_material);
+
     // put modal if failed join
     if (isset($_SESSION['errorJoinClass']) && $_SESSION['errorJoinClass']) {
       echo    "<script>
@@ -68,7 +78,7 @@
             </div>
           </div>
 
-          <div class="card mb-md-0 mb-4">
+          <div class="card mb-4">
             <div class="card-body">
               <h5 class="h5-responsive my-2">Tugas</h5>
               <hr class="purple">
@@ -87,6 +97,33 @@
                       echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
                   }
                 ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="h5-responsive my-2">Statistik</h5>
+              <hr class="purple">
+              <div class="list-group list-panel">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Kelas dibuat
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_class_created;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Posting Forum
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_post;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Komentar Forum
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_comment;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Materi diunggah
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_material_up;?></span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -123,7 +160,7 @@
                     <?php
                         while ($result = mysqli_fetch_array($recent_post)){
                             echo "<tr>";
-                            echo "<td><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
+                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
                             echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
                             echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
                             echo "</tr>";
@@ -132,7 +169,7 @@
                   </tbody>
                 </table>
               </div>
-              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -1rem;">
                   Lihat post lainnya
               </a>
             </div>
@@ -152,7 +189,7 @@
                     <?php
                         while ($result = mysqli_fetch_array($recent_material)){
                             echo "<tr>";
-                            echo "<td><a href='?p=forum&id=$result[material_id]'>$result[material_subject]</a></td>";
+                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[material_id]'>$result[material_subject]</a></td>";
                             echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[material_download]</td>";
                             echo "</tr>";
                         }
@@ -160,9 +197,34 @@
                   </tbody>
                 </table>
               </div>
-              <a href="?p=materi" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+              <a href="?p=materi" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -1rem;">
                   Lihat materi lainnya
               </a>
+            </div>
+          </div>
+
+          <div class="card my-4">
+            <div class="card-body pb-0">
+              <div class="table-responsive p-2">
+                <table id="dataTableComment" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_comment)){
+                            echo "<tr>";
+                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[comment_post]'>$result[comment_content]</a></td>";
+                            echo "<td class='text-truncate'><i class='far fa-copy mr-2'></i><a href='?p=forum&id=$result[comment_post]'>$result[post_subject]</a></td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -231,7 +293,7 @@
             </div>
           </div>
 
-          <div class="card mb-md-0 mb-4">
+          <div class="card mb-4">
             <div class="card-body">
               <h5 class="h5-responsive my-2">Tugas</h5>
               <hr class="purple">
@@ -250,6 +312,33 @@
                       echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
                   }
                 ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="h5-responsive my-2">Statistik</h5>
+              <hr class="purple">
+              <div class="list-group list-panel">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Kelas yang diikuti
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_class;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Posting Forum
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_post;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Komentar Forum
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_comment;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Materi diunduh
+                    <span class="badge badge-secondary badge-pill z-depth-0"><?php echo $n_material_dl;?></span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -282,7 +371,7 @@
                     <?php
                         while ($result = mysqli_fetch_array($recent_post)){
                             echo "<tr>";
-                            echo "<td><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
+                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
                             echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
                             echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
                             echo "</tr>";
@@ -291,8 +380,61 @@
                   </tbody>
                 </table>
               </div>
-              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -2rem;">
+              <a href="?p=forum" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -1rem;">
                   Lihat post lainnya
+              </a>
+            </div>
+          </div>
+
+          <div class="card my-4">
+            <div class="card-body pb-0">
+              <div class="table-responsive p-2">
+                <table id="dataTableComment" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_comment)){
+                            echo "<tr>";
+                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[comment_post]'>$result[comment_content]</a></td>";
+                            echo "<td class='text-truncate'><i class='far fa-copy mr-2'></i><a href='?p=forum&id=$result[comment_post]'>$result[post_subject]</a></td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card my-4">
+            <div class="card-body">
+              <div class="table-responsive p-2">
+                <table id="dataTableMaterialDownloaded" class="table table-fixed mb-0">
+                  <thead>
+                    <tr style="display: none;">
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        while ($result = mysqli_fetch_array($recent_download)){
+                            echo "<tr>";
+                            echo "<td class='text-truncate'><a href='?p=materi-post&id=$result[material_id]'>$result[material_subject]</a></td>";
+                            echo "<td class='text-truncate'><i class='fas fa-layer-group mr-2'></i>$result[course_name]</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <a href="?p=material" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold  btn-dash" style="margin-top: -1rem;">
+                  Lihat materi lainnya
               </a>
             </div>
           </div>
@@ -320,7 +462,21 @@
         "ordering" : false,
         "pageLength" : 5
     });
+    $('#dataTableMaterialDownloaded').DataTable({
+        "pagingType" : "simple_numbers",
+        "ordering" : false,
+        "pageLength" : 5
+    });
+    $('#dataTableComment').DataTable({
+        "pagingType" : "simple_numbers",
+        "ordering" : false,
+        "pageLength" : 5
+    });
     $('#dataTablePost_length label').replaceWith("<label>Post Saya</label>");
     $('#dataTableMaterial_length label').replaceWith("<label>Materi Saya</label>");
+    $('#dataTableMaterialDownloaded_length label').replaceWith("<label>Materi Diunduh</label>");
+    $('#dataTableComment_length label').replaceWith("<label>Komentar Saya</label>");
+    $('.pagination').css("margin", "0px");
     $('.dataTables_wrapper').css("padding","10px");
+    //$('.dataTables_info').hide();
 </script>
