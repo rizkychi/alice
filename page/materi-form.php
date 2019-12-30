@@ -1,8 +1,7 @@
 <?php
 
     $materi_id=isset ($_GET['materi_id']) ? $_GET['materi_id'] : false;
-
-    $user   = '0518037801';
+    $user = isset($_SESSION['user'])? $_SESSION['user'] : false;
     $subject= '';
     $content= '';
     $course = '';
