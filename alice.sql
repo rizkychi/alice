@@ -260,7 +260,6 @@ AFTER INSERT
 ON tb_class_post FOR EACH ROW
 BEGIN
     DECLARE class VARCHAR(255);
-    DECLARE fname VARCHAR(255);
     DECLARE user CHAR(10);
     DECLARE roles INT;
     DECLARE lecturer CHAR(10);
@@ -269,8 +268,8 @@ BEGIN
         SELECT user_id FROM tb_class_member WHERE class_id = NEW.post_class_id;
     DECLARE CONTINUE HANDLER FOR
         NOT FOUND SET finished = 1;
-    SELECT class_name, class_lecturer INTO class, lecturer FROM tb_class WHERE class_id = NEW.post_class_id;
-    SELECT user_name, user_role INTO fname, roles FROM tb_user WHERE user_id = NEW.post_user;
+    SELECT class_lecturer INTO lecturer FROM tb_class WHERE class_id = NEW.post_class_id;
+    SELECT user_role INTO roles FROM tb_user WHERE user_id = NEW.post_user;
     OPEN curMember;
     wloop:WHILE finished = 0 DO
         FETCH curMember INTO user;
@@ -278,14 +277,14 @@ BEGIN
             LEAVE wloop;
         END IF;
         IF NEW.post_user != user THEN
-            INSERT INTO tb_notification (notification_user, notification_class_id, notification_class_post, notification_detail)
-            VALUES (user, NEW.post_class_id, NEW.post_id, CONCAT(fname, ' menambahkan post baru di ', class));
+            INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post)
+            VALUES (user, NEW.post_user, NEW.post_class_id, NEW.post_id);
         END IF;
     END WHILE wloop;
     SET finished = 0;
     IF roles = 3 THEN
-        INSERT INTO tb_notification (notification_user, notification_class_id, notification_class_post, notification_detail)
-        VALUES (lecturer, NEW.post_class_id, NEW.post_id, CONCAT(fname, ' menambahkan post baru di ', class));
+        INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post)
+        VALUES (lecturer, NEW.post_user, NEW.post_class_id, NEW.post_id);
     END IF;
     CLOSE curMember;
 END//
