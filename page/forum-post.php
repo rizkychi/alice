@@ -8,7 +8,7 @@
         $content= $result['post_content'];
         $course = $result['course_name'];
 		$post_date = $result['post_date'];  
-        $row=mysqli_fetch_assoc($query);  
+        //$row=mysqli_fetch_assoc($query);  
 ?>
 
 
@@ -88,15 +88,15 @@
             </div>
             <!-- Grid row -->
             <hr>
-
             <div class="row px-4">
                 <h4>Komentar</h4>
-                <form action="" method="post" class="col-md-12">
-                    <div class="form-group purple-border mt-2 mb-1">
-                        <textarea class="form-control" name="comments" rows="3" placeholder="Tulis komentar..." required></textarea>
-                    </div>
-                <!--  <button type="submit" name = "button" class="btn btn-secondary btn-sm mx-0 my-1" value="<?php echo $button; ?>"</button> -->
-                <input type="submit" name= "button" class="btn btn-secondary btn-sm mx-0 my-1" value="KIRIM"/>
+                <form action="action/add_comment.php" method="post" class="col-md-12">
+                   <input type="text" name="userID" value="<?php echo $_SESSION['user'];?>" hidden>
+                    <input type="text" name="postID" value="<?php echo $_GET['id'];?>" hidden>
+                                        <div class="form-group purple-border mt-2 mb-1">
+                                            <textarea class="form-control" name="commentContent" rows="3" placeholder="Tulis komentar..." required></textarea>
+                                        </div>
+                                        <input class="btn btn-secondary btn-sm mx-0 my-1" type="submit" value="Kirim">
              </form>
             </div>
             <hr>
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="w-100">
-                                    <h6 class="h6 mb-0"><?php $row[3]; ?>
+                                    <h6 class="h6 mb-0"> <?php echo $row[3]; ?>
                                         <span class="text-black-50 ml-2 font-small"><?php echo $row[5]; ?></span>
                                     </h6>
                                     <p class="dark-grey-text article"><?php echo $row[4]; ?></p>
