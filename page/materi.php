@@ -3,6 +3,10 @@
     require_once 'config/conf.php';
     $i=0;
     $j=0;
+
+;
+
+
     
     
 ?>
@@ -56,8 +60,10 @@
                                                             <div class="row mb-3">
                                                                 <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
                                                                 <?php 
-                                                                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
-                                                                while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
+                                                                    $materi_id = $row['material_id'];
+                                                                    $jml_download = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = $materi_id");
+                                                                    echo mysqli_num_rows($jml_download);
+                                                                ?>                                               
                                                                 <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
                                                                 <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
                                                             </div>
@@ -126,8 +132,10 @@
                                                                 <div class="row mb-3">
                                                                     <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
                                                                     <?php 
-                                                                    $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
-                                                                    while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
+                                                                    $materi_id = $row['material_id'];
+                                                                    $jml_download = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = $materi_id");
+                                                                    echo mysqli_num_rows($jml_download);
+                                                                    ?>    </p>
                                                                     <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
                                                                     <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
                                                                 </div>
@@ -189,8 +197,10 @@
                                                                     <div class="row mb-3">
                                                                         <p class="col-md-6 mb-0 font-small dark-grey-text text-truncate"><i class="fas fa-download"></i>
                                                                         <?php 
-                                                                        $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded JOIN tb_material ON tb_material.material_id = tb_material_downloaded.material_id");
-                                                                        while ($result = mysqli_fetch_assoc($data)){echo  count($result); }?> </p>
+                                                                            $materi_id = $row['material_id'];
+                                                                            $jml_download = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = $materi_id");
+                                                                            echo mysqli_num_rows($jml_download);
+                                                                        ?>    </p>
                                                                         <p class="col-md-6 mb-0 font-small font-weight-bold dark-grey-text"><i class="far fa-clock"></i>
                                                                         <?php echo date('d-m-Y', strtotime($row['material_date'])) ?></p>
                                                                     </div>
