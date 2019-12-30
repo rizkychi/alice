@@ -14,6 +14,17 @@
               ?>
                 <!-- Section: Magazine posts -->
                 <section class="section extra-margins mt-2">
+                    <!-- SELECT post_id, post_subject, post_view FROM tb_forum_post ORDER BY post_date DESC -->
+                    <?php
+        require_once 'config/conf.php';
+        $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post ORDER by post_date desc limit 1;");
+        $result = mysqli_fetch_array($query);
+        $judul = $result['post_subject'];
+        $isi = $result['post_content'];
+        $tanggal = $result['post_date'];
+        $sender = $result['post_user'];
+        //var_dump($judul);
+        ?>
                     <h4 class="font-weight-bold"><strong>POST TERBARU</strong></h4>
                     <hr class="red title-hr">
 
@@ -37,11 +48,9 @@
 
                         <!-- Grid column -->
                         <div class="col-md-8 text-left mt-3">
-                            <h4 class="mb-4"><strong>This is title of the news</strong></h4>
-                            <p class="dark-grey-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque,
-                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis...</p>
-                            <p>by <a><strong>Carine Fox</strong></a>, 19/08/2016</p>
+                            <h4 class="mb-4"><strong><?php echo $judul ?></strong></h4>
+                            <p class="dark-grey-text"><?php echo $isi; ?></p>
+                            <p>by <a><strong><?php echo $sender; ?></strong></a>, <?php echo $tanggal; ?></p>
                             <a class="btn btn-secondary btn-sm">Baca selengkapnya</a>
                         </div>
                         <!-- Grid column -->
@@ -52,9 +61,14 @@
                         <div class="row mt-4">
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
-                            <?php
-                                for ($i=0; $i < 3; $i++) { 
-                                    ?>
+                            <?php 
+                    $sql =  "SELECT post_date, post_subject FROM tb_forum_post ORDER by post_date desc limit 3";
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                                        // output data of each row
+                                        while($row = mysqli_fetch_array($result)) {
+                                            //var_dump($row[1]);
+                    ?>
                                         <!-- Small news -->
                                         <div class="single-news">
                                             <div class="row mb-2">
@@ -70,8 +84,8 @@
                                                 </div>
                                                 <!-- Excerpt -->
                                                 <div class="col-md-8">
-                                                <p class="font-small text-left mb-2"><strong>19/08/2016</strong></p>
-                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text">Title of the news
+                                                <p class="font-small text-left mb-2"><strong><?php var_dump(date('d-m-Y', strtotime($row[0]))); ?></strong></p>
+                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text"><?php var_dump($row[1]); ?>
                                                     <i class="fas fa-angle-right float-right"></i>
                                                     </a></p>
                                                 </div>
@@ -79,16 +93,22 @@
                                         </div>
                                         <!-- Small news -->
                                     <?php
-                                }    
+                                } 
+                                }   
                             ?>
                         </div>
                         <!-- Grid column -->
 
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
-                            <?php
-                                for ($i=0; $i < 3; $i++) { 
-                                    ?>
+                            <?php 
+                    $sql =  "SELECT post_date, post_subject FROM tb_forum_post ORDER by post_date desc limit 3 offset 3";
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                                        // output data of each row
+                                        while($row = mysqli_fetch_array($result)) {
+                                           
+                    ?>
                                         <!-- Small news -->
                                         <div class="single-news">
                                             <div class="row mb-2">
@@ -104,8 +124,8 @@
                                                 </div>
                                                 <!-- Excerpt -->
                                                 <div class="col-md-8">
-                                                <p class="font-small text-left mb-2"><strong>19/08/2016</strong></p>
-                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text">Title of the news
+                                                <p class="font-small text-left mb-2"><strong><?php var_dump(date('d-m-Y', strtotime($row[0]))); ?></strong></p>
+                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text"><?php var_dump($row[1]); ?>
                                                     <i class="fas fa-angle-right float-right"></i>
                                                     </a></p>
                                                 </div>
@@ -113,6 +133,7 @@
                                         </div>
                                         <!-- Small news -->
                                     <?php
+                                }
                                 }    
                             ?>
                         </div>
