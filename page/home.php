@@ -4,11 +4,12 @@
     $status          = mysqli_fetch_array(mysqli_query($conn, "SELECT profile_status FROM tb_lecturer_profile WHERE profile_user = '$uid'"))[0];
     $profile         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'")); 
 
-    $assignment      = mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$uid'");
+    $assignment_stu  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class_member m ON p.post_class_id = m.class_id WHERE post_is_assignment = '1' AND m.user_id = '$uid' ORDER BY post_date DESC");
+    $assignment_lec  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class c ON p.post_class_id = c.class_id WHERE post_is_assignment = '1' AND class_lecturer = '$uid' ORDER BY post_date DESC");
     $recent_post     = mysqli_query($conn, "SELECT post_id, post_subject, post_view, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post WHERE post_user = '$uid' ORDER BY post_date DESC");
     $recent_material = mysqli_query($conn, "SELECT material_id, material_subject, (SELECT COUNT(*) FROM tb_material_downloaded WHERE tb_material_downloaded.material_id = tb_material.material_id) AS material_download FROM tb_material WHERE material_user = '$uid' ORDER BY material_date DESC");
-    $recent_comment  = mysqli_query($conn, "SELECT comment_post, comment_content, comment_user, post_subject FROM tb_forum_comment c JOIN tb_forum_post p ON c.comment_post = p.post_id  WHERE comment_user = '$uid'");
-    $recent_download = mysqli_query($conn, "SELECT d.material_id, material_subject, course_name FROM tb_material_downloaded d JOIN tb_material m ON d.material_id = m.material_id JOIN tb_course ON m.material_course = course_id WHERE d.material_user = '$uid'");
+    $recent_comment  = mysqli_query($conn, "SELECT comment_post, comment_content, comment_user, post_subject FROM tb_forum_comment c JOIN tb_forum_post p ON c.comment_post = p.post_id  WHERE comment_user = '$uid' ORDER BY comment_date DESC");
+    $recent_download = mysqli_query($conn, "SELECT d.material_id, material_subject, course_name FROM tb_material_downloaded d JOIN tb_material m ON d.material_id = m.material_id JOIN tb_course ON m.material_course = course_id WHERE d.material_user = '$uid' ORDER BY d.material_date DESC");
 
     $n_class         = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class_member WHERE user_id = '$uid'"));
     $n_class_created = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class WHERE class_lecturer = '$uid'"));
@@ -74,15 +75,22 @@
               <hr class="purple">
               <div class="list-group list-panel">
                 <?php 
-                  if (mysqli_num_rows($assignment) > 0) {
-                      while ($result = mysqli_fetch_array($assignment)) {
+                  if ($role == 2) {
+                    $temp = $assignment_lec;
+                  } else {
+                    $temp = $assignment_stu;
+                  }
+                  if (mysqli_num_rows($temp) > 0) {
+                      echo '<div class="list-group-flush">';
+                      while ($result = mysqli_fetch_array($temp)) {
                           ?>
-                            <a href="?p=admin&v=user-form&act=update&id=<?php echo $result['user_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['user_name']; ?>
+                            <a href="?p=class&id=<?php echo $result['post_class_id']; ?>&view=post&pid=<?php echo $result['post_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['post_subject']; ?>
                               <i class="fas fa-external-link-alt ml-1" data-toggle="tooltip" data-placement="top"
                                 title="Klik untuk melihat"></i>
                             </a>
                           <?php
                       }
+                      echo '</div>';
                   } else {
                       echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
                   }
@@ -289,15 +297,22 @@
               <hr class="purple">
               <div class="list-group list-panel">
                 <?php 
-                  if (mysqli_num_rows($assignment) > 0) {
-                      while ($result = mysqli_fetch_array($assignment)) {
+                  if ($role == 2) {
+                    $temp = $assignment_lec;
+                  } else {
+                    $temp = $assignment_stu;
+                  }
+                  if (mysqli_num_rows($temp) > 0) {
+                      echo '<div class="list-group-flush">';
+                      while ($result = mysqli_fetch_array($temp)) {
                           ?>
-                            <a href="?p=admin&v=user-form&act=update&id=<?php echo $result['user_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['user_name']; ?>
+                            <a href="?p=class&id=<?php echo $result['post_class_id']; ?>&view=post&pid=<?php echo $result['post_id']; ?>" class="list-group-item d-flex justify-content-between dark-grey-text"><?php echo $result['post_subject']; ?>
                               <i class="fas fa-external-link-alt ml-1" data-toggle="tooltip" data-placement="top"
                                 title="Klik untuk melihat"></i>
                             </a>
                           <?php
                       }
+                      echo '</div>';
                   } else {
                       echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
                   }

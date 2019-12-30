@@ -117,11 +117,11 @@ CREATE TABLE tb_class_comment
 CREATE TABLE tb_class_assignment
 (
     assignment_class INT NOT NULL,
-    assignment_id BIGINT NOT NULL,
+    assignment_post BIGINT NOT NULL,
     assignment_user CHAR(10) NOT NULL,
     assignment_comment TEXT,
     assignment_attachment VARCHAR(255),
-    assignment_score INT,
+    assignment_score INT DEFAULT 0,
     assignment_is_turned BOOLEAN DEFAULT 0,
     assignment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (assignment_class) REFERENCES tb_class(class_id) ON DELETE CASCADE,

@@ -84,5 +84,62 @@
             $query = mysqli_query($conn, "INSERT INTO tb_class_comment (comment_post, comment_user, comment_content) VALUES ('$pid','$uid','$content')");
             header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
         }
+    } else if ($act == 'add-assignment') {
+        if ($_POST) {
+            $uid     = $_POST['userID'];
+            $pid     = $_POST['postID'];
+            $cid     = $_POST['classID'];
+            
+            $path = "../filetugas-kelas/$pid";
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $fileName = $_FILES["attachFile"]["name"];
+            move_uploaded_file($_FILES["attachFile"]["tmp_name"],$path."/".$fileName);
+
+            $query = mysqli_query($conn, "INSERT INTO tb_class_assignment (assignment_class, assignment_post, assignment_user, assignment_attachment) VALUES ('$cid','$pid','$uid','$fileName')");
+            header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
+        }
+    } else if ($act == 'zip') {
+        if ($_POST) {
+            $uid = $_POST['userID'];
+            $pid = $_POST['postID'];
+            $cid = $_POST['classID'];
+
+            // Enter the name of directory 
+            $pathdir = "../filetugas-kelas/$pid/";  
+            
+            // Enter the name to creating zipped directory 
+            $zipcreated = "../filetugas-kelas/$pid.zip"; 
+            
+            // Create new zip class 
+            $zip = new ZipArchive; 
+            
+            if($zip -> open($zipcreated, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) { 
+                
+                // Store the path into the variable 
+                $dir = opendir($pathdir); 
+                
+                while($file = readdir($dir)) { 
+                    if(is_file($pathdir.$file)) { 
+                        $zip -> addFile($pathdir.$file, $file); 
+                    } 
+                } 
+                $zip ->close(); 
+            } 
+            $_SESSION['fileZip'] = "filetugas-kelas/$pid.zip";
+            header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
+        }
+    } else if ($act == 'grade') {
+        if ($_POST) {
+            $uid     = $_POST['userID'];
+            $pid     = $_POST['postID'];
+            $cid     = $_POST['classID'];
+            $grade   = $_POST['valueGrade'];
+
+            $query = mysqli_query($conn, "UPDATE tb_class_assignment SET assignment_score = '$grade' WHERE assignment_id = '1'");
+            header("Location: ../?p=class&id=$cid&view=grade&pid=$pid");
+        }
     }
 ?>
