@@ -23,8 +23,8 @@
     $assignment       = mysqli_query($conn, "SELECT * FROM tb_class_post WHERE post_is_assignment = '1' ORDER BY post_date DESC");
     $classPost        = mysqli_query($conn, "SELECT *, (SELECT COUNT(*) FROM tb_class_comment WHERE comment_post = post_id) AS n_comment FROM tb_class_post p JOIN tb_user u ON p.post_user = u.user_id WHERE post_class_id = '$cid' ORDER BY post_date DESC");
     $commentDetail    = mysqli_query($conn, "SELECT * FROM tb_class_comment c JOIN tb_user u ON c.comment_user = u.user_id WHERE comment_post = '$pid' ORDER BY comment_date ASC");
-    $assignmentDetail = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$_SESSION[user]'"));
-    $grade            = mysqli_query($conn, "SELECT * FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id JOIN tb_class_assignment a ON u.user_id = a.assignment_user WHERE m.class_id = '$cid' ORDER BY u.user_id ASC");
+    $assignmentDetail = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$_SESSION[user]' AND assignment_post = '$pid'"));
+    $grade            = mysqli_query($conn, "SELECT * FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id JOIN tb_class_assignment a ON u.user_id = a.assignment_user WHERE m.class_id = '$cid' AND assignment_post = '$pid' ORDER BY u.user_id ASC");
     
     echo "<script>document.title = '$class[class_name] | ALICE' </script>";
 
@@ -59,6 +59,10 @@
 
             <p class="dark-grey-text mb-1">
             <em>"<?php echo $class['class_desc'];?>"</em>
+            </p>
+
+            <p>
+                Kode kelas: <?php echo $class['class_code'];?>
             </p>
 
         </div>
@@ -450,6 +454,9 @@
                                         <!-- Description -->
                                         <p class="mt-3 dark-grey-text font-small font-weight-light text-center">
                                         <em>Hanya dapat satu kali submit</em>
+                                        </p>
+                                        <p class="text-center">
+                                            Nilai: <?php echo $assignmentDetail['assignment_score']; ?>
                                         </p>
                                     </div>
                                     <!-- Card content -->

@@ -136,9 +136,10 @@
             $uid     = $_POST['userID'];
             $pid     = $_POST['postID'];
             $cid     = $_POST['classID'];
+            $aid     = $_POST['assignID'];
             $grade   = $_POST['valueGrade'];
 
-            $query = mysqli_query($conn, "UPDATE tb_class_assignment SET assignment_score = '$grade' WHERE assignment_id = '1'");
+            $query = mysqli_query($conn, "UPDATE tb_class_assignment SET assignment_score = '$grade' WHERE assignment_id = '$aid'");
             header("Location: ../?p=class&id=$cid&view=grade&pid=$pid");
         }
     }
