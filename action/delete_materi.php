@@ -1,9 +1,9 @@
 <?php
     require '../config/conf.php';
-    
-    $materi = $_GET['materi_id'];
-
-      $sql = mysqli_query($conn, "DELETE FROM tb_material where material_id = $materi");
-      
+      $sql = mysqli_query($conn, "DELETE FROM tb_material where material_id = $_GET[id]");
+      if ($sql) {
       header("Location: ../?p=materi");
+      }else{
+        echo "error";
+      }
 ?>
