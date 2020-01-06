@@ -248,28 +248,24 @@
                             }
                         ?>
                     </li>
+                    <?php
+                        $notification = mysqli_query($conn, "SELECT * FROM tb_notification n JOIN tb_user u ON n.notif_from_user = u.user_id JOIN tb_class c ON n.notif_class_id = c.class_id WHERE notif_for_user = '$_SESSION[user]' ORDER BY notif_date DESC LIMIT 5");
+                    ?>
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell mt-1"></i>
-                                <span class="badge badge-danger">300</span>
+                                <span class="badge badge-danger"><?php echo mysqli_num_rows($notification); ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary alice-notif" aria-labelledby="navbarMainNotification">
-                            <a class="dropdown-item d-flex" href="#">
-                                <span class="w-100 text-wrap">Rizky menambahkan post ke IF05</span>
-                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
-                            </a>
-                            <a class="dropdown-item d-flex" href="#">
-                                <span class="w-100 text-wrap">Rizky mengomentari post anda di IF05</span>
-                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
-                            </a>
-                            <a class="dropdown-item d-flex" href="#">
-                                <span class="w-100 text-wrap">Rizky membalas komentar anda di forum</span>
-                                <span class="flex-shrink-1 ml-3 align-self-center"><i class="fas fa-clock" aria-hidden="true"></i> 13 min</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-link p-0" href="#">Selengkapnya</a>
-                            </div>
+                            <?php
+                                while ($result = mysqli_fetch_array($notification)) {
+                                    ?>
+                                        <a class="dropdown-item d-flex" href="?p=class&id=<?php echo $result['class_id'];?>&view=post&pid=<?php echo $result['notif_class_post'];?>">
+                                            <span class="w-100 text-wrap"><?php echo '<b>'.$result['user_name'].'</b> memposting di <b>'.$result['class_name'].'</b> - <span style="opacity:0.75">'.date('d/m/Y', strtotime($result['notif_date'])).'</span>'; ?></span>
+                                        </a>
+                                    <?php
+                                }
+                            ?>
                         </div>
                     </li>
                     <li class="nav-item avatar dropdown my-1 ml-1">

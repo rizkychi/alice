@@ -11,14 +11,32 @@
         $view = $_GET['view'];
     }
 
-    $class         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class JOIN tb_course ON class_course = course_id WHERE class_id = '$cid'"));
-    $lecturer      = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user JOIN tb_lecturer_profile ON user_id = profile_user WHERE user_id = '$class[class_lecturer]'"));
-    $member        = mysqli_query($conn, "SELECT user_name, user_photo FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id WHERE m.class_id = '$cid' ORDER BY user_name ASC");
-    $assignment    = mysqli_query($conn, "SELECT * FROM tb_class_post WHERE post_is_assignment = '1' ORDER BY post_date DESC");
-    $classPost     = mysqli_query($conn, "SELECT *, (SELECT COUNT(*) FROM tb_class_comment WHERE comment_post = post_id) AS n_comment FROM tb_class_post p JOIN tb_user u ON p.post_user = u.user_id WHERE post_class_id = '$cid' ORDER BY post_date DESC");
-    $commentDetail = mysqli_query($conn, "SELECT * FROM tb_class_comment c JOIN tb_user u ON c.comment_user = u.user_id ORDER BY comment_date ASC");
+    if (!isset($_GET['pid'])) {
+        $pid = '';
+    } else {
+        $pid = $_GET['pid'];
+    }
+
+    $class            = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class JOIN tb_course ON class_course = course_id WHERE class_id = '$cid'"));
+    $lecturer         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user JOIN tb_lecturer_profile ON user_id = profile_user WHERE user_id = '$class[class_lecturer]'"));
+    $member           = mysqli_query($conn, "SELECT u.user_id, user_name, user_photo FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id WHERE m.class_id = '$cid' ORDER BY u.user_id ASC");
+    $assignment       = mysqli_query($conn, "SELECT * FROM tb_class_post WHERE post_is_assignment = '1' ORDER BY post_date DESC");
+    $classPost        = mysqli_query($conn, "SELECT *, (SELECT COUNT(*) FROM tb_class_comment WHERE comment_post = post_id) AS n_comment FROM tb_class_post p JOIN tb_user u ON p.post_user = u.user_id WHERE post_class_id = '$cid' ORDER BY post_date DESC");
+    $commentDetail    = mysqli_query($conn, "SELECT * FROM tb_class_comment c JOIN tb_user u ON c.comment_user = u.user_id WHERE comment_post = '$pid' ORDER BY comment_date ASC");
+    $assignmentDetail = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$_SESSION[user]'"));
+    $grade            = mysqli_query($conn, "SELECT * FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id JOIN tb_class_assignment a ON u.user_id = a.assignment_user WHERE m.class_id = '$cid' ORDER BY u.user_id ASC");
     
     echo "<script>document.title = '$class[class_name] | ALICE' </script>";
+
+    
+    if (isset($_SESSION['fileZip'])){
+        echo    '<script>
+                window.onload = function(){
+                    window.open("'.$_SESSION['fileZip'].'", "_self"); 
+                }
+            </script>';
+        unset($_SESSION['fileZip']);
+    }
 ?>
 <!-- Main layout -->
 <main class="grey lighten-4" style="min-height: 100vh;">
@@ -96,7 +114,7 @@
                                             </div>
                                             <!--Message-->
                                             <div class="md-form m-1 mb-0 mt-3">
-                                                <textarea id="postFormContent" name="postContent" class="form-control md-textarea" required></textarea>
+                                                <textarea id="postFormContent" name="postContent" class="form-control md-textarea py-2" required></textarea>
                                                 <label for="postFormContent">Tulis sesuatu...</label>
                                             </div>
                                             <!-- Material input -->
@@ -372,7 +390,6 @@
                                         <?php
                                     }    
                                 ?>
-
                                 <!-- Card content -->
                             </div>
                             <!-- Card -->
@@ -385,6 +402,134 @@
                         <!-- Section: Blog v.3 -->
                     </div>
                     <!-- Main listing -->
+                  
+                    <?php
+                        if ($postDetail['post_is_assignment'] == '1' && $role == 3) {
+                            ?>
+                                <!-- Sidebar -->
+                                <div class="col-lg-3 col-12 mt-1">
+
+                                    <!-- Card -->
+                                    <div class="card">
+
+                                    <!-- Card content -->
+                                    <div class="card-body">
+                                        <h5>
+                                            File tugas
+                                        </h5>
+                                        <hr>
+                                        <!-- Title -->
+                                        <h6 class="card-title dark-grey-text text-center grey lighten-4 py-2 px-2 text-truncate" id="attachAssignment">
+                                           <?php
+                                               if ($assignmentDetail != null) {
+                                                   echo $assignmentDetail['assignment_attachment'];
+                                                   $disable = true;
+                                               } else {
+                                                   echo 'Tidak ada file';
+                                                   $disable = false;
+                                               }
+                                           ?>
+                                        </h6>
+
+                                        <form action="action/classroom.php?act=add-assignment" method="POST" id="formAssignment" enctype="multipart/form-data">
+                                            <!-- hidden -->
+                                            <input type="text" name="classID" value="<?php echo $class['class_id'];?>" hidden>
+                                            <input type="text" name="userID" value="<?php echo $_SESSION['user'];?>" hidden>
+                                            <input type="text" name="postID" value="<?php echo $pid;?>" hidden>
+                                            <input type="file" name="attachFile" id="upload" hidden required>
+                                            <div class="row px-2">
+                                                <div class="col-md-6 px-2">
+                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="upload_file" <?php if ($disable) echo 'disabled'; ?>>Browse</button>
+                                                </div>
+                                                <div class="col-md-6 px-2">
+                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="btnSubmit" <?php if ($disable) echo 'disabled'; ?>>Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                        <!-- Description -->
+                                        <p class="mt-3 dark-grey-text font-small font-weight-light text-center">
+                                        <em>Hanya dapat satu kali submit</em>
+                                        </p>
+                                    </div>
+                                    <!-- Card content -->
+
+                                    </div>
+                                    <!-- Card -->
+
+                                </div>
+                                <!-- Sidebar -->
+                            <?php
+                        } else if ($postDetail['post_is_assignment'] == '1' && $role == 2) {
+                        ?>
+                            <!-- Sidebar -->
+                            <div class="col-lg-3 col-12 mt-1">
+
+                                <!-- Card -->
+                                <div class="card">
+
+                                <!-- Card content -->
+                                <div class="card-body">
+                                    <h5>
+                                        File tugas
+                                    </h5>
+                                    <hr>
+
+                                    <form action="action/classroom.php?act=zip" method="POST">
+                                       
+                                        <input type="text" name="classID" value="<?php echo $class['class_id'];?>" hidden>
+                                        <input type="text" name="userID" value="<?php echo $_SESSION['user'];?>" hidden>
+                                        <input type="text" name="postID" value="<?php echo $pid;?>" hidden>
+                                        <button class="btn btn-sm btn-secondary btn-block m-0" id="btnSubmit">Unduh</button>
+                                    </form>
+                                </div>
+                                <!-- Card content -->
+                                <div class="card-body">
+                                    <h5>Nilai</h5>
+                                    <hr>
+                                    <a href="?p=class&id=<?php echo $cid; ?>&view=grade&pid=<?php echo $pid; ?>" class="btn btn-sm btn-secondary btn-block m-0">Beri penilaian</a>
+                                </div>
+
+                                </div>
+                                <!-- Card -->
+
+                                </div>
+                                <!-- Sidebar -->
+                        <?php
+                    }
+            } else if ($view == 'grade') {
+                ?>
+                <div class="col-md-12">
+                    <h3>Beri Nilai</h3>
+                    <div class="list-group-flush">
+                        <?php
+                            while ($result = mysqli_fetch_array($grade)) {
+                                ?>
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="mb-0"><?php echo $result['user_id'].' - '. $result['user_name'];?></p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a class="text-secondary" href="filetugas-kelas/<?php echo $pid.'/'.$result['assignment_attachment'];?>"><?php echo $result['assignment_attachment'];?></a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <form action="action/classroom.php?act=grade" method="post" class="row formGrade">
+                                                <input type="text" name="classID" value="<?php echo $class['class_id'];?>" hidden>
+                                                <input type="text" name="userID" value="<?php echo $_SESSION['user'];?>" hidden>
+                                                <input type="text" name="postID" value="<?php echo $pid;?>" hidden>
+                                                <input type="text" name="assignID" value="<?php echo $result['assignment_id'];?>" hidden>
+                                                <input type="number" name="valueGrade" min="0" max="100" class="form-control w-50 inputGrade" value="<?php echo $result['assignment_score'];?>" required/>
+                                                <button type="submit" class="btn btn-secondary btn-sm btnGrade">Perbarui</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </div>
+                </div>
                 <?php
             }
         ?>
@@ -410,7 +555,39 @@
         $("#upload").on('change', function(e) {
             e.preventDefault();
             $("#upload_name").text(this.files[0].name);
+            $("#attachAssignment").text(this.files[0].name);
         });
+        $("#btnSubmit").click(function(){
+            if (!($("#upload").get(0).files.length === 0)) {
+                $("#formAssignment").submit();
+            }
+        });
+
+        // $(".btnGrade").click(function(){
+        //     $(this).html("Simpan");
+        //     $(this).siblings().prop('disabled',false);
+        //     $(this).addClass("btnSave");
+        // });
+        
+
+        // $('#cropImage').click(function(event){
+        //         $image_crop.croppie('result', {
+        //         type: 'canvas',
+        //         size: 'viewport'
+        //         }).then(function(response){
+        //             $.ajax({
+        //                 url:"action/upload_picture.php",
+        //                 type: "POST",
+        //                 data:{"image": response},
+        //                 success:function(data)
+        //                 {
+        //                 $('#uploadimageModal').modal('hide');
+        //                 $('#uploaded_image').html(data);
+        //                 }
+        //             });
+        //         })
+        //     });
+
         $("#postType").change(function(){
             var type = $("#postType option:selected").text();
             if (type != 'Post') {
