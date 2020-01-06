@@ -62,7 +62,7 @@
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
                             <?php 
-                    $sql =  "SELECT post_date, post_subject FROM tb_forum_post ORDER by post_date desc limit 3";
+                    $sql =  "SELECT post_date, post_subject, post_id FROM tb_forum_post ORDER by post_date desc limit 3";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -84,8 +84,8 @@
                                                 </div>
                                                 <!-- Excerpt -->
                                                 <div class="col-md-8">
-                                                <p class="font-small text-left mb-2"><strong><?php var_dump(date('d-m-Y', strtotime($row[0]))); ?></strong></p>
-                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text"><?php var_dump($row[1]); ?>
+                                                <p class="font-small text-left mb-2"><strong><?php echo date('d-m-Y', strtotime($row[0])); ?></strong></p>
+                                                <p class="text-left"><a href="?p=forum&id=<?php echo $row[2]; ?>" class="text-secondary stretched-link text"><?php echo ($row[1]); ?>
                                                     <i class="fas fa-angle-right float-right"></i>
                                                     </a></p>
                                                 </div>
@@ -102,7 +102,7 @@
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
                             <?php 
-                    $sql =  "SELECT post_date, post_subject FROM tb_forum_post ORDER by post_date desc limit 3 offset 3";
+                    $sql =  "SELECT post_date, post_subject, post_id FROM tb_forum_post ORDER by post_date desc limit 3 offset 3";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -124,8 +124,8 @@
                                                 </div>
                                                 <!-- Excerpt -->
                                                 <div class="col-md-8">
-                                                <p class="font-small text-left mb-2"><strong><?php var_dump(date('d-m-Y', strtotime($row[0]))); ?></strong></p>
-                                                <p class="text-left"><a href="#" class="text-secondary stretched-link text"><?php var_dump($row[1]); ?>
+                                                <p class="font-small text-left mb-2"><strong><?php echo (date('d-m-Y', strtotime($row[0]))); ?></strong></p>
+                                                <p class="text-left"><a href="?p=forum&id=<?php echo $row[2]; ?>" class="text-secondary stretched-link text"><?php echo ($row[1]); ?>
                                                     <i class="fas fa-angle-right float-right"></i>
                                                     </a></p>
                                                 </div>

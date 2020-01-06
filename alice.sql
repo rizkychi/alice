@@ -178,8 +178,8 @@ CREATE TABLE tb_material_downloaded
     material_id BIGINT NOT NULL,
     material_user CHAR(10) NOT NULL,
     material_date DATETIME DEFAULT NOW(),
-    FOREIGN KEY (material_id) REFERENCES tb_material(material_id),
-    FOREIGN KEY (material_user) REFERENCES tb_user(user_id),
+    FOREIGN KEY (material_id) REFERENCES tb_material(material_id) ON DELETE CASCADE,
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id) ON DELETE CASCADE,
     UNIQUE KEY (material_id, material_user) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

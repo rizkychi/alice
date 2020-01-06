@@ -1,9 +1,8 @@
 <?php
-    $query  = mysqli_query($conn, 'SELECT tb_class.class_id, class_name, user_name, course_name, COUNT(tb_class_member.user_id) AS class_member, class_code, class_created, class_suspended 
-                                    FROM tb_class 
-                                    JOIN tb_user ON tb_class.class_lecturer = tb_user.user_id 
-                                    JOIN tb_course ON tb_class.class_course = tb_course.course_id
-                                    JOIN tb_class_member ON tb_class.class_id = tb_class_member.class_id');
+    $query  = mysqli_query($conn, 'SELECT c.class_id, class_name, user_name, course_name, class_code, class_created, class_suspended, (SELECT COUNT(*) FROM tb_class_member m WHERE m.class_id = c.class_id) AS class_member 
+                                    FROM tb_class c 
+                                    JOIN tb_user u ON c.class_lecturer = u.user_id 
+                                    JOIN tb_course co ON c.class_course = co.course_id');
 ?>
 <!-- Main layout -->
   <main>
@@ -62,7 +61,7 @@
                       <?php
                         $i = 1;
                         while ($data = mysqli_fetch_array($query)) {
-                            if ($data[7] == 0) {
+                            if ($data[6] == 0) {
                               $unsuspend = '';
                               $btn_suspend = 'warning';
                             } else {
@@ -74,9 +73,9 @@
                             echo "<td>$data[1]</td>";
                             echo "<td>$data[2]</td>";
                             echo "<td>$data[3]</td>";
+                            echo "<td>$data[7]</td>";
                             echo "<td>$data[4]</td>";
                             echo "<td>$data[5]</td>";
-                            echo "<td>$data[6]</td>";
                             echo "<td>";
                             echo "<a href='action/_classroom.php?act=delete&id=$data[0]&v=classroom' class='ml-2'><span class='badge badge-danger'>HAPUS</span></a>";
                             echo "<a href='action/_classroom.php?act=".$unsuspend."suspend&id=$data[0]&v=classroom' class='ml-2'><span class='badge badge-$btn_suspend'>".strtoupper($unsuspend)."SUSPEND</span></a>";
