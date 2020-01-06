@@ -1,7 +1,7 @@
 <?php
     require_once 'config/conf.php';
-    $materi_id = $_GET['id'];
-    $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user WHERE tb_material.material_id='$materi_id'");        
+    $material_id = $_GET['id'];
+    $query = mysqli_query($conn, "SELECT * FROM tb_material JOIN tb_course ON tb_material.material_course = tb_course.course_id JOIN tb_user ON tb_user.user_id=tb_material.material_user WHERE tb_material.material_id='$material_id'");        
     $row=mysqli_fetch_assoc($query);
     $role = $_SESSION['role'];
     $uploader = $row['user_id'];
@@ -29,13 +29,13 @@
             <p class="font-weight-normal"><?php echo $row['material_content'] ?></p>
             <p class="font-weight-normal">by <a href="?p=profile&id=<?php echo $row['material_user']?>" class="text-secondary"><strong><?php echo $row['user_name'] ?></strong></a><i class="fas fa-download ml-3"></i>
             <?php 
-                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = '$materi_id'");
+                $data = mysqli_query($conn, "SELECT * FROM tb_material_downloaded WHERE material_id = '$material_id'");
                 echo mysqli_num_rows($data); ?></p>
             <a href="filemateri/<?php echo $row['material_attachment']; ?>" class="btn btn-success" id="btn_download">UNDUH</a>
             <?php
             if ( $role == 2 && $user == $uploader )  {                            
-                echo "<a href='?p=materi-form&materi_id=$row[material_id]' class='btn btn-warning'>EDIT</a>";
-                echo "<a href='action/delete_materi.php?materi_id=$row[material_id]' class='btn btn-danger'>HAPUS</a>";
+                echo "<a href='?p=materi-form&material_id=$row[material_id]' class='btn btn-warning'>EDIT</a>";
+                echo "<a href='action/delete_materi.php?id=$row[material_id]' class='btn btn-danger'>HAPUS</a>";
             }
             ?>
         </div>

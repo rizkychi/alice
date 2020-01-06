@@ -1,7 +1,9 @@
 <?php
 
-    $materi_id=isset ($_GET['materi_id']) ? $_GET['materi_id'] : false;
+    $material_id = isset ($_GET['material_id']) ? $_GET['material_id'] : false;
+
     $user = isset($_SESSION['user'])? $_SESSION['user'] : false;
+    
     $subject= '';
     $content= '';
     $course = '';
@@ -10,8 +12,8 @@
     $button = 'TAMBAH';
     $title  = 'Unggah Materi Baru';
 
-    if($materi_id) {
-        $query = mysqli_query($conn, "SELECT * FROM tb_material WHERE material_id = $materi_id");
+    if($material_id) {
+        $query = mysqli_query($conn, "SELECT * FROM tb_material WHERE material_id = $material_id");
         $row = mysqli_fetch_assoc($query);
 
         $title = 'Edit Materi';

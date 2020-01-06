@@ -1,5 +1,12 @@
 <?php
     include '../config/conf.php';
+
+    $data = mysqli_query($conn,"SELECT * FROM tb_material");
+    $ambil = mysqli_fetch_array($data);
+    session_start();
+    $_SESSION['material_id'] = $ambil['material_id'] ;
+
+
     $user   = $_POST['materiUser'];
     $subject= $_POST['materiName'];
     $course = $_POST['course'];
