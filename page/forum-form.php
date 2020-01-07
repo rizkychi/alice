@@ -41,7 +41,7 @@
                 <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
-                    <input type="hidden" name="post_id" value="<?= $post_id?>">
+                    <input type="hidden" name="post_id" value="<?php $post_id?>">
                     <div class="md-form">
                         <input type="text" id="postFormTitle" name="postName" value="<?php echo $subject;?>" class="form-control" required>
                         <label for="postFormTitle">Judul post</label>

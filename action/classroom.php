@@ -47,6 +47,13 @@
             $query   = mysqli_query($conn, "UPDATE tb_class SET class_name = '$cname', class_course = '$ccourse', class_desc = '$cdesc', class_lecturer = '$uid' WHERE class_id = '$cid'");
             header("Location: ../?p=classroom");
         }
+    } else if ($act == 'delete') {
+        if ($_GET) {
+            $cid     = $_GET['id'];
+
+            $query   = mysqli_query($conn, "DELETE FROM tb_class WHERE class_id = '$cid'");
+            header("Location: ../?p=classroom");
+        }
     } else if ($act == 'add-post') {
         if ($_POST) {
             $uid     = $_POST['userID'];
@@ -69,11 +76,36 @@
                 $isMaterial = 1;
             } else if ($type == 'Tugas') {
                 $isAssignment = 1;
+                $date    = date('Y-m-d', strtotime($_POST['postDueDate']));
+                $time    = $_POST['postDueTime'];
+
+                $fulldate = date('Y-m-d H:i:s', strtotime("$date $time"));
             }
 
-            $query = mysqli_query($conn, "INSERT INTO tb_class_post (post_class_id, post_user, post_subject, post_content, post_attachment, post_attachment_link, post_is_material, post_is_assignment) VALUES ('$cid','$uid','$subject','$content','$fileName','$link','$isMaterial','$isAssignment')");
+            if ($isAssignment == 1) {
+                $query = mysqli_query($conn, "INSERT INTO tb_class_post (post_class_id, post_user, post_subject, post_content, post_attachment, post_attachment_link, post_is_material, post_is_assignment, post_due_date) VALUES ('$cid','$uid','$subject','$content','$fileName','$link','$isMaterial','$isAssignment','$fulldate')");
+            } else {
+                $query = mysqli_query($conn, "INSERT INTO tb_class_post (post_class_id, post_user, post_subject, post_content, post_attachment, post_attachment_link, post_is_material, post_is_assignment) VALUES ('$cid','$uid','$subject','$content','$fileName','$link','$isMaterial','$isAssignment')");
+            }
             header("Location: ../?p=class&id=$cid");
         }
+    } else if ($act == 'delete-post') {
+        $pid     = $_GET['id'];
+        $uid     = $_GET['user'];
+        $cid     = $_GET['class'];
+
+        $query   = mysqli_query($conn, "DELETE FROM tb_class_post WHERE post_id = '$pid' AND post_class_id = '$cid' AND post_user = '$uid'");
+        header("Location: ../?p=class&id=$cid&view=home");
+
+    } else if ($act == 'update-post') {
+        $pid     = $_GET['id'];
+        $uid     = $_GET['user'];
+        $cid     = $_GET['class'];
+        $content = $_POST['postContent'];
+
+        $query   = mysqli_query($conn, "UPDATE tb_class_post SET post_content = '$content' WHERE post_id = '$pid'");
+        // header("Location: ../?p=class&id=$cid&view=home");
+
     } else if ($act == 'add-comment') {
         if ($_POST) {
             $uid     = $_POST['userID'];
@@ -82,6 +114,16 @@
             $content = $_POST['commentContent'];
 
             $query = mysqli_query($conn, "INSERT INTO tb_class_comment (comment_post, comment_user, comment_content) VALUES ('$pid','$uid','$content')");
+            header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
+        }
+    } else if ($act == 'delete-comment') {
+        if ($_GET) {
+            $uid     = $_GET['user'];
+            $pid     = $_GET['post'];
+            $cid     = $_GET['class'];
+            $comment = $_GET['id'];
+
+            $query = mysqli_query($conn, "DELETE FROM tb_class_comment WHERE comment_id = '$comment' AND comment_user = '$uid'");
             header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
         }
     } else if ($act == 'add-assignment') {
@@ -142,5 +184,5 @@
             $query = mysqli_query($conn, "UPDATE tb_class_assignment SET assignment_score = '$grade' WHERE assignment_id = '$aid'");
             header("Location: ../?p=class&id=$cid&view=grade&pid=$pid");
         }
-    }
+    } 
 ?>

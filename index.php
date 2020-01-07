@@ -147,6 +147,10 @@
             .alice-dropdown::after {
                 content: none;
             }
+            .alice-active {
+                background: #F5F5F5 !important;
+                border-color: #dee2e6 #dee2e6 #F5F5F5 !important;
+            }
             .md-form input:read-only {
                 color: rgba(0, 0, 0, 0.3) !important;
             }

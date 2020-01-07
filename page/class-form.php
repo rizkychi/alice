@@ -18,8 +18,8 @@
         $button = 'Buat';
         $title  = 'Buat Kelas Baru';
     } else if ($act == 'update') {
-        if (isset($_GET['classID'])) {
-            $id     = $_GET['classID'];
+        if (isset($_GET['id'])) {
+            $id     = $_GET['id'];
             $query  = mysqli_query($conn, "SELECT * FROM tb_class WHERE class_id = '$id'");
             $result = mysqli_fetch_array($query);
             $user   = $result['class_lecturer'];
@@ -61,7 +61,7 @@
                             $query  = mysqli_query($conn, "SELECT course_id, course_name FROM tb_course ORDER BY course_name ASC");
                             while ($result = mysqli_fetch_array($query)) {
                                 echo "<option value='$result[0]'";
-                                if ($act == 'update' && $sks = 2) 
+                                if ($act == 'update' && $result['course_id'] == $course) 
                                     echo 'selected';
                                 echo ">$result[1]</option>";
                             }

@@ -75,7 +75,7 @@ CREATE TABLE tb_class (
     class_suspended BOOLEAN DEFAULT 0,
     class_created DATETIME DEFAULT NOW(),
     FOREIGN KEY (class_course) REFERENCES tb_course(course_id),
-    FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id)
+    FOREIGN KEY (class_lecturer) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_member (
@@ -101,7 +101,7 @@ CREATE TABLE tb_class_post
     post_update DATETIME DEFAULT NOW(),
     post_due_date DATETIME,
     FOREIGN KEY (post_class_id) REFERENCES tb_class(class_id) ON DELETE CASCADE,
-    FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (post_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_comment
@@ -111,7 +111,7 @@ CREATE TABLE tb_class_comment
     comment_user CHAR(10) NOT NULL,
     comment_content TEXT,
     comment_date DATETIME DEFAULT NOW(),
-    FOREIGN KEY (comment_post) REFERENCE tb_user(user_id)
+    FOREIGN KEY (comment_post) REFERENCE tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_class_assignment
@@ -126,7 +126,7 @@ CREATE TABLE tb_class_assignment
     assignment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (assignment_class) REFERENCES tb_class(class_id) ON DELETE CASCADE,
     FOREIGN KEY (assignment_id) REFERENCES tb_class_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (assignment_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (assignment_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Forum
@@ -142,7 +142,7 @@ CREATE TABLE tb_forum_post
     post_dislike INT DEFAULT 0,
     post_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (post_course) REFERENCES tb_course(course_id),
-    FOREIGN KEY (post_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (post_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tb_forum_comment
@@ -155,7 +155,7 @@ CREATE TABLE tb_forum_comment
     comment_dislike INT DEFAULT 0,
     comment_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (comment_post) REFERENCES tb_forum_post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (comment_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Material
@@ -169,7 +169,7 @@ CREATE TABLE tb_material
     material_attachment VARCHAR(255),
     material_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (material_course) REFERENCES tb_course(course_id),
-    FOREIGN KEY (material_user) REFERENCES tb_user(user_id)
+    FOREIGN KEY (material_user) REFERENCES tb_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Downloaded material
@@ -206,7 +206,7 @@ CREATE TABLE tb_visit
 (
     visit_id CHAR(10),
     visit_date DATETIME DEFAULT NOW(),
-    FOREIGN KEY (visit_id) REFERENCES tb_user(user_id) 
+    FOREIGN KEY (visit_id) REFERENCES tb_user(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

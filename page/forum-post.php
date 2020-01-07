@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-4">
                         <!-- Basic dropdown -->
-                        <a id="alice=dropdown" class="dropdown-toggle float-right m-0 alice-dropdown" type="button" data-toggle="dropdown"
+                        <a class="dropdown-toggle float-right m-0 alice-dropdown" type="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h" style="font-size:20px;"></i></a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alice-dropdown">

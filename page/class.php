@@ -64,7 +64,19 @@
             <p>
                 Kode kelas: <?php echo $class['class_code'];?>
             </p>
-
+            
+            <?php
+                if ($role == 2) {
+                    ?>
+                        <div class="row ml-1">
+                            <a href="?p=class-form&act=update&id=<?php echo $cid; ?>" class="text-secondary mr-3"><i class="fas fa-cog"></i></a>
+                            <!-- <input type="file" name="upload_image" id="upload_cover" accept="image/*" hidden/> -->
+                            <!-- <a href="" id="uploadCover" class="text-secondary mr-3"><i class="fas fa-camera"></i></a> -->
+                            <a href="#" data-toggle="modal" data-target="#alertDeleteClass" class="text-secondary"><i class="far fa-trash-alt"></i></a>
+                        </div>    
+                    <?php
+                }
+            ?>
         </div>
         <!-- Grid column -->
 
@@ -77,13 +89,13 @@
 <!-- Intro -->
 <ul class="nav nav-tabs justify-content-center white">
   <li class="nav-item">
-    <a class="nav-link <?php if ($view == 'home') echo 'active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=home">Home</a>
+    <a class="nav-link <?php if ($view == 'home') echo 'active alice-active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=home">Home</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link <?php if ($view == 'work') echo 'active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=work">Tugas</a>
+    <a class="nav-link <?php if ($view == 'work') echo 'active alice-active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=work">Tugas</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link <?php if ($view == 'member') echo 'active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=member">Member</a>
+    <a class="nav-link <?php if ($view == 'member') echo 'active alice-active';?>" href="?p=class&id=<?php echo $class['class_id'];?>&view=member">Member</a>
   </li>
 </ul>
 <!-- Blog section -->
@@ -135,6 +147,7 @@
                                                 <div class="col-md-6 row align-items-center justify-content-end pr-0">
                                                     <div class="input-group-sm mr-3 collapse" id="collapseDate">
                                                         <input class="form-control" type="date" name="postDueDate" id="postDueDate">
+                                                        <input type="text" id="manual-operations-input" class="form-control" name="postDueTime" placeholder="Now">
                                                     </div>
                                                     <select class="browser-default custom-select custom-select-sm w-25 mr-2" id="postType" name="postType">
                                                         <option value="Post" selected>Post</option>
@@ -341,7 +354,11 @@
                                         </div>
                                         <hr>
                                         <!-- Text -->
-                                        <p class="dark-grey-text mb-3"><?php echo $postDetail['post_content']; ?></p>
+                                        <div class="md-form m-1 mb-0 mt-3">
+                                            <textarea id="postFormContent" name="postContent" class="form-control md-textarea py-2" required disabled><?php echo $postDetail['post_content']; ?></textarea>
+                                            <button id="btnSavePost" class="btn btn-secondary btn-sm float-right" hidden>Simpan</button>
+                                            <button id="btnCancelPost" class="btn btn-light btn-sm float-right" hidden>Batal</button>
+                                        </div>
                                         <?php
                                             if ($postDetail['post_attachment'] != '') {
                                                 echo "<a href='filemateri-kelas/$postDetail[post_attachment]' class='badge badge-success mb-3 mr-3'><i class='fas fa-paperclip'></i> Lampiran</a>";
@@ -352,6 +369,17 @@
                                         ?>
                                     </div>
                                 </div>
+                                <?php
+                                    if ($_SESSION['user'] == $postDetail['post_user']) {
+                                        ?>
+                                            <hr class="my-0 mx-3">
+                                            <div class="row justify-content-center">
+                                                    <a id="btnUpdatePost" class="btn btn-secondary btn-sm">Ubah Post</a>
+                                                    <a href="action/classroom.php?act=delete-post&id=<?php echo $postDetail['post_id'];?>&user=<?php echo $_SESSION['user'];?>&class=<?php echo $cid;?>" class="btn btn-danger btn-sm">Hapus Post</a>
+                                            </div>
+                                        <?php
+                                    }
+                                ?>
                                 <hr class="mt-0 mx-3">
                                 <div class="row px-4">
                                     <h5 class="ml-2">Komentar</h5>
@@ -381,6 +409,11 @@
                                                     <div class="w-100">
                                                         <h6 class="h6 mb-0"><?php echo $result['user_name']; ?>
                                                             <span class="text-black-50 ml-2 font-small"><?php echo $result['comment_date']; ?></span>
+                                                            <?php
+                                                                $uid = $_SESSION['user'];
+                                                                if ($uid == $result['comment_user'])                                                                 
+                                                                    echo "<a href='action/classroom.php?act=delete-comment&id=$result[comment_id]&class=$cid&post=$pid&user=$uid' class='text-danger font-small'>Hapus</a>";  
+                                                            ?>
                                                         </h6>
                                                         <p class="dark-grey-text article mb-0">
                                                             <?php echo $result['comment_content']; ?>
@@ -432,6 +465,13 @@
                                                    echo 'Tidak ada file';
                                                    $disable = false;
                                                }
+                                               $due = $postDetail['post_due_date'];
+                                               $now = date('Y-m-d H:i:s');
+                                               if ($now < $due){
+                                                   $disable = false;
+                                               } else {
+                                                   $disable = true;
+                                               }
                                            ?>
                                         </h6>
 
@@ -453,6 +493,7 @@
                                         
                                         <!-- Description -->
                                         <p class="mt-3 dark-grey-text font-small font-weight-light text-center">
+                                            Deadline: <?php echo $postDetail['post_due_date'];?><br>
                                         <em>Hanya dapat satu kali submit</em>
                                         </p>
                                         <p class="text-center">
@@ -490,6 +531,9 @@
                                         <button class="btn btn-sm btn-secondary btn-block m-0" id="btnSubmit">Unduh</button>
                                     </form>
                                 </div>
+                                <p class="mt-3 dark-grey-text font-small font-weight-light text-center">
+                                    Deadline: <?php echo $postDetail['post_due_date'];?><br>
+                                </p>
                                 <!-- Card content -->
                                 <div class="card-body">
                                     <h5>Nilai</h5>
@@ -521,13 +565,13 @@
                                             <a class="text-secondary" href="filetugas-kelas/<?php echo $pid.'/'.$result['assignment_attachment'];?>"><?php echo $result['assignment_attachment'];?></a>
                                         </div>
                                         <div class="col-md-3">
-                                            <form action="action/classroom.php?act=grade" method="post" class="row formGrade">
+                                            <form class="row formGrade">
                                                 <input type="text" name="classID" value="<?php echo $class['class_id'];?>" hidden>
                                                 <input type="text" name="userID" value="<?php echo $_SESSION['user'];?>" hidden>
                                                 <input type="text" name="postID" value="<?php echo $pid;?>" hidden>
                                                 <input type="text" name="assignID" value="<?php echo $result['assignment_id'];?>" hidden>
-                                                <input type="number" name="valueGrade" min="0" max="100" class="form-control w-50 inputGrade" value="<?php echo $result['assignment_score'];?>" required/>
-                                                <button type="submit" class="btn btn-secondary btn-sm btnGrade">Perbarui</button>
+                                                <input type="number" name="valueGrade" min="0" max="100" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control w-50 inputGrade" value="<?php echo $result['assignment_score'];?>" disabled required/>
+                                                <button type="button" class="btn btn-secondary btn-sm btnGrade btnSave">Perbarui</button>
                                             </form>
                                         </div>
                                     </div>
@@ -552,8 +596,44 @@
 <!-- Blog section -->
 
 </main>
+
+<!-- Central Modal Medium Danger -->
+<div class="modal fade" id="alertDeleteClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Hapus Kelas</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+          <p>Apakah anda yakin ingin menghapus kelas ini? Sekali anda hapus, data anda akan hilang selamanya.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Batal</a>
+        <a type="button" class="btn btn-danger waves-effect" href="action/classroom.php?act=delete&id=<?php echo $cid?>">Hapus</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal alert delete class-->
+
 <!-- Main layout -->
 <script>
+    
     $(function(){
         $("#upload_file").on('click', function(e){
             e.preventDefault();
@@ -570,30 +650,45 @@
             }
         });
 
-        // $(".btnGrade").click(function(){
-        //     $(this).html("Simpan");
-        //     $(this).siblings().prop('disabled',false);
-        //     $(this).addClass("btnSave");
-        // });
-        
+        $(".btnGrade").click(function(){
+            var btn = $(this).text();
+            if (btn == 'Simpan') {
+                var len = $(this).prev().val();
+                if (len < 0 || len > 100) {
+                    alert('Range nilai 1-100');
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "action/classroom.php?act=grade",
+                        data: $(this).parent().serialize(), // changed
+                        success: function(data) {
+                            //alert('saved'); // show response from the php script.
+                        }
+                    });
+                    $(this).siblings().prop('disabled',true);
+                    $(this).html("Perbarui");
+                }
+            } else {
+                $(this).siblings().prop('disabled',false);
+                $(this).html("Simpan");
+            }
+        });   
 
-        // $('#cropImage').click(function(event){
-        //         $image_crop.croppie('result', {
-        //         type: 'canvas',
-        //         size: 'viewport'
-        //         }).then(function(response){
-        //             $.ajax({
-        //                 url:"action/upload_picture.php",
-        //                 type: "POST",
-        //                 data:{"image": response},
-        //                 success:function(data)
-        //                 {
-        //                 $('#uploadimageModal').modal('hide');
-        //                 $('#uploaded_image').html(data);
-        //                 }
-        //             });
-        //         })
-        //     });
+        $("#upload_cover").change(function(){
+            // $.ajax({
+            //     type: "POST",
+            //     url: "action/classroom.php?act=cover&cid=",
+            //     data: {'image':$(this).serialize()}, // changed
+            //     success: function(data) {
+            //         alert('saved'); // show response from the php script.
+            //     }
+            // });
+        });
+
+        $("#uploadCover").click(function(){
+            $("#upload_cover").click();
+        });
+
 
         $("#postType").change(function(){
             var type = $("#postType option:selected").text();
@@ -624,5 +719,42 @@
         
         var maxDate = year + '-' + month + '-' + day;
         $('#postDueDate').attr('min', maxDate);
+
+        var input = $('#manual-operations-input').pickatime({
+            autoclose: true,
+            'default': 'now'
+        });
+
+        // Manually toggle to the minutes view
+        $('#check-minutes').click(function(e){
+            e.stopPropagation();
+            input.pickatime('show').pickatime('toggleView', 'minutes');
+        });
+
+        $("#btnUpdatePost").click(function(){
+            $("#btnSavePost").prop('hidden',false);
+            $("#btnCancelPost").prop('hidden',false);
+            $("#postFormContent").prop('disabled', false);
+            $("#postFormContent").focus();
+        });
+
+        $("#btnCancelPost").click(function(){
+            $("#btnSavePost").prop('hidden',true);
+            $("#btnCancelPost").prop('hidden',true);
+            $("#postFormContent").prop('disabled', true);
+        });
+
+        $("#btnSavePost").click(function(){
+            var content = $("#postFormContent").val();
+            alert(content);
+            $.ajax({
+                type: "POST",
+                url: "action/classroom.php?act=update-post&id=<?php echo $pid;?>&user=<?php echo $_SESSION['user'];?>&class=<?php echo $cid;?>",
+                data: {'postContent': content}, // changed
+                success: function(data) {
+                    $("#btnCancelPost").click();
+                }
+            });
+        });
     });
 </script>
