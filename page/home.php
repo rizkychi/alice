@@ -4,8 +4,8 @@
     $status          = mysqli_fetch_array(mysqli_query($conn, "SELECT profile_status FROM tb_lecturer_profile WHERE profile_user = '$uid'"))[0];
     $profile         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = '$uid'")); 
 
-    $assignment_stu  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class_member m ON p.post_class_id = m.class_id WHERE post_is_assignment = '1' AND m.user_id = '$uid' ORDER BY post_date DESC");
-    $assignment_lec  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class c ON p.post_class_id = c.class_id WHERE post_is_assignment = '1' AND class_lecturer = '$uid' ORDER BY post_date DESC");
+    $assignment_stu  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class_member m ON p.post_class_id = m.class_id WHERE post_is_assignment = '1' AND m.user_id = '$uid' AND post_due_date >= NOW() ORDER BY post_date DESC");
+    $assignment_lec  = mysqli_query($conn, "SELECT * FROM tb_class_post p JOIN tb_class c ON p.post_class_id = c.class_id WHERE post_is_assignment = '1' AND class_lecturer = '$uid' AND post_due_date >= NOW() ORDER BY post_date DESC");
     $recent_post     = mysqli_query($conn, "SELECT post_id, post_subject, post_view, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post WHERE post_user = '$uid' ORDER BY post_date DESC");
     $recent_material = mysqli_query($conn, "SELECT material_id, material_subject, (SELECT COUNT(*) FROM tb_material_downloaded WHERE tb_material_downloaded.material_id = tb_material.material_id) AS material_download FROM tb_material WHERE material_user = '$uid' ORDER BY material_date DESC");
     $recent_comment  = mysqli_query($conn, "SELECT comment_post, comment_content, comment_user, post_subject FROM tb_forum_comment c JOIN tb_forum_post p ON c.comment_post = p.post_id  WHERE comment_user = '$uid' ORDER BY comment_date DESC");

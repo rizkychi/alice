@@ -10,6 +10,38 @@
         <?php
           if (isset($_GET['id'])) {
               include 'forum-post.php';
+          } else if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
+                echo "<h3 class='pt-4 mb-4'>Pencarian: $_GET[keyword]</h3>";
+                $query = mysqli_query($conn, "SELECT * FROM tb_forum_post JOIN tb_user ON user_id = post_user WHERE post_subject LIKE '%$_GET[keyword]%'");
+                echo '<div class="row">';
+                while ($result = mysqli_fetch_array($query)) { 
+                    ?>
+                        <!-- Grid column -->
+                        <div class="col-md-4 my-3">
+                            <!-- Card -->
+                            <div class="card">
+                            <!-- Card content -->
+                            <div class="card-body">
+                                <!-- Title -->
+                                <h4 class="card-title"><strong><?php echo $result['post_subject']; ?></strong></h4>
+                                <hr>
+                                <!-- Text -->
+                                <p class="card-text mb-3"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
+                                </p>
+                                <p class="font-small font-weight-bold dark-grey-text mb-1"><i class="far fa-clock-o"></i>
+                                <?php echo date('d/m/Y', strtotime($result['post_date'])); ?></p>
+                                <p class="font-small grey-text mb-0"><?php echo $result['user_name']; ?></p>
+                                <p class="text-right mb-0 font-small font-weight-bold"><a href="?p=forum&id=<?php echo $result['post_id']; ?>" class="text-secondary">Baca selengkapnya <i
+                                    class="fas fa-angle-right"></i></a></p>
+                            </div>
+                            <!-- Card content -->
+                            </div>
+                            <!-- Card -->
+                        </div>
+                        <!-- Grid column -->
+                    <?php
+                }
+                echo '</div>';
           } else {
               ?>
                 <!-- Section: Magazine posts -->
@@ -17,12 +49,13 @@
                     <!-- SELECT post_id, post_subject, post_view FROM tb_forum_post ORDER BY post_date DESC -->
                     <?php
         require_once 'config/conf.php';
-        $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post ORDER by post_date desc limit 1;");
+        $query  = mysqli_query($conn, "SELECT * FROM tb_forum_post JOIN tb_user ON user_id = post_user ORDER by post_date desc limit 1;");
         $result = mysqli_fetch_array($query);
         $judul = $result['post_subject'];
         $isi = $result['post_content'];
         $tanggal = $result['post_date'];
         $sender = $result['post_user'];
+        $id = $result['post_id'];
         //var_dump($judul);
         ?>
                     <h4 class="font-weight-bold"><strong>POST TERBARU</strong></h4>
@@ -37,7 +70,7 @@
                         <div class="col-md-3 mx-3 my-3">
                             <!-- Featured image -->
                             <div class="view overlay">
-                            <img src="img/alice-img/avatar.png" class="rounded-circle img-fluid mx-auto"
+                            <img src="img/alice-img/<?php echo $result['user_photo']?>" class="rounded-circle img-fluid mx-auto"
                                 alt="Avatar">
                             <a>
                                 <div class="mask rgba-white-slight"></div>
@@ -50,8 +83,8 @@
                         <div class="col-md-8 text-left mt-3">
                             <h4 class="mb-4"><strong><?php echo $judul ?></strong></h4>
                             <p class="dark-grey-text"><?php echo $isi; ?></p>
-                            <p>by <a><strong><?php echo $sender; ?></strong></a>, <?php echo $tanggal; ?></p>
-                            <a class="btn btn-secondary btn-sm">Baca selengkapnya</a>
+                            <p>by <a><strong><?php echo $result['user_name']?></strong></a>, <?php echo $tanggal; ?></p>
+                            <a href="?p=forum&id=<?php echo $id;?>" class="btn btn-secondary btn-sm">Baca selengkapnya</a>
                         </div>
                         <!-- Grid column -->
                         </div>
@@ -149,7 +182,8 @@
                     <!-- Grid row -->
                     <div class="row mb-4">
                     <?php
-                        for ($i=0; $i < 6; $i++) { 
+                        $query = mysqli_query($conn, "SELECT * FROM tb_forum_post JOIN tb_user ON user_id = post_user ORDER BY post_view DESC LIMIT 6");
+                        while ($result = mysqli_fetch_array($query)) { 
                             ?>
                                 <!-- Grid column -->
                                 <div class="col-md-4 my-3">
@@ -158,17 +192,15 @@
                                     <!-- Card content -->
                                     <div class="card-body">
                                         <!-- Title -->
-                                        <h4 class="card-title"><strong>POST TITLE</strong></h4>
+                                        <h4 class="card-title"><strong><?php echo $result['post_subject']; ?></strong></h4>
                                         <hr>
                                         <!-- Text -->
-                                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk
-                                        of the card's
-                                        content.
+                                        <p class="card-text mb-3"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
                                         </p>
                                         <p class="font-small font-weight-bold dark-grey-text mb-1"><i class="far fa-clock-o"></i>
-                                        27/08/2017</p>
-                                        <p class="font-small grey-text mb-0">Anna Smith</p>
-                                        <p class="text-right mb-0 font-small font-weight-bold text-secondary"><a>Baca selengkapnya <i
+                                        <?php echo date('d/m/Y', strtotime($result['post_date'])); ?></p>
+                                        <p class="font-small grey-text mb-0"><?php echo $result['user_name']; ?></p>
+                                        <p class="text-right mb-0 font-small font-weight-bold"><a href="?p=forum&id=<?php echo $result['post_id']; ?>" class="text-secondary">Baca selengkapnya <i
                                             class="fas fa-angle-right"></i></a></p>
                                     </div>
                                     <!-- Card content -->
@@ -183,7 +215,7 @@
                     <!-- Section: Magazine posts -->
                 
                     <div class="row justify-content-center mb-4">
-                        <a href="#" class="btn btn-secondary">Lihat semua post</a>
+                        <a href="?p=list&type=post" class="btn btn-secondary">Lihat semua post</a>
                     </div>
                     
                 </section>
@@ -203,8 +235,9 @@
                 <h4 class="font-weight-bold mt-2"><strong>PENCARIAN</strong></h4>
                 <hr class="red title-hr">
                 <!-- Search form -->
-                <form class="md-form form-inline active-purple-3 active-purple-4 mx-auto">
-                    <input class="w-100 form-control" type="text" placeholder="Cari postingan" aria-label="Search">
+                <form class="w-100 mx-auto py-2" method="get">
+                    <input type="text" name="p" value="forum" hidden>
+                    <input class="form-control w-100 submit-on-enter btn-rounded" type="text" name="keyword" placeholder="Cari post" aria-label="Search">
                 </form>
                 <!-- Search form -->
             </section>
@@ -217,27 +250,31 @@
                 <ul class="list-group z-depth-1 mt-4">
                 <?php
                 //$sql = "SELECT course_id,course_name,course_sks FROM tb_course";
-                $sql = "SELECT course_name FROM tb_course INNER JOIN tb_forum_post on course_id = post_course group by course_name";
-               $count = "SELECT COUNT(post_id) FROM tb_forum_post GROUP by post_course";
+                $sql = "SELECT course_name, count(post_id) as counts, course_id FROM tb_course LEFT JOIN tb_forum_post on course_id = post_course group by course_name, course_id order by counts desc";
                 $result = mysqli_query($conn, $sql);
                // $hitung = mysqli_query($conn, $count);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
+                    $i = 0;
                     while($row = mysqli_fetch_array($result)) {
-                    ?>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a><?php echo $row[0];?></a>
-                                        <span class="badge badge-danger badge-pill">4</span>
-                                    </li>
-                <?php
-                  } 
+                        ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="?p=list&type=post-course&id=<?php echo $row[2]; ?>" class="text-secondary"><?php echo $row[0];?></a>
+                            <span class="badge badge-danger badge-pill"><?php echo $row[1]; ?></span>
+                        </li>
+                        <?php
+                        if ($i == 5) {
+                            echo '<div class="collapse" id="collapseCourse">';
+                        }
+                        $i++;
+                    }
+                    echo '</div>'; 
                  } else {
                      echo "0 Result";
                  }
                 ?>
-
                     <li class="list-group-item d-flex justify-content-center align-items-center">
-                        <a href="#" class="text-secondary">Lihat Selengkapnya</a>
+                        <a data-toggle="collapse" data-target="#collapseCourse" class="text-secondary">Lihat Selengkapnya</a>
                     </li>
                 </ul>
 
@@ -254,7 +291,9 @@
 
                 <div class="card card-body pb-0 mt-4 mb-4">
                     <?php
-                        for ($i=0; $i < 5; $i++) { 
+                        $i = 0;
+                        $query = mysqli_query($conn, "SELECT *, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post JOIN tb_user ON user_id = post_user ORDER BY post_comment DESC LIMIT 5");
+                        while ($result = mysqli_fetch_array($query)) { 
                             ?>
                                 <div class="single-post">
                                     <!-- Grid row -->
@@ -262,7 +301,7 @@
                                         <div class="col-4">
                                             <!-- Image -->
                                             <div class="view overlay rgba-white-slight">
-                                                <img src="img/alice-img/avatar.png"
+                                                <img src="img/alice-img/<?php echo $result['user_photo'];?>"
                                                     class="img-fluid rounded-0 w-75 ml-2" alt="Avatar">
                                                 <a>
                                                     <div class="mask waves-light"></div>
@@ -272,15 +311,15 @@
                                         <!-- Excerpt -->
                                         <div class="col-8">
                                             <div class="post-data">
-                                                <a href="?p=forum&id=1" class="text-secondary stretched-link"><strong>Title of the news</strong></a>
+                                                <a href="?p=forum&id=<?php echo $result['post_id']; ?>" class="text-secondary stretched-link"><strong><?php echo $result['post_subject']; ?></strong></a>
                                                 <p class="font-small mb-0 text-black-50">
-                                                    25/08/2016
+                                                    <?php echo date('d-m-Y', strtotime($result['post_date']));?>
                                                 </p>
                                                 <a class="font-small mb-0"><i class="fas fa-comment-alt"></i>
-                                                    114
+                                                    <?php echo $result['post_comment']; ?>
                                                 </a>
                                                 <a class="font-small mb-0 ml-3"><i class="fas fa-eye"></i></i>
-                                                    114
+                                                    <?php echo $result['post_view'] ?>
                                                 </a>
                                             </div>
                                         </div>
@@ -294,6 +333,7 @@
                             } else {
                                 echo '<div class="mb-4"></div>';
                             }
+                            $i++;
                         }
                     ?>
                 </div>

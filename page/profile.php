@@ -182,7 +182,7 @@
 
                 <div class="table-wrapper table-responsive">
                     <!--Table-->
-                    <table class="table table-hover mb-0">
+                    <table class="table mb-0">
 
                     <!--Table head-->
                     <thead>
@@ -201,10 +201,20 @@
 
 
                         <tbody>
-                        <!-- <tr>
-                            <td>1</td>
-                            <td>Pemrograman Web Lanjut</td>
-                        </tr> -->
+                        <?php
+                          $query = mysqli_query($conn, "SELECT * FROM tb_class WHERE class_lecturer = $data[user_id]");
+                          $i = 1;
+                          if (mysqli_num_rows($query) <= 0) {
+                            echo "<tr><td></td><td>Tidak ada kelas</td></tr>";
+                          }
+                          while ($result = mysqli_fetch_array($query)) {
+                            echo "<tr>
+                                      <td>$i</td>
+                                      <td>$result[class_name]</td>
+                                  </tr>";
+                            $i++;
+                          }
+                        ?>
                         
                     </tbody>
                     <!--Table body-->

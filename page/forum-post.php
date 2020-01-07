@@ -1,14 +1,17 @@
 <?php
         require_once 'config/conf.php';
         $post_id = $_GET['id'];
-        $query  = mysqli_query($conn, "SELECT tb_forum_post.post_course, tb_forum_post.post_user, tb_forum_post.post_subject, tb_forum_post.post_content, tb_forum_post.post_date, tb_course.course_name FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
+        $query  = mysqli_query($conn, "SELECT tb_forum_post.post_course, tb_forum_post.post_user, tb_forum_post.post_subject, tb_forum_post.post_content, tb_forum_post.post_date, tb_course.course_name, post_view, user_name FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id JOIN tb_user ON user_id = post_user WHERE post_id = '$post_id'");
         $result = mysqli_fetch_array($query);
         $user_id = $result['post_user'];
         $subject= $result['post_subject'];
         $content= $result['post_content'];
         $course = $result['course_name'];
-		$post_date = $result['post_date'];  
-        //$row=mysqli_fetch_assoc($query);  
+        $post_date = $result['post_date']; 
+        $n_view = $result['post_view'];
+        $n_comment = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_forum_comment WHERE comment_post = $post_id"));
+        
+        mysqli_query($conn, "UPDATE tb_forum_post SET post_view = post_view + 1 WHERE post_id = '$post_id'");
 ?>
 
 
@@ -22,7 +25,7 @@
                 <div class="row justify-content-between">
                     <div class="col-md-4 mb-3">
                         <p class="font-small dark-grey-text mb-1">
-                            <strong>Penulis: </strong><?php echo $user_id; ?></p>
+                            <strong>Penulis: </strong><?php echo $result['user_name']; ?></p>
                         <p class="font-small grey-text">
                             <strong>Pada tanggal </strong><?php echo $post_date; ?></p>
                         <a>
@@ -58,13 +61,13 @@
                         <div class="col-md-6">
                             <h6 class="font-weight-bold dark-grey-text">
                                 <i class="far fa-lg fa-newspaper mr-2 dark-grey-text"></i>
-                                <strong>147</strong> Dibaca
+                                <strong><?php echo $n_view;?></strong> Dibaca
                             </h6>
                         </div>
                         <div class="col-md-6">
                             <h6 class="font-weight-bold dark-grey-text">
                                 <i class="far fa-lg fa-comment-alt mr-2 dark-grey-text"></i>
-                                <strong>14</strong> Komentar
+                                <strong><?php echo $n_comment;?></strong> Komentar
                             </h6>
                         </div>
                     </div>
@@ -102,7 +105,7 @@
             <hr>
 
             <?php 
-                    $sql =  "SELECT tb_forum_post.post_id, tb_forum_comment.comment_id, tb_forum_comment.comment_post, tb_forum_comment.comment_user, tb_forum_comment.comment_content, tb_forum_comment.comment_date from tb_forum_post JOIN tb_forum_comment on tb_forum_post.post_id = tb_forum_comment.comment_post where post_id = $post_id";
+                    $sql =  "SELECT tb_forum_post.post_id, tb_forum_comment.comment_id, tb_forum_comment.comment_post, tb_forum_comment.comment_user, tb_forum_comment.comment_content, tb_forum_comment.comment_date, user_name from tb_forum_post JOIN tb_forum_comment on tb_forum_post.post_id = tb_forum_comment.comment_post JOIN tb_user ON user_id = comment_user where post_id = $post_id";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -122,10 +125,15 @@
                                     </div>
                                 </div>
                                 <div class="w-100">
-                                    <h6 class="h6 mb-0"> <?php echo $row[3]; ?>
+                                    <h6 class="h6 mb-0"> <?php echo $row['user_name']; ?>
                                         <span class="text-black-50 ml-2 font-small"><?php echo $row[5]; ?></span>
+                                        <?php
+                                            $uid = $_SESSION['user'];
+                                            if ($uid == $row['comment_user'])                                                                 
+                                                echo "<a href='action/_formpost.php?act=delete-comment&id=$row[1]&post=$post_id&user=$uid' class='text-danger font-small'>Hapus</a>";  
+                                        ?>
                                     </h6>
-                                    <p class="dark-grey-text article"><?php echo $row[4]; ?></p>
+                                    <p class="dark-grey-text article mb-0"><?php echo $row[4]; ?></p>
                                 </div>
                             </div>
                             <!-- Comments -->

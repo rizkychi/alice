@@ -14,13 +14,14 @@
         $button = 'Post';
         $title  = 'Buat Post Baru';
     } elseif ($act == 'update') {
-         $post_id = $_GET['id'];
+        $post_id = $_GET['id'];
         $query = mysqli_query($conn, "SELECT post_course, post_user, post_subject, post_content, post_date FROM tb_forum_post 
        JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id WHERE post_id = '$post_id'");
         $row = mysqli_fetch_array($query);
         $title = 'Edit Post';
         $button = 'SIMPAN';
        
+        $user = $_SESSION['user'];
         $subject = $row ['post_subject'];
         $content = $row ['post_content'];
         $course = $row ['post_course'];
@@ -41,7 +42,11 @@
                 <form action="action/_formpost.php?act=<?php echo $act; ?>" method="post">
                 <!-- Body -->
                     <!-- Material input -->
-                    <input type="hidden" name="post_id" value="<?php $post_id?>">
+                    <?php
+                        if ($act == 'update') {
+                            echo '<input type="hidden" name="post_id" value="'.$post_id.'">';
+                        }
+                    ?>
                     <div class="md-form">
                         <input type="text" id="postFormTitle" name="postName" value="<?php echo $subject;?>" class="form-control" required>
                         <label for="postFormTitle">Judul post</label>

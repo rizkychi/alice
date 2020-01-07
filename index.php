@@ -253,20 +253,53 @@
                         ?>
                     </li>
                     <?php
-                        $notification = mysqli_query($conn, "SELECT * FROM tb_notification n JOIN tb_user u ON n.notif_from_user = u.user_id JOIN tb_class c ON n.notif_class_id = c.class_id WHERE notif_for_user = '$_SESSION[user]' ORDER BY notif_date DESC LIMIT 5");
+                        $notification = mysqli_query($conn, "SELECT * FROM tb_notification n JOIN tb_user u ON n.notif_from_user = u.user_id LEFT JOIN tb_class c ON n.notif_class_id = c.class_id WHERE notif_for_user = '$_SESSION[user]' ORDER BY notif_date DESC LIMIT 5");
+                        $n_notif = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_notification WHERE notif_for_user = '$_SESSION[user]' AND notif_status = '0'"));
                     ?>
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell mt-1"></i>
-                                <span class="badge badge-danger"><?php echo mysqli_num_rows($notification); ?></span>
+                                <?php
+                                    if ($n_notif > 0) {
+                                        echo "<span id='spanNotif' class='badge badge-danger'>$n_notif</span>";
+                                    }
+                                ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary alice-notif" aria-labelledby="navbarMainNotification">
                             <?php
                                 while ($result = mysqli_fetch_array($notification)) {
+                                    if ($result['notif_type'] == 'post') {
+                                        ?>
+                                            <a class="dropdown-item d-flex" href="?p=class&id=<?php echo $result['class_id'];?>&view=post&pid=<?php echo $result['notif_class_post'];?>">
+                                                <span class="w-100 text-wrap"><?php echo '<b>'.strstr($result['user_name'], ' ', true).'</b> memposting di <b>'.$result['class_name'].'</b> - <span style="opacity:0.75">'.date('d/m/Y', strtotime($result['notif_date'])).'</span>'; ?></span>
+                                            </a>
+                                        <?php
+                                    } else if ($result['notif_type'] == 'comment_class') {
+                                        ?>
+                                            <a class="dropdown-item d-flex" href="?p=class&id=<?php echo $result['class_id'];?>&view=post&pid=<?php echo $result['notif_class_post'];?>">
+                                                <span class="w-100 text-wrap"><?php echo '<b>'.strstr($result['user_name'], ' ', true).'</b> mengomentari post anda di <b>'.$result['class_name'].'</b> - <span style="opacity:0.75">'.date('d/m/Y', strtotime($result['notif_date'])).'</span>'; ?></span>
+                                            </a>
+                                        <?php
+                                    } else if ($result['notif_type'] == 'comment_forum') {
+                                        $subject = mysqli_fetch_array(mysqli_query($conn, "SELECT post_subject FROM tb_forum_post WHERE post_id = '$result[notif_forum_post]'"))[0];
+                                        if (strlen($subject) > 32) {
+                                            $subject = substr($subject, 0, 27)."...";
+                                        }
+                                        ?>
+                                            <a class="dropdown-item d-flex" href="?p=forum&id=<?php echo $result['notif_forum_post'];?>">
+                                                <span class="w-100 text-wrap"><?php echo '<b>'.strstr($result['user_name'], ' ', true).'</b> mengomentari post anda di <b>'.$subject.'</b> - <span style="opacity:0.75">'.date('d/m/Y', strtotime($result['notif_date'])).'</span>'; ?></span>
+                                            </a>
+                                        <?php
+                                    }
+                                }
+                                if ($n_notif == 5) {
                                     ?>
-                                        <a class="dropdown-item d-flex" href="?p=class&id=<?php echo $result['class_id'];?>&view=post&pid=<?php echo $result['notif_class_post'];?>">
-                                            <span class="w-100 text-wrap"><?php echo '<b>'.$result['user_name'].'</b> memposting di <b>'.$result['class_name'].'</b> - <span style="opacity:0.75">'.date('d/m/Y', strtotime($result['notif_date'])).'</span>'; ?></span>
-                                        </a>
+                                        <hr class="my-0">
+                                        <div class="text-center">
+                                            <a class="text-secondary pb-0" href="?p=list&type=notif">
+                                                Selengkapnya
+                                            </a>
+                                        </div>
                                     <?php
                                 }
                             ?>
@@ -399,18 +432,23 @@
         <script type="text/javascript">
             // Material Select Initialization
             $(document).ready(function () {
-            $('.mdb-select').materialSelect();
-            $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
-                $(this).closest('.select-outline').find('label').toggleClass('active');
-                $(this).closest('.select-outline').find('.caret').toggleClass('active');
+                $('.mdb-select').materialSelect();
+                $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
+                    $(this).closest('.select-outline').find('label').toggleClass('active');
+                    $(this).closest('.select-outline').find('.caret').toggleClass('active');
+                });
+
+                $("#navbarMainNotification").click(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "action/notification.php",
+                        data: {'userID': '<?php echo $_SESSION['user'];?>'}, // changed
+                        success: function(data) {
+                            $("#spanNotif").hide();
+                        }
+                    });
+                });
             });
-            });
-            
-            // $('.datepicker').pickadate({
-            // // Escape any “rule” characters with an exclamation mark (!).
-            //     format: 'yyyy-mm-dd',
-            //     formatSubmit: 'yyyy-mm-dd'
-            // })
 
             $('#uploadAvatar').click(function () {
                 $('#upload_image').click();
