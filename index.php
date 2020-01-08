@@ -85,7 +85,7 @@
         <title>ALICE</title>
         <?php
             // change page title
-            echo '<script>document.title += " | '.$page_title.'"</script>';
+            echo '<script>document.title = "'.$page_title.' | ALICE"</script>';
         ?>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
