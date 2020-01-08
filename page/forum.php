@@ -19,14 +19,14 @@
                         <!-- Grid column -->
                         <div class="col-md-4 my-3">
                             <!-- Card -->
-                            <div class="card">
+                            <div class="card" style="height: 20rem;">
                             <!-- Card content -->
                             <div class="card-body">
                                 <!-- Title -->
-                                <h4 class="card-title"><strong><?php echo $result['post_subject']; ?></strong></h4>
+                                <h4 class="card-title" style="height: 4rem;"><strong><?php echo $result['post_subject']; ?></strong></h4>
                                 <hr>
                                 <!-- Text -->
-                                <p class="card-text mb-3"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
+                                <p class="card-text mb-3" style="height: 6rem;"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
                                 </p>
                                 <p class="font-small font-weight-bold dark-grey-text mb-1"><i class="far fa-clock-o"></i>
                                 <?php echo date('d/m/Y', strtotime($result['post_date'])); ?></p>
@@ -82,7 +82,8 @@
                         <!-- Grid column -->
                         <div class="col-md-8 text-left mt-3">
                             <h4 class="mb-4"><strong><?php echo $judul ?></strong></h4>
-                            <p class="dark-grey-text"><?php echo $isi; ?></p>
+                            <p class="dark-grey-text"><?php echo substr($result['post_content'], 0, 185); if (strlen($result['post_content']) >= 185) echo '...'; ?></p>
+                            <!-- <?php echo $isi; ?> -->
                             <p>by <a><strong><?php echo $result['user_name']?></strong></a>, <?php echo $tanggal; ?></p>
                             <a href="?p=forum&id=<?php echo $id;?>" class="btn btn-secondary btn-sm">Baca selengkapnya</a>
                         </div>
@@ -118,7 +119,7 @@
                                                 <!-- Excerpt -->
                                                 <div class="col-md-8">
                                                 <p class="font-small text-left mb-2"><strong><?php echo date('d-m-Y', strtotime($row[0])); ?></strong></p>
-                                                <p class="text-left"><a href="?p=forum&id=<?php echo $row[2]; ?>" class="text-secondary stretched-link text"><?php echo ($row[1]); ?>
+                                                <p class="text-left"><a href="?p=forum&id=<?php echo $row[2]; ?>" class="text-secondary stretched-link text" style="height: 1rem;"><?php echo ($row[1]); ?>
                                                     <i class="fas fa-angle-right float-right"></i>
                                                     </a></p>
                                                 </div>
@@ -188,14 +189,14 @@
                                 <!-- Grid column -->
                                 <div class="col-md-4 my-3">
                                     <!-- Card -->
-                                    <div class="card">
+                                    <div class="card" style="height: 20rem;">
                                     <!-- Card content -->
                                     <div class="card-body">
                                         <!-- Title -->
-                                        <h4 class="card-title"><strong><?php echo $result['post_subject']; ?></strong></h4>
+                                        <h4 class="card-title" style="height: 4rem;"><strong><?php echo substr($result['post_subject'], 0, 25); if (strlen($result['post_subject']) >= 25) echo '...'; ?></strong></h4>
                                         <hr>
                                         <!-- Text -->
-                                        <p class="card-text mb-3"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
+                                        <p class="card-text mb-3" style="height: 6rem;"><?php echo substr($result['post_content'], 0, 80); if (strlen($result['post_content']) >= 80) echo '...'; ?>
                                         </p>
                                         <p class="font-small font-weight-bold dark-grey-text mb-1"><i class="far fa-clock-o"></i>
                                         <?php echo date('d/m/Y', strtotime($result['post_date'])); ?></p>

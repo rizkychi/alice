@@ -86,7 +86,7 @@
 
             <!-- Grid row -->
             <div class="row mx-md-4 px-4 mt-3">
-                <p class="dark-grey-text article"><?php echo $content; ?></p>
+                <p class="dark-grey-text article" align="justify"><?php echo $content; ?></p>
             
             </div>
             <!-- Grid row -->
