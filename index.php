@@ -256,7 +256,7 @@
                         $notification = mysqli_query($conn, "SELECT * FROM tb_notification n JOIN tb_user u ON n.notif_from_user = u.user_id LEFT JOIN tb_class c ON n.notif_class_id = c.class_id WHERE notif_for_user = '$_SESSION[user]' ORDER BY notif_date DESC LIMIT 5");
                         $n_notif = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_notification WHERE notif_for_user = '$_SESSION[user]' AND notif_status = '0'"));
                     ?>
-                    <li class="nav-item dropdown mx-2">
+                    <li class="nav-item dropdown mx-2" id="notifPanel">
                         <a class="nav-link waves-effect waves-light" id="navbarMainNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell mt-1"></i>
                                 <?php
@@ -449,6 +449,12 @@
                     });
                 });
             });
+
+            <?php
+                if ($role == 1) {
+                    echo '$("#notifPanel").hide();';
+                }
+            ?>
 
             $('#uploadAvatar').click(function () {
                 $('#upload_image').click();

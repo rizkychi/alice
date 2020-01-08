@@ -274,3 +274,37 @@
   </div>
 </div>
 <!-- Modal Login Failed-->
+
+<!-- Modal Login Failed -->
+<!-- Central Modal Medium Danger -->
+<div class="modal fade" id="modalClassSuspended" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-warning" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Kelas Ditangguhkan</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-exclamation-circle fa-4x mb-3 animated rotateIn"></i>
+          <p>Kelas ini sedang ditangguhkan. Apabila terdapat kesalahan silahkan hubungi administrator.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-warning waves-effect" data-dismiss="modal">Tutup</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal Login Failed-->

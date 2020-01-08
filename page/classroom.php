@@ -14,6 +14,16 @@
                 </script>";
         unset($_SESSION['errorJoinClass']);
     }
+
+    // put modal if class suspended
+    if (isset($_SESSION['class_suspended']) && $_SESSION['class_suspended']) {
+        echo    "<script>
+                    $(document).ready(function() {
+                        $('#modalClassSuspended').modal('show');
+                    });
+                </script>";
+        unset($_SESSION['class_suspended']);
+    }
 ?>
 <div class="container-fluid">
     <div class="d-flex mx-2 justify-content-between align-items-center">
