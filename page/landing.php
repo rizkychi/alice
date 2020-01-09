@@ -37,24 +37,19 @@
         <ul class="navbar-nav ml-auto text-uppercase smooth-scroll">
           <li class="nav-item">
             <a class="nav-link heather-color" href="#about" data-offset="100">
-              <strong>About us</strong>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link heather-color" href="#articles" data-offset="100">
-              <strong>Articles</strong>
+              <strong>Tentang</strong>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link heather-color" href="#offer" data-offset="100">
-              <strong>Memberships</strong>
+              <strong>Manfaat</strong>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link heather-color" href="#contact" data-offset="100">
-              <strong>Contact us</strong>
+            <a class="nav-link heather-color" href="#articles" data-offset="100">
+              <strong>Fitur</strong>
             </a>
-          </li>
+          </li>         
           <li class="nav-item">
             <a class="nav-link pt-0-1" href="#login" data-offset="100">
               <button type="button" class="btn btn-outline-purple-pastel btn-rounded btn-md z-depth-0 m-0 pt-2">Masuk <i class="fas fa-angle-double-right"></i></button>
@@ -74,12 +69,10 @@
 
           <div class="col-lg-4 col-xl-5 col-flex mt-lg-0 pt-lg-4 mt-5 pt-5">
 
-            <h1 class="heading font-weight-bold display-3 mb-4">Hi<span>.</span> <br
-                class="d-block d-md-none d-lg-block d-xl-none">We are <br>the Place</span></h1>
-            <h5 class="subheading mb-xl-4 pb-xl-0 mb-md-3 pb-md-3 mb-4"><strong>Welcome to the Place - a club workplace
-                for entrepreneurs, companies and the creative industry.
-                <br class="d-none d-xl-block">We are the central meeting place in which design, business and ideas
-                coexist in harmony.</strong></h5>
+            <h1 class="heading font-weight-bold display-3 mb-4">Hai<span>.</span> <br
+                class="d-block d-md-none d-lg-block d-xl-none"><br>Selamat Datang</span></h1>
+            <h5 class="subheading mb-xl-4 pb-xl-0 mb-md-3 pb-md-3 mb-4"><strong>Saat ini kamu mengunjungi web e-learning milik Universitas Amikom. 
+                <br class="d-none d-xl-block">Bagi kamu mahasiswa aktif Amikom , wajib banget buat gabung disini. Daftarkan diri kamu sekarang</strong></h5>
             <div class="mr-auto">
                 <button type="button" class="btn purple-gradient btn-rounded ml-0" data-toggle="modal" data-target="#registerModal">Daftar Sekarang</button>
             </div>
@@ -113,12 +106,10 @@
       <section id="about" class="mb-5 pb-5">
 
         <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold text-center">Why Choose Us</h2>
+        <h2 class="h1-responsive font-weight-bold text-center">Mengapa harus bergabung ?</h2>
         <hr class="hr-pink my-3">
-        <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">We open the first location of the Place in
-          the center of Paris,
-          at the junction of Adelaide and Jefferson streets.
-          We have designed a number of functions and facilities on eight floors.</p>
+        <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">Selain karena wajib bagi mahasiswa aktif Amikom untuk bergabung , web keren ini 
+        juga memfasilitasi baik mahasiswa maupun dosen Amikom untuk dapat membantu jalannya kegiatan perkuliahan secara daring.</p>
 
         <!-- Grid row -->
         <div class="row">
@@ -137,13 +128,13 @@
 
               <!-- Grid column -->
               <div class="col-lg-10 col-md-9 col-10">
-                <h4 class="font-weight-bold orange-pastel">Workplace</h4>
+                <h4 class="font-weight-bold orange-pastel">Bergabung Kelas</h4>
                 <p class="grey-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
                   doloremque laudantium,
                   totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
                   sunt explicabo.
                   Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-                <a class="btn btn-orange-pastel btn-rounded btn-sm">Learn more</a>
+                
               </div>
               <!-- Grid column -->
 
@@ -167,12 +158,12 @@
 
               <!-- Grid column -->
               <div class="col-lg-10 col-md-9 col-10">
-                <h4 class="font-weight-bold blue-pastel">A meeting place</h4>
+                <h4 class="font-weight-bold blue-pastel">Tugas Perkuliahan</h4>
                 <p class="grey-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
                   adipisci velit,
                   sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem,
                   sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                <a class="btn btn-blue-pastel btn-rounded btn-sm">Learn more</a>
+                
               </div>
               <!-- Grid column -->
 
@@ -196,13 +187,13 @@
 
               <!-- Grid column -->
               <div class="col-lg-10 col-md-9 col-10">
-                <h4 class="font-weight-bold green-pastel">We are children-friendly</h4>
+                <h4 class="font-weight-bold green-pastel">Forum Diskusi</h4>
                 <p class="grey-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
                   praesentium
                   voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate
                   non provident,
                   similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-                <a class="btn btn-green-pastel btn-rounded btn-sm">Learn more</a>
+                
               </div>
               <!-- Grid column -->
 
@@ -222,11 +213,9 @@
       <section id="offer" class="mb-5">
 
         <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold text-center">What You Get</h2>
+        <h2 class="h1-responsive font-weight-bold text-center">Manfaat yang didapat</h2>
         <hr class="hr-pink my-3">
-        <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">Duis aute irure dolor in reprehenderit in
-          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit.</p>
+        <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">Banyak manfaat yang nantinya dapat kamu rasakan setelah bergabung disini.</p>
 
         <!-- Grid row -->
         <div class="row mb-lg-0 mb-5">
@@ -248,9 +237,8 @@
                 <i class="fas fa-book-open purple-pastel fa-2x"></i>
               </div>
               <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold purple-pastel mb-2">Desks for any period</h5>
-                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores nam,
-                  aperiam minima elit assumenda voluptate velit.</p>
+                <h5 class="font-weight-bold purple-pastel mb-2">Belajar hal-hal baru</h5>
+                <p class="grey-text">Jelajahi materi , teman dan ilmu baru dengan bergabung disini. </p>
               </div>
             </div>
             <!-- Grid row -->
@@ -261,9 +249,8 @@
                 <i class="fas fa-wifi green-pastel fa-2x"></i>
               </div>
               <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold green-pastel mb-2">Fast Internet</h5>
-                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores nam,
-                  aperiam minima elit assumenda voluptate velit.</p>
+                <h5 class="font-weight-bold green-pastel mb-2">Gabung Forum</h5>
+                <p class="grey-text">Dengan bergabung kedalam forum , kamu bisa saling berbagi berkenalan dengan mahasiswa aktif lainnya.</p>
               </div>
             </div>
             <!-- Grid row -->
@@ -274,9 +261,8 @@
                 <i class="far fa-clock orange-pastel fa-2x"></i>
               </div>
               <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold orange-pastel mb-2">Access 24/7</h5>
-                <p class="grey-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores
-                  nam, aperiam minima elit assumenda voluptate velit.</p>
+                <h5 class="font-weight-bold orange-pastel mb-2">Belajar Kapan Saja</h5>
+                <p class="grey-text mb-0">Kamu dapat melakukan perkuliahan dan berdiskusi dengan mahasiswa aktif lainnya kapanpun dan dimanapun.</p>
               </div>
             </div>
             <!-- Grid row -->
@@ -285,65 +271,7 @@
           <!-- Grid column -->
 
         </div>
-        <!-- Grid row -->
 
-        <!-- Grid row -->
-        <div class="row">
-
-          <!-- Grid column -->
-          <div class="col-lg-6">
-
-            <!-- Grid row -->
-            <div class="row mb-3">
-              <div class="col-md-1 col-2">
-                <i class="fas fa-users fa-2x blue-pastel"></i>
-              </div>
-              <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold blue-pastel mb-2">Meeting rooms</h5>
-                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores nam,
-                  aperiam minima elit assumenda voluptate velit.</p>
-              </div>
-            </div>
-            <!-- Grid row -->
-
-            <!-- Grid row -->
-            <div class="row mb-3">
-              <div class="col-md-1 col-2">
-                <i class="fas fa-gem fa-2x pink-pastel"></i>
-              </div>
-              <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold pink-pastel mb-2">Flexible memberships</h5>
-                <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores nam,
-                  aperiam minima elit assumenda voluptate velit.</p>
-              </div>
-            </div>
-            <!-- Grid row -->
-
-            <!-- Grid row -->
-            <div class="row mb-lg-0 mb-5">
-              <div class="col-md-1 col-2">
-                <i class="fas fa-utensils fa-2x navy-blue-color"></i>
-              </div>
-              <div class="col-md-11 col-10">
-                <h5 class="font-weight-bold navy-blue-color mb-2">Kitchenettes</h5>
-                <p class="grey-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing. Reprehenderit maiores
-                  nam, aperiam minima elit assumenda voluptate velit.</p>
-              </div>
-            </div>
-            <!-- Grid row -->
-
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-lg-6" style="margin-top: -6rem;">
-            <div class="view">
-              <img src="https://mdbootstrap.com/img/illustrations/graphics(4).png" class="img-fluid" alt="smaple image">
-            </div>
-          </div>
-          <!-- Grid column -->
-
-        </div>
         <!-- Grid row -->
 
       </section>
@@ -353,7 +281,7 @@
       <section id="articles" class="mb-5 pb-5">
 
         <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold text-center">The Great News</h2>
+        <h2 class="h1-responsive font-weight-bold text-center">Fitur Lengkap</h2>
         <hr class="hr-pink my-3">
         <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">Duis aute irure dolor in reprehenderit in
           voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
@@ -382,20 +310,6 @@
                 debitis aut rerum necessitatibus
                 saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
               </p>
-              <ul class="list-unstyled mb-0">
-                <!-- Facebook -->
-                <a class="p-2 fa-lg fb-ic">
-                  <i class="fab fa-facebook-f blue-pastel"> </i>
-                </a>
-                <!-- Twitter -->
-                <a class="p-2 fa-lg tw-ic">
-                  <i class="fab fa-twitter blue-pastel"> </i>
-                </a>
-                <!-- Instagram -->
-                <a class="p-2 fa-lg ins-ic">
-                  <i class="fab fa-instagram blue-pastel"> </i>
-                </a>
-              </ul>
             </div>
           </div>
           <!-- Grid column -->
@@ -420,20 +334,6 @@
                 aliquid ex ea commodi consequatur,
                 quis autem vel eum iure reprehenderit qui in ea voluptate velit?
               </p>
-              <ul class="list-unstyled mb-0">
-                <!-- Facebook -->
-                <a class="p-2 fa-lg fb-ic">
-                  <i class="fab fa-facebook-f blue-pastel"> </i>
-                </a>
-                <!-- Twitter -->
-                <a class="p-2 fa-lg tw-ic">
-                  <i class="fab fa-twitter blue-pastel"> </i>
-                </a>
-                <!-- Instagram -->
-                <a class="p-2 fa-lg ins-ic">
-                  <i class="fab fa-instagram blue-pastel"> </i>
-                </a>
-              </ul>
             </div>
           </div>
           <!-- Grid column -->
@@ -458,20 +358,6 @@
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                 Excepteur proident sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
-              <ul class="list-unstyled mb-0">
-                <!-- Facebook -->
-                <a class="p-2 fa-lg fb-ic">
-                  <i class="fab fa-facebook-f blue-pastel"> </i>
-                </a>
-                <!-- Twitter -->
-                <a class="p-2 fa-lg tw-ic">
-                  <i class="fab fa-twitter blue-pastel"> </i>
-                </a>
-                <!-- Instagram -->
-                <a class="p-2 fa-lg ins-ic">
-                  <i class="fab fa-instagram blue-pastel"> </i>
-                </a>
-              </ul>
             </div>
           </div>
           <!-- Grid column -->
@@ -485,10 +371,7 @@
         <!-- Section heading -->
         <h2 class="h1-responsive font-weight-bold text-center">Masuk ke Akun Anda</h2>
         <hr class="hr-pink my-3">
-        <p class="lead grey-text text-center w-responsive mx-auto mb-5 pb-3">Duis aute irure dolor in reprehenderit in
-          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit.</p>
-
+        <br><br>
         <!-- Grid row -->
         <div class="row">
 
@@ -590,16 +473,13 @@
               <a class="dark-grey-text" href="#!">Homepage</a>
             </li>
             <li>
-              <a class="dark-grey-text" href="#!">About us</a>
+              <a class="dark-grey-text" href="#!">Tentang</a>
             </li>
             <li>
-              <a class="dark-grey-text" href="#!">Memberships</a>
+              <a class="dark-grey-text" href="#!">Manfaat</a>
             </li>
             <li>
               <a class="dark-grey-text" href="#!">Articles</a>
-            </li>
-            <li>
-              <a class="dark-grey-text" href="#!">Contact</a>
             </li>
           </ul>
 
