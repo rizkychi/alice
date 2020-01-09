@@ -195,7 +195,7 @@
     } else { 
     // put default page
 ?>
-    <body>
+    <body style="background: url('img/bg.jpg');">
         
         <header>
             <!-- Navbar -->
