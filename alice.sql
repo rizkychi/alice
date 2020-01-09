@@ -191,7 +191,7 @@ CREATE TABLE tb_notification
     notif_class_id INT,
     notif_class_post BIGINT,
     notif_forum_post BIGINT,
-    notif_type ENUM('class','forum','task'),
+    notif_type ENUM('post','comment_forum','comment_class'),
     notif_status BOOLEAN DEFAULT 0,
     notif_date DATETIME DEFAULT NOW(),
     FOREIGN KEY (notif_for_user) REFERENCES tb_user(user_id) ON DELETE CASCADE,
@@ -277,16 +277,62 @@ BEGIN
             LEAVE wloop;
         END IF;
         IF NEW.post_user != user THEN
-            INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post)
-            VALUES (user, NEW.post_user, NEW.post_class_id, NEW.post_id);
+            INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post, notif_type)
+            VALUES (user, NEW.post_user, NEW.post_class_id, NEW.post_id, 'post');
         END IF;
     END WHILE wloop;
     SET finished = 0;
     IF roles = 3 THEN
-        INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post)
-        VALUES (lecturer, NEW.post_user, NEW.post_class_id, NEW.post_id);
+        INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_id, notif_class_post, notif_type)
+        VALUES (lecturer, NEW.post_user, NEW.post_class_id, NEW.post_id, 'post');
     END IF;
     CLOSE curMember;
+END//
+DELIMITER ;
+
+-- Notification class comment
+DELIMITER //
+CREATE TRIGGER tg_notification_class_comment
+AFTER INSERT
+ON tb_class_comment FOR EACH ROW
+BEGIN
+    DECLARE exist INT;
+    DECLARE user CHAR(10);
+    DECLARE cid INT;
+
+    SELECT post_user, post_class_id INTO user, cid FROM tb_class_post JOIN tb_class_comment ON post_id = comment_post WHERE comment_id = NEW.comment_id;
+    SELECT COUNT(*) INTO exist FROM tb_notification WHERE notif_from_user = NEW.comment_user AND notif_class_post = NEW.comment_post AND notif_type = 'comment_class';
+
+    IF exist = 0 AND user != NEW.comment_user THEN
+        INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_class_post, notif_class_id, notif_type)
+        VALUES (user, NEW.comment_user, NEW.comment_post, cid, 'comment_class');
+    END IF;
+    IF exist > 0 THEN 
+        UPDATE tb_notification SET notif_date = NOW(), notif_status = 0 WHERE notif_from_user = NEW.comment_user AND notif_class_post = NEW.comment_post AND notif_type = 'comment_class';
+    END IF;
+END//
+DELIMITER ;
+
+-- Notification forum comment
+DELIMITER //
+CREATE TRIGGER tg_notification_forum_comment
+AFTER INSERT
+ON tb_forum_comment FOR EACH ROW
+BEGIN
+    DECLARE exist INT;
+    DECLARE user CHAR(10);
+    DECLARE cid INT;
+
+    SELECT post_user INTO user FROM tb_forum_post JOIN tb_forum_comment ON post_id = comment_post WHERE comment_id = NEW.comment_id;
+    SELECT COUNT(*) INTO exist FROM tb_notification WHERE notif_from_user = NEW.comment_user AND notif_forum_post = NEW.comment_post AND notif_type = 'comment_forum';
+
+    IF exist = 0 AND user != NEW.comment_user THEN
+        INSERT INTO tb_notification (notif_for_user, notif_from_user, notif_forum_post, notif_type)
+        VALUES (user, NEW.comment_user, NEW.comment_post, 'comment_forum');
+    END IF;
+    IF exist > 0 THEN 
+        UPDATE tb_notification SET notif_date = NOW(), notif_status = 0 WHERE notif_from_user = NEW.comment_user AND notif_forum_post = NEW.comment_post AND notif_type = 'comment_forum';
+    END IF;
 END//
 DELIMITER ;
 

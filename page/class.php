@@ -17,6 +17,12 @@
         $pid = $_GET['pid'];
     }
 
+    $suspended = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_class WHERE class_id = '$cid' AND class_suspended = '1'"));
+    if ($suspended > 0) {
+        $_SESSION['class_suspended'] = true;
+        echo "<script>window.location = 'http://$host$uri?p=classroom'</script>";
+    }
+
     $class            = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class JOIN tb_course ON class_course = course_id WHERE class_id = '$cid'"));
     $lecturer         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user JOIN tb_lecturer_profile ON user_id = profile_user WHERE user_id = '$class[class_lecturer]'"));
     $member           = mysqli_query($conn, "SELECT u.user_id, user_name, user_photo FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id WHERE m.class_id = '$cid' ORDER BY u.user_id ASC");

@@ -46,44 +46,19 @@
               header('Location: ../?p=forum');
             } else {
               // $last_post = mysqli_insert_id($conn);
-               header('Location: ../?p=forum-post&id='.$post_id);
+               header('Location: ../?p=forum&id='.$post_id);
             }
          
          }
 
-        }
-	
-    
-    
-    
-    //else if ($act == 'delete') {
-      //  if (isset($_GET['id'])) {
-        //    $id = $_GET['id'];
+    } else if ($act == 'delete-comment') {
+      if ($_GET) {
+        $uid     = $_GET['user'];
+        $pid     = $_GET['post'];
+        $comment = $_GET['id'];
 
-          //  $query = mysqli_query($conn, "DELETE FROM tb_forum_post WHERE post_id = $id");
-
-            //if (!$query) {
-              //  echo "<script>alert('gagal')</script>";
-            //} else {
-              //  header('Location: ../?p=forum-post');
-            //}
-        //}
-    //} 
-    
-    
-    // else if ($act == 'update') {
-      //   if ($_POST) {
-         //    $subject= $_POST['postName'];
-        //     $content= $_POST['postContent'];
-          //   $course = $_POST['course'];
-
-       //      $query = mysqli_query($conn, "UPDATE tb_forum_post SET postFormTitle = '$subject', postFormContent = '$content' WHERE course = $course");
-
-          //   if (!$query) {
-            //     echo "<script>alert('gagal')</script>";
-           //  } else {
-            //     header('Location: ../?p=forum-post');
-            // }
-         //}
-    // }
+        $query = mysqli_query($conn, "DELETE FROM tb_forum_comment WHERE comment_id = '$comment' AND comment_user = '$uid'");
+        header("Location: ../?p=forum&id=$pid");
+    }
+    }
 ?>

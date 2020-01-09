@@ -20,7 +20,7 @@
 
             <!-- Excerpt -->
             <div class="row d-flex justify-content-between px-3">
-                <a href="#!" class="green-text">
+                <a href="?p=list&type=material-course&id=<?php echo $row['course_id']; ?>" class="green-text">
                     <h6 class="h6 pb-1"><i class="fas fa-layer-group mr-2"></i> <?php echo $row['course_name']?></h6>
                 </a>
                 <h6 class="h6 pb-1"><i class="far fa-calendar mr-2"></i><?php echo date('d-m-Y', strtotime($row['material_date'])) ?></h6>
