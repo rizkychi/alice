@@ -464,7 +464,7 @@
                                         <!-- Title -->
                                         <h6 class="card-title dark-grey-text text-center grey lighten-4 py-2 px-2 text-truncate" id="attachAssignment">
                                            <?php
-                                               if ($assignmentDetail != null) {
+                                               if ($assignmentDetail['assignment_is_turned'] == '1') {
                                                    echo $assignmentDetail['assignment_attachment'];
                                                    $disable = true;
                                                } else {
