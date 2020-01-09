@@ -314,7 +314,7 @@
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarMainContent-dropdown">
                             <?php
                                 if ($role != 1) {
-                                    ?><a class="dropdown-item" href="?p=akun">Akunku</a><?php
+                                    ?><a class="dropdown-item" href="?p=akun">Profil</a><?php
                                 }
                             ?>
                             <a class="dropdown-item" href="action/do_logout.php">Keluar</a>
