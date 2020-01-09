@@ -92,7 +92,7 @@
                       }
                       echo '</div>';
                   } else {
-                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
+                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Aseeek tidak ada tugas</p>";
                   }
                 ?>
               </div>
@@ -314,7 +314,7 @@
                       }
                       echo '</div>';
                   } else {
-                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Woohooo tidak ada tugas</p>";
+                      echo "<p class='font-weight-light font-italic text-center my-5' style='line-height: 0.9;'>Aseeek tidak ada tugas</p>";
                   }
                 ?>
               </div>
