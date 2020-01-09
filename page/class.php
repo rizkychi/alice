@@ -26,7 +26,7 @@
     $class            = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class JOIN tb_course ON class_course = course_id WHERE class_id = '$cid'"));
     $lecturer         = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_user JOIN tb_lecturer_profile ON user_id = profile_user WHERE user_id = '$class[class_lecturer]'"));
     $member           = mysqli_query($conn, "SELECT u.user_id, user_name, user_photo FROM tb_user u JOIN tb_class_member m ON u.user_id = m.user_id WHERE m.class_id = '$cid' ORDER BY u.user_id ASC");
-    $assignment       = mysqli_query($conn, "SELECT * FROM tb_class_post WHERE post_is_assignment = '1' ORDER BY post_date DESC");
+    $assignment       = mysqli_query($conn, "SELECT * FROM tb_class_post WHERE post_is_assignment = '1' AND post_class_id = '$cid' ORDER BY post_date DESC");
     $classPost        = mysqli_query($conn, "SELECT *, (SELECT COUNT(*) FROM tb_class_comment WHERE comment_post = post_id) AS n_comment FROM tb_class_post p JOIN tb_user u ON p.post_user = u.user_id WHERE post_class_id = '$cid' ORDER BY post_date DESC");
     $commentDetail    = mysqli_query($conn, "SELECT * FROM tb_class_comment c JOIN tb_user u ON c.comment_user = u.user_id WHERE comment_post = '$pid' ORDER BY comment_date ASC");
     $assignmentDetail = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM tb_class_assignment WHERE assignment_user = '$_SESSION[user]' AND assignment_post = '$pid'"));

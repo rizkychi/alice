@@ -112,7 +112,7 @@
             <hr>
 
             <?php 
-                    $sql =  "SELECT tb_forum_post.post_id, tb_forum_comment.comment_id, tb_forum_comment.comment_post, tb_forum_comment.comment_user, tb_forum_comment.comment_content, tb_forum_comment.comment_date, user_name from tb_forum_post JOIN tb_forum_comment on tb_forum_post.post_id = tb_forum_comment.comment_post JOIN tb_user ON user_id = comment_user where post_id = $post_id";
+                    $sql =  "SELECT tb_forum_post.post_id, tb_forum_comment.comment_id, tb_forum_comment.comment_post, tb_forum_comment.comment_user, tb_forum_comment.comment_content, tb_forum_comment.comment_date, user_name, user_photo from tb_forum_post JOIN tb_forum_comment on tb_forum_post.post_id = tb_forum_comment.comment_post JOIN tb_user ON user_id = comment_user where post_id = $post_id";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -124,7 +124,7 @@
                             <div class="d-flex p-2 align-items-start">
                                 <div class="flex-shrink-1 mr-3">
                                     <div class="view overlay">
-                                        <img src="img/alice-img/<?php echo $row['user_photo'];?>.png" class="rounded-circle img-fluid alice-avatar"
+                                        <img src="img/alice-img/<?php echo $row['user_photo'];?>" class="rounded-circle img-fluid alice-avatar"
                                             alt="Avatar">
                                         <a>
                                             <div class="mask rgba-white-slight"></div>
