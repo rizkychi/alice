@@ -19,7 +19,7 @@
       <div class="col-md-12 mt-5">
 
         <div class="avatar mx-auto">
-          <img src="img/alice-img/avatar.png" class="img-fluid rounded-circle z-depth-1" style="width:100px;height:100px;" alt="Avatar">
+          <img src="img/alice-img/<?php echo $data['user_photo'];?>" class="img-fluid rounded-circle z-depth-1" style="width:100px;height:100px;" alt="Avatar">
         </div>
         <h3 class="my-3 font-weight-bold">
           <strong>

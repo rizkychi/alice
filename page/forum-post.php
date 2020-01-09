@@ -124,7 +124,7 @@
                             <div class="d-flex p-2 align-items-start">
                                 <div class="flex-shrink-1 mr-3">
                                     <div class="view overlay">
-                                        <img src="img/alice-img/avatar.png" class="rounded-circle img-fluid alice-avatar"
+                                        <img src="img/alice-img/<?php echo $row['user_photo'];?>.png" class="rounded-circle img-fluid alice-avatar"
                                             alt="Avatar">
                                         <a>
                                             <div class="mask rgba-white-slight"></div>

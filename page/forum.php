@@ -96,7 +96,7 @@
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
                             <?php 
-                    $sql =  "SELECT post_date, post_subject, post_id FROM tb_forum_post ORDER by post_date desc limit 3";
+                    $sql =  "SELECT post_date, post_subject, post_id, user_photo FROM tb_forum_post JOIN tb_user ON user_id = post_user ORDER by post_date desc limit 3";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -109,7 +109,7 @@
                                                 <div class="col-md-4">
                                                 <!-- Image -->
                                                 <div class="view overlay rgba-white-slight mb-2">
-                                                    <img src="img/alice-img/avatar.png"
+                                                    <img src="img/alice-img/<?php echo $row['user_photo'];?>"
                                                     class="img-fluid rounded-circle w-75 mx-auto alice-avatar" alt="Avatar">
                                                     <a>
                                                     <div class="mask rgba-white-slight"></div>
@@ -136,7 +136,7 @@
                         <!-- Grid column -->
                         <div class="col-md-5 mx-4 my-3">
                             <?php 
-                    $sql =  "SELECT post_date, post_subject, post_id FROM tb_forum_post ORDER by post_date desc limit 3 offset 3";
+                    $sql =  "SELECT post_date, post_subject, post_id, user_photo FROM tb_forum_post JOIN tb_user ON user_id = post_user ORDER by post_date desc limit 3 offset 3";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                                         // output data of each row
@@ -149,7 +149,7 @@
                                                 <div class="col-md-4">
                                                 <!-- Image -->
                                                 <div class="view overlay rgba-white-slight mb-2">
-                                                <img src="img/alice-img/avatar.png"
+                                                <img src="img/alice-img/<?php echo $row['user_photo']; ?>"
                                                     class="img-fluid rounded-circle w-75 mx-auto alice-avatar" alt="Avatar">
                                                     <a>
                                                     <div class="mask rgba-white-slight"></div>

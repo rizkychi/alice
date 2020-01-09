@@ -340,103 +340,25 @@
   <footer class="page-footer font-small pt-4 dark-grey-text">
 
     <!-- Footer Links -->
-    <div class="container text-center text-md-left">
+    <div class="container text-center">
 
       <!-- Grid row -->
       <div class="row">
 
         <!-- Grid column -->
-        <div class="col-md-2 mt-md-0 mt-3">
+        <div class="col-md-12 mt-md-0 mt-3">
 
           <h3 class="mb-3">
-            <a class="brand purple-pastel" href="#">
+            <a class="brand purple-pastel" href="">
               <strong>ALICE<br><span class="font-weight-bold"></span><span class="font-weight-bold pink-pastel"></span>
               </strong>
             </a>
           </h3>
 
-          <p class="mb-1"><strong>Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta<br>
-          55283</strong></p>
+          <p class="mb-1"><strong>Jl. Ring Road Utara, Condong Catur, Sleman, Yogyakarta 55283</strong></p>
 
         </div>
         <!-- Grid column -->
-
-        <hr class="clearfix w-100 d-md-none pb-3">
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Homepage</a>
-            </li>
-            <li>
-              <a class="dark-grey-text" href="#!">Tentang</a>
-            </li>
-            <li>
-              <a class="dark-grey-text" href="#!">Manfaat</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-
-        <!-- Grid column -->
-        <div class="col-md-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Cookie Policy</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Facebook</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Instagram</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-        
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Linkedin</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-12 col-lg-4 my-lg-0 my-4">
 
          
 
@@ -451,7 +373,7 @@
     <!-- Footer Links -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3 dark-grey-text">© 2018 Copyright:
-      <a class="text-black-50" href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+    <div class="footer-copyright text-center py-3 dark-grey-text">© 2019 Copyright: ALICE Team - 
+      Themes: <a class="text-black-50" href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
     </div>
     <!-- Copyright -->

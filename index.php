@@ -302,6 +302,12 @@
                                             </a>
                                         </div>
                                     <?php
+                                } if ($n_notif == 0) {
+                                    ?>
+                                        <div class="text-center">
+                                            Tidak ada pemberitahuan
+                                        </div>
+                                    <?php
                                 }
                             ?>
                         </div>
