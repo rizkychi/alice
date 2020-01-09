@@ -116,6 +116,7 @@ CREATE TABLE tb_class_comment
 
 CREATE TABLE tb_class_assignment
 (
+    assignment_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     assignment_class INT NOT NULL,
     assignment_post BIGINT NOT NULL,
     assignment_user CHAR(10) NOT NULL,

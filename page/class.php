@@ -474,9 +474,9 @@
                                                $due = $postDetail['post_due_date'];
                                                $now = date('Y-m-d H:i:s');
                                                if ($now < $due){
-                                                   $disable = false;
+                                                   $disable_deadline = false;
                                                } else {
-                                                   $disable = true;
+                                                   $disable_deadline = true;
                                                }
                                            ?>
                                         </h6>
@@ -489,10 +489,10 @@
                                             <input type="file" name="attachFile" id="upload" hidden required>
                                             <div class="row px-2">
                                                 <div class="col-md-6 px-2">
-                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="upload_file" <?php if ($disable) echo 'disabled'; ?>>Browse</button>
+                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="upload_file" <?php if ($disable || $disable_deadline) echo 'disabled'; ?>>Browse</button>
                                                 </div>
                                                 <div class="col-md-6 px-2">
-                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="btnSubmit" <?php if ($disable) echo 'disabled'; ?>>Submit</button>
+                                                    <button class="btn btn-sm btn-secondary btn-block m-0" id="btnSubmit" <?php if ($disable || $disable_deadline) echo 'disabled'; ?>>Submit</button>
                                                 </div>
                                             </div>
                                         </form>
