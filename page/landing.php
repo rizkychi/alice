@@ -377,26 +377,11 @@
             <li>
               <a class="dark-grey-text" href="#!">Manfaat</a>
             </li>
-            <li>
-              <a class="dark-grey-text" href="#!">Articles</a>
-            </li>
           </ul>
 
         </div>
         <!-- Grid column -->
 
-        <!-- Grid column -->
-        <div class="col-md-1 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <ul class="list-unstyled">
-            <li>
-              <a class="dark-grey-text" href="#!">Rules</a>
-            </li>
-          </ul>
-
-        </div>
-        <!-- Grid column -->
 
         <!-- Grid column -->
         <div class="col-md-1 mb-md-0 mb-3">
