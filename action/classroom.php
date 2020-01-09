@@ -138,7 +138,7 @@
             }
 
             $fileName = $_FILES["attachFile"]["name"];
-            move_uploaded_file($_FILES["attachFile"]["tmp_name"],$path."/".$fileName);
+            move_uploaded_file($_FILES["attachFile"]["tmp_name"],$path."/".$uid."_".$fileName);
 
             $query = mysqli_query($conn, "INSERT INTO tb_class_assignment (assignment_class, assignment_post, assignment_user, assignment_attachment) VALUES ('$cid','$pid','$uid','$fileName')");
             header("Location: ../?p=class&id=$cid&view=post&pid=$pid");
