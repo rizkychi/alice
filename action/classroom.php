@@ -18,7 +18,10 @@
             $cid   = mysqli_fetch_array($query)[0];
 
             if ($exist > 0) {
-                $query = mysqli_query($conn, "INSERT INTO tb_class_member (class_id, user_id) VALUES ($cid, '$uid')");
+                $joined = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_class_member WHERE class_id = '$cid' AND user_id = '$uid'"));
+                if ($joined == 0) {
+                    $query = mysqli_query($conn, "INSERT INTO tb_class_member (class_id, user_id) VALUES ($cid, '$uid')");
+                }
                 $_SESSION['successJoinClass'] = true;
                 header("Location: ../?p=class&id=$cid");
             } else {

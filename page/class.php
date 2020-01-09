@@ -752,7 +752,7 @@
 
         $("#btnSavePost").click(function(){
             var content = $("#postFormContent").val();
-            alert(content);
+            //alert(content);
             $.ajax({
                 type: "POST",
                 url: "action/classroom.php?act=update-post&id=<?php echo $pid;?>&user=<?php echo $_SESSION['user'];?>&class=<?php echo $cid;?>",
