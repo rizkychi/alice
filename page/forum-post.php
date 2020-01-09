@@ -1,12 +1,13 @@
 <?php
         require_once 'config/conf.php';
         $post_id = $_GET['id'];
-        $query  = mysqli_query($conn, "SELECT tb_forum_post.post_course, tb_forum_post.post_user, tb_forum_post.post_subject, tb_forum_post.post_content, tb_forum_post.post_date, tb_course.course_name, post_view, user_name FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id JOIN tb_user ON user_id = post_user WHERE post_id = '$post_id'");
+        $query  = mysqli_query($conn, "SELECT tb_forum_post.post_course, tb_forum_post.post_user, tb_forum_post.post_subject, tb_forum_post.post_content, tb_forum_post.post_date, tb_course.course_name, post_view, user_name, course_id FROM tb_forum_post JOIN tb_course ON tb_forum_post.post_course = tb_course.course_id JOIN tb_user ON user_id = post_user WHERE post_id = '$post_id'");
         $result = mysqli_fetch_array($query);
         $user_id = $result['post_user'];
         $subject= $result['post_subject'];
         $content= $result['post_content'];
         $course = $result['course_name'];
+        $course_id = $result['course_id'];
         $post_date = $result['post_date']; 
         $n_view = $result['post_view'];
         $n_comment = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_forum_comment WHERE comment_post = $post_id"));
@@ -28,22 +29,28 @@
                             <strong>Penulis: </strong><?php echo $result['user_name']; ?></p>
                         <p class="font-small grey-text">
                             <strong>Pada tanggal </strong><?php echo $post_date; ?></p>
-                        <a>
+                        <a href="?p=list&type=post-course&id=<?php echo $course_id;?>">
                             <span class="badge badge-danger"><?php echo $course; ?></span>
                         </a>
                     </div>
-                    <div class="col-md-4">
-                        <!-- Basic dropdown -->
-                        <a class="dropdown-toggle float-right m-0 alice-dropdown" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h" style="font-size:20px;"></i></a>
+                    <?php
+                        if ($_SESSION['user'] == $result['post_user']) {
+                            ?>
+                                <div class="col-md-4">
+                                    <!-- Basic dropdown -->
+                                    <a class="dropdown-toggle float-right m-0 alice-dropdown" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h" style="font-size:20px;"></i></a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alice-dropdown">
-                            <a class="dropdown-item" href="?p=forum-form&id=<?php echo $post_id; ?>&act=update">Edit</a>
-                            <a class="dropdown-item" href="action/delete_thread.php?id=<?php echo $post_id; ?>" onclick="javascript: return confirm('Yakin Hapus?')" >Hapus</a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alice-dropdown">
+                                        <a class="dropdown-item" href="?p=forum-form&id=<?php echo $post_id; ?>&act=update">Edit</a>
+                                        <a class="dropdown-item" href="action/delete_thread.php?id=<?php echo $post_id; ?>" onclick="javascript: return confirm('Yakin Hapus?')" >Hapus</a>
 
-                        </div>
-                        <!-- Basic dropdown -->
-                    </div>
+                                    </div>
+                                    <!-- Basic dropdown -->
+                                </div>
+                            <?php
+                        }
+                    ?>
                 </div>
             </div>
             <!-- Title -->

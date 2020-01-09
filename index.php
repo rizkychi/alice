@@ -87,6 +87,7 @@
             // change page title
             echo '<script>document.title = "'.$page_title.' | ALICE"</script>';
         ?>
+        <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <!-- Bootstrap core CSS -->
@@ -194,7 +195,7 @@
     } else { 
     // put default page
 ?>
-    <body>
+    <body style="background: url('img/bg.jpg');">
         
         <header>
             <!-- Navbar -->

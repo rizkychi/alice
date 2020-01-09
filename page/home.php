@@ -9,7 +9,7 @@
     $recent_post     = mysqli_query($conn, "SELECT post_id, post_subject, post_view, (SELECT COUNT(*) FROM tb_forum_comment WHERE comment_post = post_id) AS post_comment FROM tb_forum_post WHERE post_user = '$uid' ORDER BY post_date DESC");
     $recent_material = mysqli_query($conn, "SELECT material_id, material_subject, (SELECT COUNT(*) FROM tb_material_downloaded WHERE tb_material_downloaded.material_id = tb_material.material_id) AS material_download FROM tb_material WHERE material_user = '$uid' ORDER BY material_date DESC");
     $recent_comment  = mysqli_query($conn, "SELECT comment_post, comment_content, comment_user, post_subject FROM tb_forum_comment c JOIN tb_forum_post p ON c.comment_post = p.post_id  WHERE comment_user = '$uid' ORDER BY comment_date DESC");
-    $recent_download = mysqli_query($conn, "SELECT d.material_id, material_subject, course_name FROM tb_material_downloaded d JOIN tb_material m ON d.material_id = m.material_id JOIN tb_course ON m.material_course = course_id WHERE d.material_user = '$uid' ORDER BY d.material_date DESC");
+    $recent_download = mysqli_query($conn, "SELECT d.material_id, material_subject, course_name, material_course FROM tb_material_downloaded d JOIN tb_material m ON d.material_id = m.material_id JOIN tb_course ON m.material_course = course_id WHERE d.material_user = '$uid' ORDER BY d.material_date DESC");
 
     $n_class         = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class_member WHERE user_id = '$uid'"));
     $n_class_created = mysqli_num_rows(mysqli_query($conn, "SELECT class_id FROM tb_class WHERE class_lecturer = '$uid'"));
@@ -159,8 +159,8 @@
                         while ($result = mysqli_fetch_array($recent_post)){
                             echo "<tr>";
                             echo "<td class='text-truncate'><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
-                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
-                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_comment]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_view]</td>";
                             echo "</tr>";
                         }
                     ?>
@@ -187,8 +187,8 @@
                     <?php
                         while ($result = mysqli_fetch_array($recent_material)){
                             echo "<tr>";
-                            echo "<td class='text-truncate'><a href='?p=forum&id=$result[material_id]'>$result[material_subject]</a></td>";
-                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[material_download]</td>";
+                            echo "<td class='text-truncate'><a href='?p=materi-post&id=$result[material_id]'>$result[material_subject]</a></td>";
+                            echo "<td style='width:150px;'><i class='fas fa-download mr-2'></i>$result[material_download]</td>";
                             echo "</tr>";
                         }
                     ?>
@@ -377,8 +377,8 @@
                         while ($result = mysqli_fetch_array($recent_post)){
                             echo "<tr>";
                             echo "<td class='text-truncate'><a href='?p=forum&id=$result[post_id]'>$result[post_subject]</a></td>";
-                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_view]</td>";
-                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_comment]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-comment mr-2'></i>$result[post_comment]</td>";
+                            echo "<td style='width:150px;'><i class='far fa-eye mr-2'></i>$result[post_view]</td>";
                             echo "</tr>";
                         }
                     ?>
@@ -431,7 +431,7 @@
                         while ($result = mysqli_fetch_array($recent_download)){
                             echo "<tr>";
                             echo "<td class='text-truncate'><a href='?p=materi-post&id=$result[material_id]'>$result[material_subject]</a></td>";
-                            echo "<td class='text-truncate'><i class='fas fa-layer-group mr-2'></i>$result[course_name]</td>";
+                            echo "<td class='text-truncate'><a href='?p=list&type=material-course&id=$result[material_course]'><i class='fas fa-layer-group mr-2'></i>$result[course_name]</a></td>";
                             echo "</tr>";
                         }
                     ?>
