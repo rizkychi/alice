@@ -255,6 +255,7 @@
                     </li>
                     <?php
                         $notification = mysqli_query($conn, "SELECT * FROM tb_notification n JOIN tb_user u ON n.notif_from_user = u.user_id LEFT JOIN tb_class c ON n.notif_class_id = c.class_id WHERE notif_for_user = '$_SESSION[user]' ORDER BY notif_date DESC LIMIT 5");
+                        $limit_notif = mysqli_num_rows($notification);
                         $n_notif = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_notification WHERE notif_for_user = '$_SESSION[user]' AND notif_status = '0'"));
                     ?>
                     <li class="nav-item dropdown mx-2" id="notifPanel">
@@ -293,7 +294,7 @@
                                         <?php
                                     }
                                 }
-                                if ($n_notif == 5) {
+                                if ($limit_notif == 5) {
                                     ?>
                                         <hr class="my-0">
                                         <div class="text-center">
@@ -302,7 +303,7 @@
                                             </a>
                                         </div>
                                     <?php
-                                } if ($n_notif == 0) {
+                                } else if ($limit_notif == 0) {
                                     ?>
                                         <div class="text-center">
                                             Tidak ada pemberitahuan
